@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Octopus TMS - Finally. A TMS that only wins when YOU win.</title>
     <meta name="description" content="$20 per booked load. Zero loads = Zero cost. The revolutionary TMS built by truckers, for truckers. No contracts, no monthly fees, just partnership.">
+    <meta property="og:title" content="Octopus TMS - Revolutionary Trucking Management Software">
+    <meta property="og:description" content="$20 per booked load. Zero loads = Zero cost. Built by truckers, for truckers.">
+    <meta property="og:image" content="https://octopustms.com/octopus-logo.svg">
+    <meta property="og:url" content="https://octopustms.com">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,40 +24,90 @@
         }
 
         :root {
-            --primary-blue: #3B82F6;
-            --primary-green: #10B981;
-            --dark-bg: #0F172A;
-            --darker-bg: #020817;
-            --light-text: #F1F5F9;
-            --muted-text: #94A3B8;
-            --border-color: #334155;
-            --card-bg: rgba(30, 41, 59, 0.5);
+            /* Octopus Brand Colors from themes.css */
+            --octopus-primary: #60a5fa; /* blue-400 */
+            --octopus-primary-dark: #3b82f6; /* blue-500 */
+            --octopus-secondary: #818cf8; /* indigo-400 */
+            --octopus-gradient-start: #1D4ED8;
+            --octopus-gradient-end: #7C3AED;
+
+            /* Enhanced color palette */
+            --bg-primary: #0f172a; /* slate-900 */
+            --bg-secondary: #1e293b; /* slate-800 */
+            --bg-tertiary: #334155; /* slate-700 */
+            --bg-card: rgba(30, 41, 59, 0.8);
+
+            --text-primary: #f8fafc; /* slate-50 */
+            --text-secondary: #cbd5e1; /* slate-300 */
+            --text-muted: #94a3b8; /* slate-400 */
+
+            --border: #334155;
+            --border-light: #475569;
+
+            --success: #4ade80; /* green-400 */
+            --warning: #fbbf24; /* amber-400 */
+            --error: #f87171; /* red-400 */
+            --info: #38bdf8; /* sky-400 */
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(to bottom, var(--dark-bg), var(--darker-bg), var(--dark-bg));
-            color: var(--light-text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 80%, var(--octopus-primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--octopus-secondary) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, var(--octopus-gradient-end) 0%, transparent 50%);
+            opacity: 0.05;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(20px) rotate(-1deg); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Header */
+        /* Enhanced Header */
         header {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(96, 165, 250, 0.1);
             z-index: 1000;
             padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.75rem 0;
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         nav {
@@ -62,12 +117,28 @@
         }
 
         .logo {
-            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
             font-weight: 900;
-            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-decoration: none;
         }
 
         .nav-links {
@@ -77,48 +148,86 @@
         }
 
         .nav-link {
-            color: var(--muted-text);
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover {
-            color: var(--light-text);
+            color: var(--text-primary);
         }
 
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Premium Buttons */
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 2rem;
             border-radius: 0.75rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             border: none;
             font-size: 1rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
-            background: linear-gradient(to right, var(--primary-green), var(--primary-blue));
-            color: var(--darker-bg);
+            background: linear-gradient(135deg, var(--success) 0%, var(--octopus-primary) 100%);
+            color: var(--bg-primary);
+            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 20px 25px -5px rgb(16 185 129 / 25%);
             transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(74, 222, 128, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-secondary {
-            border: 2px solid var(--border-color);
-            background: transparent;
-            color: var(--light-text);
+            background: rgba(96, 165, 250, 0.1);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: var(--card-bg);
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--octopus-primary);
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.2);
         }
 
         /* Hero Section */
@@ -128,21 +237,35 @@
             position: relative;
         }
 
+        /* Enhanced Countdown Banner */
         .countdown-banner {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.3);
             border-radius: 9999px;
             margin-bottom: 3rem;
             backdrop-filter: blur(10px);
+            animation: pulse-glow 2s ease-in-out infinite;
         }
 
-        .countdown-banner span {
-            color: var(--primary-green);
-            font-weight: 600;
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(74, 222, 128, 0.4); }
+        }
+
+        .sparkle-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--success);
+            animation: sparkle 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes sparkle {
+            from { transform: scale(1) rotate(0deg); }
+            to { transform: scale(1.2) rotate(180deg); }
         }
 
         .countdown {
@@ -154,18 +277,26 @@
 
         .countdown-item {
             text-align: center;
+            padding: 1rem;
+            background: rgba(96, 165, 250, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            min-width: 80px;
         }
 
         .countdown-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--light-text);
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .countdown-label {
             font-size: 0.75rem;
-            color: var(--muted-text);
+            color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         h1 {
@@ -173,127 +304,109 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .gradient-text {
-            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 50%, var(--octopus-gradient-end) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease-in-out infinite;
         }
 
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--muted-text);
-            margin-bottom: 1rem;
-            max-width: 48rem;
-            margin-left: auto;
-            margin-right: auto;
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        .hero-emphasis {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-        }
-
-        .red-text {
-            color: #EF4444;
-        }
-
-        .pricing-box {
-            background: rgba(30, 41, 59, 0.5);
+        /* Feature Cards */
+        .feature-card {
+            background: var(--bg-card);
             backdrop-filter: blur(10px);
             border-radius: 1.5rem;
             padding: 2rem;
-            max-width: 32rem;
-            margin: 0 auto 3rem;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(96, 165, 250, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .pricing-main {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        .pricing-sub {
-            font-size: 1.5rem;
-            color: var(--primary-green);
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
         }
 
-        .pricing-note {
-            color: var(--muted-text);
-            font-size: 1.125rem;
-        }
-
-        /* Feature Sections */
-        .section {
-            padding: 5rem 0;
-        }
-
-        .section-bg {
-            background: rgba(30, 41, 59, 0.3);
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            width: 3rem;
-            height: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-blue);
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-description {
-            color: var(--muted-text);
-        }
-
-        /* LLMP Flow */
-        .flow-container {
-            background: linear-gradient(to right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .flow-steps {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border-radius: 1rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
+            justify-content: center;
         }
 
-        .flow-step {
-            flex: 1;
-            text-align: center;
-            min-width: 150px;
+        .feature-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--octopus-primary);
+            stroke-width: 2;
+        }
+
+        /* LLMP Flow with enhanced visuals */
+        .flow-container {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: 2rem;
+            padding: 3rem;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .flow-circle {
@@ -304,53 +417,64 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
-            font-size: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
         .flow-circle-blue {
-            background: rgba(59, 130, 246, 0.2);
-            border: 2px solid var(--primary-blue);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(96, 165, 250, 0.2) 100%);
+            border: 2px solid var(--octopus-primary);
         }
 
         .flow-circle-green {
-            background: rgba(16, 185, 129, 0.2);
-            border: 2px solid var(--primary-green);
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+            border: 2px solid var(--success);
         }
 
         .flow-circle-purple {
-            background: rgba(168, 85, 247, 0.2);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(129, 140, 248, 0.2) 100%);
             border: 2px solid #A855F7;
         }
 
-        .flow-circle-yellow {
-            background: rgba(251, 191, 36, 0.2);
-            border: 2px solid #FBBF24;
+        .flow-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
         }
 
-        .flow-arrow {
-            color: var(--muted-text);
-            font-size: 2rem;
-        }
-
-        /* Calculator */
-        .calculator-container {
-            background: var(--card-bg);
-            border-radius: 1.5rem;
+        /* Partner Logos Section */
+        .partner-logos {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
             padding: 2rem;
-            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(96, 165, 250, 0.1);
         }
 
-        .slider-container {
-            margin: 2rem 0;
+        .partner-logo {
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            height: 50px;
         }
 
+        .partner-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Pricing Calculator */
         .slider {
             width: 100%;
             height: 8px;
             border-radius: 4px;
-            background: var(--border-color);
+            background: linear-gradient(90deg, var(--success) 0%, var(--octopus-primary) 100%);
             outline: none;
             -webkit-appearance: none;
+            position: relative;
         }
 
         .slider::-webkit-slider-thumb {
@@ -359,258 +483,129 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: var(--primary-blue);
+            background: white;
             cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--primary-blue);
-            cursor: pointer;
+        .slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 10px rgba(96, 165, 250, 0.1);
         }
 
-        .calc-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .calc-box {
-            background: rgba(15, 23, 42, 0.5);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .calc-label {
-            font-size: 0.875rem;
-            color: var(--muted-text);
-            margin-bottom: 0.25rem;
-        }
-
-        .calc-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .calc-box-success {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        .calc-box-success .calc-value {
-            color: var(--primary-green);
-        }
-
-        /* Testimonials */
+        /* Testimonial Cards */
         .testimonial-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(96, 165, 250, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 4rem;
+            color: var(--octopus-primary);
+            opacity: 0.2;
         }
 
         .stars {
             color: #FBBF24;
             margin-bottom: 1rem;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            color: var(--muted-text);
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-author {
-            font-weight: 700;
-        }
-
-        .testimonial-role {
-            font-size: 0.875rem;
-            color: var(--muted-text);
-        }
-
-        /* Stats */
-        .stats-container {
             display: flex;
-            justify-content: center;
-            gap: 4rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
+            gap: 0.25rem;
         }
 
-        .stat-item {
-            text-align: center;
+        .star {
+            transition: all 0.3s ease;
         }
 
+        .testimonial-card:hover .star {
+            animation: twinkle 0.5s ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Stats with animated numbers */
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
-            color: var(--primary-green);
+            background: linear-gradient(135deg, var(--success) 0%, var(--octopus-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: count-up 2s ease-out;
         }
 
-        .stat-label {
-            color: var(--muted-text);
+        @keyframes count-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         /* Footer */
         footer {
-            padding: 3rem 0;
-            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.8));
+            border-top: 1px solid rgba(96, 165, 250, 0.1);
             text-align: center;
         }
 
-        .footer-logo {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-tagline {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .footer-note {
-            color: var(--muted-text);
-            margin-bottom: 1rem;
-        }
-
-        .footer-launch {
-            color: var(--primary-green);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
-            .flow-steps {
-                flex-direction: column;
-            }
-
-            .flow-arrow {
-                transform: rotate(90deg);
-            }
-
-            .stats-container {
+            .partner-logos {
                 gap: 2rem;
             }
-        }
 
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
+            .countdown {
+                gap: 1rem;
             }
-            50% {
-                opacity: 0.5;
+
+            .countdown-item {
+                min-width: 60px;
+                padding: 0.5rem;
+            }
+
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
             }
         }
 
-        .animate-pulse {
-            animation: pulse 2s infinite;
+        /* Loading Animation */
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
         }
 
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .comparison-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .comparison-card-bad {
-            color: #EF4444;
-        }
-
-        .comparison-card-good {
-            color: var(--primary-green);
-        }
-
-        .comparison-list {
-            list-style: none;
-            space-y: 0.5rem;
-        }
-
-        .comparison-list li {
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .trust-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .trust-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .dream-squad {
-            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            margin-top: 3rem;
-        }
-
-        .squad-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .squad-item {
-            text-align: center;
-        }
-
-        .squad-emoji {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .squad-name {
-            font-weight: 700;
-            color: var(--light-text);
-        }
-
-        .squad-role {
-            font-size: 0.75rem;
-            color: var(--muted-text);
-        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav class="container">
-            <a href="/" class="logo">🐙 Octopus TMS</a>
+            <a href="/" class="logo">
+                <img src="octopus-logo.svg" alt="Octopus TMS">
+                <span class="logo-text">Octopus TMS</span>
+            </a>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
@@ -625,25 +620,30 @@
     <section class="hero">
         <div class="container">
             <!-- Launch Countdown -->
-            <div class="countdown-banner">
-                <span>✨</span>
-                <span>Revolution Launches October 24, 2025</span>
-                <span>✨</span>
+            <div class="countdown-banner animate-in">
+                <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.09 6.26L20.35 9l-4.26 1.91L15 17.15l-3-5.24-3 5.24-1.09-6.24L3.65 9l6.26-.74z"/>
+                </svg>
+                <span style="color: var(--success); font-weight: 600;">Revolution Launches October 24, 2025</span>
+                <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.09 6.26L20.35 9l-4.26 1.91L15 17.15l-3-5.24-3 5.24-1.09-6.24L3.65 9l6.26-.74z"/>
+                </svg>
             </div>
+
             <div class="countdown" id="countdown">
-                <div class="countdown-item">
+                <div class="countdown-item animate-in delay-1">
                     <div class="countdown-value" id="days">0</div>
                     <div class="countdown-label">Days</div>
                 </div>
-                <div class="countdown-item">
+                <div class="countdown-item animate-in delay-2">
                     <div class="countdown-value" id="hours">0</div>
                     <div class="countdown-label">Hours</div>
                 </div>
-                <div class="countdown-item">
+                <div class="countdown-item animate-in delay-3">
                     <div class="countdown-value" id="minutes">0</div>
                     <div class="countdown-label">Minutes</div>
                 </div>
-                <div class="countdown-item">
+                <div class="countdown-item animate-in delay-4">
                     <div class="countdown-value" id="seconds">0</div>
                     <div class="countdown-label">Seconds</div>
                 </div>
@@ -654,25 +654,27 @@
                 <span class="gradient-text">wins when YOU win.</span>
             </h1>
 
-            <p class="hero-subtitle">
+            <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 1rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
                 Every other TMS charges you $500-5,000/month whether you book 1 load or 100.
                 Whether you're profitable or bleeding money.
             </p>
 
-            <p class="hero-emphasis">
-                We said <span class="red-text">"fuck that."</span>
+            <p style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
+                We said <span style="color: var(--error);">"fuck that."</span>
             </p>
 
-            <div class="pricing-box">
-                <div class="pricing-main">$20 per booked load.</div>
-                <div class="pricing-sub">Zero loads = Zero cost.</div>
-                <div class="pricing-note">Because software should be your partner, not your parasite.</div>
+            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 2rem; padding: 2.5rem; max-width: 32rem; margin: 0 auto 3rem; border: 1px solid rgba(96, 165, 250, 0.2);">
+                <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">$20 per booked load.</div>
+                <div style="font-size: 1.5rem; color: var(--success); font-weight: 700; margin-bottom: 1rem;">Zero loads = Zero cost.</div>
+                <div style="color: var(--text-secondary); font-size: 1.125rem;">Because software should be your partner, not your parasite.</div>
             </div>
 
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="https://app.octopustms.com/register" class="btn btn-primary">
                     Start Free - No Card Required
-                    <span>→</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
                 </a>
                 <button class="btn btn-secondary" onclick="alert('Demo video coming soon!')">Watch 2-Min Demo</button>
             </div>
@@ -680,30 +682,46 @@
     </section>
 
     <!-- The "FINALLY" Moment -->
-    <section class="section section-bg">
+    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);">
         <div class="container">
-            <h2 class="section-title">
+            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">
                 "Finally, someone who GETS it!"
             </h2>
-            <p style="text-align: center; font-size: 1.25rem; color: var(--muted-text); margin-bottom: 3rem;">
+            <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem;">
                 - Every dispatcher who sees Octopus
             </p>
 
-            <div class="feature-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 <div class="feature-card">
-                    <div class="feature-icon">⏰</div>
-                    <h3 class="feature-title">We know the 2 AM panic</h3>
-                    <p class="feature-description">When the broker calls asking "where's my load?" We've lived it.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the 2 AM panic</h3>
+                    <p style="color: var(--text-muted);">When the broker calls asking "where's my load?" We've lived it.</p>
                 </div>
+
                 <div class="feature-card">
-                    <div class="feature-icon">📄</div>
-                    <h3 class="feature-title">We know the Friday scramble</h3>
-                    <p class="feature-description">To get settlements done before everyone goes home. We've done it.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="5" y="4" width="14" height="17" stroke="currentColor" rx="2"/>
+                            <path d="M9 9h6M9 13h6M9 17h4" stroke="currentColor" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the Friday scramble</h3>
+                    <p style="color: var(--text-muted);">To get settlements done before everyone goes home. We've done it.</p>
                 </div>
+
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">We know the rage</h3>
-                    <p class="feature-description">When your TMS crashes during peak booking hours. We've felt it.</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the rage</h3>
+                    <p style="color: var(--text-muted);">When your TMS crashes during peak booking hours. We've felt it.</p>
                 </div>
             </div>
 
@@ -714,48 +732,71 @@
     </section>
 
     <!-- One-Click Magic (LLMP Flow) -->
-    <section class="section">
+    <section style="padding: 5rem 0;">
         <div class="container">
-            <h2 class="section-title">One-Click Magic</h2>
+            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">One-Click Magic</h2>
 
             <div class="flow-container">
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <div class="flow-circle flow-circle-blue">🎯</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; position: relative; z-index: 1;">
+                    <div style="flex: 1; text-align: center; min-width: 150px;">
+                        <div class="flow-circle flow-circle-blue">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <circle cx="12" cy="12" r="8"/>
+                                <circle cx="12" cy="12" r="11"/>
+                            </svg>
+                        </div>
                         <h3 style="font-weight: 700;">Find</h3>
-                        <p style="font-size: 0.875rem; color: var(--muted-text);">Native DAT integration</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Native DAT integration</p>
                     </div>
 
-                    <span class="flow-arrow">→</span>
+                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
 
-                    <div class="flow-step">
-                        <div class="flow-circle flow-circle-green">✓</div>
+                    <div style="flex: 1; text-align: center; min-width: 150px;">
+                        <div class="flow-circle flow-circle-green">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg>
+                        </div>
                         <h3 style="font-weight: 700;">Book</h3>
-                        <p style="font-size: 0.875rem; color: var(--muted-text);">One click, done</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">One click, done</p>
                     </div>
 
-                    <span class="flow-arrow">→</span>
+                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
 
-                    <div class="flow-step">
-                        <div class="flow-circle flow-circle-purple">🚛</div>
+                    <div style="flex: 1; text-align: center; min-width: 150px;">
+                        <div class="flow-circle flow-circle-purple">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="10" rx="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                        </div>
                         <h3 style="font-weight: 700;">Assign</h3>
-                        <p style="font-size: 0.875rem; color: var(--muted-text);">Auto-notify driver</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Auto-notify driver</p>
                     </div>
 
-                    <span class="flow-arrow">→</span>
+                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
 
-                    <div class="flow-step">
-                        <div class="flow-circle flow-circle-yellow">📊</div>
+                    <div style="flex: 1; text-align: center; min-width: 150px;">
+                        <div class="flow-circle" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%); border: 2px solid #FBBF24;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2">
+                                <path d="M3 12h4l3-9 4 18 3-9h4"/>
+                            </svg>
+                        </div>
                         <h3 style="font-weight: 700;">Track</h3>
-                        <p style="font-size: 0.875rem; color: var(--muted-text);">Public tracking links</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Public tracking links</p>
                     </div>
 
-                    <span class="flow-arrow">→</span>
+                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
 
-                    <div class="flow-step">
-                        <div class="flow-circle flow-circle-green animate-pulse">💰</div>
+                    <div style="flex: 1; text-align: center; min-width: 150px;">
+                        <div class="flow-circle flow-circle-green" style="animation: pulse-glow 2s ease-in-out infinite;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+                            </svg>
+                        </div>
                         <h3 style="font-weight: 700;">Get Paid</h3>
-                        <p style="font-size: 0.875rem; color: var(--primary-green); font-weight: 700;">"Cashanggg!"</p>
+                        <p style="font-size: 0.875rem; color: var(--success); font-weight: 700;">"Cashanggg!"</p>
                     </div>
                 </div>
 
@@ -767,59 +808,59 @@
     </section>
 
     <!-- Partnership Promise & Calculator -->
-    <section class="section section-bg" id="pricing">
+    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);" id="pricing">
         <div class="container">
-            <h2 class="section-title">The Partnership Promise</h2>
-            <p style="text-align: center; font-size: 1.5rem; color: var(--primary-green); font-weight: 700; margin-bottom: 3rem;">
+            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">The Partnership Promise</h2>
+            <p style="text-align: center; font-size: 1.5rem; color: var(--success); font-weight: 700; margin-bottom: 3rem;">
                 "We Don't Demand Money. We Demand BUSINESS!"
             </p>
 
-            <div class="calculator-container">
-                <div class="comparison-grid">
+            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.1);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
                     <div>
-                        <h3 class="comparison-card-bad">Traditional TMS:</h3>
+                        <h3 style="color: var(--error); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Traditional TMS:</h3>
                         <p style="font-size: 1.875rem; font-weight: 900; margin-bottom: 1rem;">$2,000/month forever</p>
-                        <ul class="comparison-list">
-                            <li>
-                                <span style="color: #EF4444;">✗</span>
+                        <ul style="list-style: none; space-y: 0.5rem;">
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--error);">✗</span>
                                 <span>Pay even during slow weeks</span>
                             </li>
-                            <li>
-                                <span style="color: #EF4444;">✗</span>
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--error);">✗</span>
                                 <span>Pay even if the software breaks</span>
                             </li>
-                            <li>
-                                <span style="color: #EF4444;">✗</span>
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--error);">✗</span>
                                 <span>Locked into annual contracts</span>
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="comparison-card-good">Octopus:</h3>
+                        <h3 style="color: var(--success); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Octopus:</h3>
                         <p style="font-size: 1.875rem; font-weight: 900; margin-bottom: 1rem;">$20 only when you book</p>
-                        <ul class="comparison-list">
-                            <li>
-                                <span style="color: var(--primary-green);">✓</span>
+                        <ul style="list-style: none; space-y: 0.5rem;">
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--success);">✓</span>
                                 <span>Slow week with 10 loads? $200</span>
                             </li>
-                            <li>
-                                <span style="color: var(--primary-green);">✓</span>
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--success);">✓</span>
                                 <span>Vacation week with 0 loads? $0</span>
                             </li>
-                            <li>
-                                <span style="color: var(--primary-green);">✓</span>
+                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="color: var(--success);">✓</span>
                                 <span>Boom week with 100 loads? Fair share</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+                <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
 
                 <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Calculate Your Savings</h3>
 
-                <div class="slider-container">
+                <div style="margin: 2rem 0;">
                     <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <span>Loads per week:</span>
                         <span id="loads-value" style="font-size: 1.5rem; font-weight: 700;">50</span>
@@ -827,22 +868,22 @@
                     <input type="range" class="slider" id="loads-slider" min="0" max="200" value="50">
                 </div>
 
-                <div class="calc-results">
-                    <div class="calc-box">
-                        <div class="calc-label">Weekly with Octopus</div>
-                        <div class="calc-value" id="weekly-cost">$1,000</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
+                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Weekly with Octopus</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;" id="weekly-cost">$1,000</div>
                     </div>
-                    <div class="calc-box">
-                        <div class="calc-label">Monthly estimate</div>
-                        <div class="calc-value" id="monthly-cost">$4,330</div>
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
+                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Monthly estimate</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;" id="monthly-cost">$4,330</div>
                     </div>
-                    <div class="calc-box">
-                        <div class="calc-label">Traditional TMS</div>
-                        <div class="calc-value" style="text-decoration: line-through; color: var(--muted-text);">$2,000</div>
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
+                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Traditional TMS</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; text-decoration: line-through; color: var(--text-muted);">$2,000</div>
                     </div>
-                    <div class="calc-box calc-box-success">
-                        <div class="calc-label">You save</div>
-                        <div class="calc-value" id="monthly-savings">$0/mo</div>
+                    <div style="background: rgba(74, 222, 128, 0.1); padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(74, 222, 128, 0.3);">
+                        <div style="font-size: 0.875rem; color: var(--success); margin-bottom: 0.25rem;">You save</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="monthly-savings">$0/mo</div>
                     </div>
                 </div>
             </div>
@@ -850,115 +891,158 @@
     </section>
 
     <!-- Social Proof -->
-    <section class="section" id="testimonials">
+    <section style="padding: 5rem 0;" id="testimonials">
         <div class="container">
-            <h2 class="section-title">Carriers Already Living the Revolution</h2>
+            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">Carriers Already Living the Revolution</h2>
 
-            <div class="feature-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">
+                    <div class="stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
                         "I don't care how much it costs, if it keeps all my shit together"
                     </p>
-                    <p class="testimonial-author">- Salim</p>
-                    <p class="testimonial-role">15-truck fleet owner</p>
+                    <p style="font-weight: 700;">- Salim</p>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">15-truck fleet owner</p>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">
+                    <div class="stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
                         "My dispatcher literally dreams about this workflow"
                     </p>
-                    <p class="testimonial-author">- Marcus</p>
-                    <p class="testimonial-role">Operations Manager</p>
+                    <p style="font-weight: 700;">- Marcus</p>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">Operations Manager</p>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">
+                    <div class="stars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
                         "First TMS that doesn't make me want to throw my computer out the window"
                     </p>
-                    <p class="testimonial-author">- Jennifer</p>
-                    <p class="testimonial-role">Owner-Operator</p>
+                    <p style="font-weight: 700;">- Jennifer</p>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">Owner-Operator</p>
                 </div>
             </div>
 
-            <div class="stats-container">
-                <div class="stat-item">
+            <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; flex-wrap: wrap;">
+                <div style="text-align: center;">
                     <div class="stat-value">10+</div>
-                    <div class="stat-label">Carriers already using</div>
+                    <div style="color: var(--text-muted);">Carriers already using</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" style="color: var(--primary-blue);">4hrs</div>
-                    <div class="stat-label">Saved per dispatcher/day</div>
+                <div style="text-align: center;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4hrs</div>
+                    <div style="color: var(--text-muted);">Saved per dispatcher/day</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" style="color: #A855F7;">3x</div>
-                    <div class="stat-label">Faster settlements</div>
+                <div style="text-align: center;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, #A855F7 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">3x</div>
+                    <div style="color: var(--text-muted);">Faster settlements</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Trust Architecture -->
-    <section class="section section-bg">
+    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);">
         <div class="container">
-            <h2 class="section-title">Built By Truckers, For Truckers</h2>
-            <p style="text-align: center; font-size: 1.25rem; color: var(--muted-text); max-width: 48rem; margin: 0 auto 3rem;">
+            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">Built By Truckers, For Truckers</h2>
+            <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); max-width: 48rem; margin: 0 auto 3rem;">
                 We're not venture-funded bros trying to "disrupt" your industry.
                 We're truckers who got tired of shitty software and built what we wished existed.
             </p>
 
-            <div class="trust-grid">
-                <div class="trust-card">
-                    <div class="trust-icon">🛡️</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div class="feature-card" style="text-align: center;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="margin: 0 auto 1rem;">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
                     <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Contracts</h3>
-                    <p style="color: var(--muted-text); font-size: 0.875rem;">Cancel anytime (but nobody does)</p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">Cancel anytime (but nobody does)</p>
                 </div>
-                <div class="trust-card">
-                    <div class="trust-icon">👥</div>
+                <div class="feature-card" style="text-align: center;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2" style="margin: 0 auto 1rem;">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                    </svg>
                     <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Setup Fees</h3>
-                    <p style="color: var(--muted-text); font-size: 0.875rem;">We're partners from day one</p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">We're partners from day one</p>
                 </div>
-                <div class="trust-card">
-                    <div class="trust-icon">💳</div>
+                <div class="feature-card" style="text-align: center;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" style="margin: 0 auto 1rem;">
+                        <rect x="1" y="4" width="22" height="16" rx="2"/>
+                        <path d="M1 10h22"/>
+                    </svg>
                     <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Hidden Costs</h3>
-                    <p style="color: var(--muted-text); font-size: 0.875rem;">Just $20 per booked load, forever</p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">Just $20 per booked load, forever</p>
                 </div>
-                <div class="trust-card">
-                    <div class="trust-icon">📄</div>
+                <div class="feature-card" style="text-align: center;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" style="margin: 0 auto 1rem;">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                    </svg>
                     <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Data Hostage</h3>
-                    <p style="color: var(--muted-text); font-size: 0.875rem;">Export everything, anytime</p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">Export everything, anytime</p>
                 </div>
             </div>
 
-            <div class="dream-squad">
-                <h3 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">The Dream Squad</h3>
-                <div class="squad-grid">
-                    <div class="squad-item">
-                        <div class="squad-emoji">🐙</div>
-                        <div class="squad-name">Octopus</div>
-                        <div class="squad-role">Orchestration</div>
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(74, 222, 128, 0.1) 100%); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+                <h3 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;">The Dream Squad</h3>
+
+                <div class="partner-logos">
+                    <!-- Octopus Logo -->
+                    <div style="text-align: center;">
+                        <img src="octopus-logo.svg" alt="Octopus" class="partner-logo" style="height: 60px;">
+                        <p style="font-weight: 700; margin-top: 0.5rem;">Octopus</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Orchestration</p>
                     </div>
-                    <div class="squad-item">
-                        <div class="squad-emoji">💳</div>
-                        <div class="squad-name">Stripe</div>
-                        <div class="squad-role">Settlements</div>
+
+                    <!-- Stripe Logo -->
+                    <div style="text-align: center;">
+                        <svg class="partner-logo" viewBox="0 0 100 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 21c0 11.598-9.402 21-21 21s-21-9.402-21-21S67.402 0 79 0s21 9.402 21 21z" fill="#635BFF"/>
+                            <path d="M79 10.5c-5.799 0-10.5 4.701-10.5 10.5S73.201 31.5 79 31.5 89.5 26.799 89.5 21 84.799 10.5 79 10.5z" fill="white"/>
+                            <path d="M12.965 16.523c0-1.548.633-2.21 1.65-2.21 1.018 0 1.728.662 1.728 2.21v1.115h3.67v-1.508c0-3.542-1.806-5.13-3.904-5.13-1.454 0-2.666.547-3.36 1.625-.694-1.078-1.883-1.625-3.398-1.625C7.33 11 6.196 11.779 5.58 12.97h-.078V11.27H2v11.46h3.67v-6.09c0-1.586.556-2.247 1.495-2.247s1.572.661 1.572 2.246v6.092h3.67v-6.091c0-1.585.557-2.247 1.495-2.247.94 0 1.573.662 1.573 2.247v6.091h3.67V16.64c0-.04 0-.078-.002-.116h.002v-.001zM23.5 23c2.485 0 4.5-2.015 4.5-4.5S25.985 14 23.5 14 19 16.015 19 18.5 21.015 23 23.5 23z" fill="#94A3B8"/>
+                        </svg>
+                        <p style="font-weight: 700; margin-top: 0.5rem;">Stripe</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Settlements</p>
                     </div>
-                    <div class="squad-item">
-                        <div class="squad-emoji">📊</div>
-                        <div class="squad-name">DAT</div>
-                        <div class="squad-role">Load Board</div>
+
+                    <!-- DAT Logo -->
+                    <div style="text-align: center;">
+                        <svg class="partner-logo" viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="120" height="50" rx="8" fill="#FF6B35"/>
+                            <text x="60" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">DAT</text>
+                        </svg>
+                        <p style="font-weight: 700; margin-top: 0.5rem;">DAT</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Load Board</p>
                     </div>
-                    <div class="squad-item">
-                        <div class="squad-emoji">☁️</div>
-                        <div class="squad-name">AWS</div>
-                        <div class="squad-role">Infrastructure</div>
+
+                    <!-- AWS Logo -->
+                    <div style="text-align: center;">
+                        <svg class="partner-logo" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M31.007 24.668c0 1.854.196 3.362.557 4.482.392.1.196 0.879 1.334 1.887.196.294.294.588.294.784 0 .343-.196.686-.687 1.078l-2.284 1.519c-.343.196-.686.343-.98.343-.392 0-.784-.196-1.078-.49-.49-.49-.92-1.029-1.274-1.568-.343-.588-.687-1.225-1.078-2.009-2.726 3.215-6.147 4.825-10.287 4.825-2.94 0-5.291-.833-6.979-2.499-1.687-1.666-2.548-3.901-2.548-6.685 0-2.96 1.048-5.361 3.185-7.154 2.137-1.793 4.971-2.695 8.542-2.695 1.177 0 2.401.098 3.724.245 1.323.147 2.695.392 4.166.637v-2.107c0-2.205-.461-3.724-1.372-4.629-.931-.902-2.509-1.342-4.776-1.342-1.029 0-2.088.123-3.176.392-1.088.27-2.156.588-3.176.98-.49.196-.833.294-1.029.343-.196.049-.343.049-.49.049-.441 0-.662-.323-.662-.98v-1.548c0-.49.049-.862.196-1.058.147-.196.441-.392.833-.588 1.029-.539 2.254-.98 3.675-1.323 1.421-.392 2.94-.557 4.531-.557 3.459 0 5.987.784 7.625 2.352 1.607 1.568 2.421 3.95 2.421 7.154v9.419h.049zm-14.207 5.263c.951 0 1.95-.176 2.999-.529 1.048-.353 1.999-1.009 2.802-1.911.49-.588.833-1.225 1.009-1.96.176-.735.294-1.617.294-2.666V21.61c-.833-.196-1.715-.353-2.646-.49-.931-.137-1.842-.196-2.744-.196-1.95 0-3.381.392-4.361 1.225-.98.833-1.47 2.009-1.47 3.528 0 1.421.362 2.479 1.127 3.205.735.755 1.764 1.107 2.989 1.107zm23.137 4.237c-.539 0-.902-.098-1.127-.343-.225-.196-.441-.637-.637-1.225L30.45 10.478c-.196-.637-.294-1.029-.294-1.274 0-.49.245-.784.735-.784h3.224c.568 0 .951.098 1.176.343.226.196.392.637.588 1.225l5.508 21.669 5.116-21.669c.147-.637.343-1.029.568-1.225.226-.196.662-.343 1.177-.343h2.646c.568 0 .95.098 1.176.343.226.196.441.637.568 1.225l5.165 21.963 5.684-21.963c.196-.637.392-1.029.617-1.225.225-.196.608-.343 1.177-.343h3.058c.49 0 .784.245.784.784 0 .147-.029.294-.078.49-.049.196-.147.461-.245.833L60.647 32.39c-.196.637-.392 1.029-.617 1.225-.226.196-.637.343-1.177.343h-2.842c-.568 0-.95-.098-1.177-.343-.225-.225-.44-.637-.568-1.274l-5.087-20.591-5.038 20.542c-.147.637-.343 1.049-.568 1.274-.225.226-.657.343-1.225.343h-2.842zm37.1.637c-1.568 0-3.137-.196-4.608-.557-1.47-.362-2.617-.764-3.381-1.225-.49-.294-.784-.588-.882-.882-.098-.295-.147-.608-.147-.931v-1.597c0-.657.245-.98.706-.98.196 0 .392.049.588.098.196.049.49.176.784.294.98.392 2.058.706 3.185.931 1.156.226 2.284.324 3.43.324 1.813 0 3.224-.314 4.186-.951.961-.617 1.47-1.548 1.47-2.724 0-.803-.265-1.47-.784-2.009-.519-.539-1.499-.98-2.92-1.372l-4.187-.98c-2.107-.49-3.655-1.323-4.608-2.45-.951-1.107-1.421-2.333-1.421-3.655 0-1.078.245-2.029.735-2.842.49-.813 1.156-1.519 1.96-2.107.833-.557 1.764-.98 2.891-1.274 1.127-.265 2.313-.412 3.538-.412.618 0 1.274.029 1.891.118.637.078 1.225.176 1.842.274.557.118 1.098.236 1.597.373.5.137.902.274 1.225.412.412.196.706.392.882.588.176.225.265.519.265.902v1.48c0 .657-.245 1.009-.706 1.009-.265 0-.686-.118-1.225-.353-1.646-.706-3.489-1.058-5.508-1.058-1.646 0-2.95.255-3.832.803-.882.549-1.343 1.382-1.343 2.548 0 .803.294 1.48.882 2.009.588.529 1.686 1.048 3.264 1.499l4.088.98c2.078.49 3.577 1.225 4.461 2.205.882.98 1.313 2.107 1.313 3.401 0 1.098-.245 2.088-.706 2.96-.49.872-1.156 1.637-2.009 2.254-.853.637-1.881 1.107-3.058 1.441-1.235.382-2.528.549-3.93.549z" fill="#FF9900"/>
+                            <path d="M80.748 44.343c-6.879 5.067-16.859 7.762-25.459 7.762-12.045 0-22.892-4.451-31.091-11.86-.637-.588-.069-1.382.706-.931 8.846 5.145 19.781 8.248 31.063 8.248 7.615 0 15.998-1.578 23.703-4.853 1.176-.52 2.137.764 1.078 1.634z" fill="#FF9900"/>
+                            <path d="M83.542 41.168c-.882-1.127-5.821-.539-8.053-.265-.676.078-.784-.51-.176-.961 3.94-2.773 10.415-1.96 11.17-.98.755 1.009-.196 7.958-3.901 11.278-.568.51-1.107.245-.853-.412.833-2.137 2.695-6.918 1.813-8.66z" fill="#FF9900"/>
+                        </svg>
+                        <p style="font-weight: 700; margin-top: 0.5rem;">AWS</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Infrastructure</p>
                     </div>
-                    <div class="squad-item">
-                        <div class="squad-emoji">🤖</div>
-                        <div class="squad-name">Claude</div>
-                        <div class="squad-role">Intelligence</div>
+
+                    <!-- Claude Logo -->
+                    <div style="text-align: center;">
+                        <svg class="partner-logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100" height="50" rx="8" fill="linear-gradient(135deg, #9333EA 0%, #7C3AED 100%)"/>
+                            <text x="50" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Claude</text>
+                        </svg>
+                        <p style="font-weight: 700; margin-top: 0.5rem;">Claude</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Intelligence</p>
                     </div>
                 </div>
             </div>
@@ -966,28 +1050,35 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="section" style="padding: 5rem 0;">
+    <section style="padding: 5rem 0;">
         <div class="container">
-            <div style="background: linear-gradient(to right, var(--primary-blue), var(--primary-green)); border-radius: 1.5rem; padding: 3rem; text-align: center;">
-                <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; margin-bottom: 1rem;">
+            <div style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 100%); border-radius: 2rem; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 30s linear infinite;"></div>
+
+                <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; margin-bottom: 1rem; position: relative;">
                     Stop Accepting Broken.
                 </h2>
-                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto; position: relative;">
                     You move America. You deserve tools that respect your intelligence,
                     value your time, and share your success.
                 </p>
 
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://app.octopustms.com/register" class="btn" style="background: white; color: var(--primary-blue); padding: 1rem 2rem; font-size: 1.125rem;">
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative;">
+                    <a href="https://app.octopustms.com/register" class="btn" style="background: white; color: var(--octopus-primary); padding: 1rem 2rem; font-size: 1.125rem;">
                         Start Free Now
-                        <span>→</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
                     </a>
                     <button class="btn" style="background: transparent; color: white; border: 2px solid rgba(255, 255, 255, 0.5); padding: 1rem 2rem; font-size: 1.125rem;" onclick="alert('Call us at 1-800-OCTOPUS')">
-                        📞 Book Quick Demo
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 0.5rem;">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        Book Quick Demo
                     </button>
                 </div>
 
-                <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1.5rem;">
+                <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1.5rem; position: relative;">
                     Or call us: <span style="color: white; font-weight: 700;">1-800-OCTOPUS</span>
                 </p>
             </div>
@@ -997,22 +1088,24 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-logo">🐙</div>
-            <p class="footer-tagline">
-                "We lived the pain. We built the cure. Now we share the success."
-            </p>
-            <p class="footer-note">
-                Octopus TMS - Where partnership replaces subscription.
-            </p>
-            <p class="footer-launch">
-                Coming October 24, 2025. The revolution has tentacles. 🐙
-            </p>
+            <div style="text-align: center;">
+                <img src="octopus-logo.svg" alt="Octopus" style="height: 60px; margin: 0 auto 1rem;">
+                <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
+                    "We lived the pain. We built the cure. Now we share the success."
+                </p>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                    Octopus TMS - Where partnership replaces subscription.
+                </p>
+                <p style="color: var(--success); font-weight: 700; font-size: 1.25rem;">
+                    Coming October 24, 2025. The revolution has tentacles. 🐙
+                </p>
+            </div>
 
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                <p style="color: var(--muted-text); font-size: 0.875rem;">
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                <p style="color: var(--text-muted); font-size: 0.875rem;">
                     © 2025 Octopus TMS. Built with ❤️ by a trucker who codes.
                 </p>
-                <p style="color: var(--muted-text); font-size: 0.875rem; margin-top: 0.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">
                     From Charjou to Chicago. From truck cab to tech revolution.
                 </p>
             </div>
@@ -1064,7 +1157,7 @@
         slider.addEventListener('input', updateCalculator);
         updateCalculator();
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1073,6 +1166,35 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and testimonials
+        document.querySelectorAll('.feature-card, .testimonial-card').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
