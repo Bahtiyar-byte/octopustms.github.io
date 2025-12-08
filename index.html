@@ -24,30 +24,37 @@
         }
 
         :root {
-            /* Octopus Brand Colors from themes.css */
-            --octopus-primary: #60a5fa; /* blue-400 */
-            --octopus-primary-dark: #3b82f6; /* blue-500 */
-            --octopus-secondary: #818cf8; /* indigo-400 */
-            --octopus-gradient-start: #1D4ED8;
-            --octopus-gradient-end: #7C3AED;
+            /* Ultra Bright Blue Color Palette */
+            --octopus-primary: #60A5FA; /* Vivid Sky Blue */
+            --octopus-primary-dark: #3B82F6; /* Bright Blue */
+            --octopus-secondary: #5EEAD4; /* Vivid Teal */
+            --octopus-gradient-start: #60A5FA; /* Sky Blue */
+            --octopus-gradient-end: #5EEAD4; /* Teal */
 
-            /* Enhanced color palette */
-            --bg-primary: #0f172a; /* slate-900 */
-            --bg-secondary: #1e293b; /* slate-800 */
-            --bg-tertiary: #334155; /* slate-700 */
-            --bg-card: rgba(30, 41, 59, 0.8);
+            /* Dark backgrounds for contrast */
+            --bg-primary: #0F172A; /* Deep navy */
+            --bg-secondary: #1E293B; /* Dark slate */
+            --bg-tertiary: #334155; /* Slate */
+            --bg-card: rgba(30, 41, 59, 0.95);
 
-            --text-primary: #f8fafc; /* slate-50 */
-            --text-secondary: #cbd5e1; /* slate-300 */
-            --text-muted: #94a3b8; /* slate-400 */
+            /* Bright text */
+            --text-primary: #FFFFFF; /* Pure white */
+            --text-secondary: #F8FAFC; /* Almost white */
+            --text-muted: #E2E8F0; /* Light gray - more visible */
 
-            --border: #334155;
-            --border-light: #475569;
+            --border: #64748B;
+            --border-light: #94A3B8;
 
-            --success: #4ade80; /* green-400 */
-            --warning: #fbbf24; /* amber-400 */
-            --error: #f87171; /* red-400 */
-            --info: #38bdf8; /* sky-400 */
+            /* Ultra bright accent colors */
+            --success: #4ADE80; /* Vivid Green */
+            --warning: #FCD34D; /* Vivid Yellow */
+            --error: #FB7185; /* Vivid Rose */
+            --info: #5EEAD4; /* Vivid Teal */
+
+            /* Electric accent colors */
+            --accent-light: #93C5FD; /* Light sky blue */
+            --accent-glow: #BAE6FD; /* Very light blue */
+            --highlight: #A5F3FC; /* Electric cyan */
         }
 
         body {
@@ -70,8 +77,8 @@
             background-image:
                 radial-gradient(circle at 20% 80%, var(--octopus-primary) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, var(--octopus-secondary) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, var(--octopus-gradient-end) 0%, transparent 50%);
-            opacity: 0.05;
+                radial-gradient(circle at 40% 40%, var(--accent-light) 0%, transparent 50%);
+            opacity: 0.08;
             animation: float 20s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
@@ -98,7 +105,7 @@
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(96, 165, 250, 0.1);
+            border-bottom: 1px solid rgba(96, 165, 250, 0.4);
             z-index: 1000;
             padding: 1rem 0;
             transition: all 0.3s ease;
@@ -107,7 +114,7 @@
         header.scrolled {
             padding: 0.75rem 0;
             background: rgba(15, 23, 42, 0.98);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(96, 165, 250, 0.3);
         }
 
         nav {
@@ -162,7 +169,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
+            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
             transition: width 0.3s ease;
         }
 
@@ -192,14 +199,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--success) 0%, var(--octopus-primary) 100%);
-            color: var(--bg-primary);
-            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-secondary) 100%);
+            color: #0F172A;
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.5);
+            font-weight: 700;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(74, 222, 128, 0.4);
+            box-shadow: 0 8px 35px rgba(96, 165, 250, 0.7);
         }
 
         .btn-primary::before {
@@ -218,16 +226,16 @@
         }
 
         .btn-secondary {
-            background: rgba(96, 165, 250, 0.1);
-            border: 2px solid rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.15);
+            border: 2px solid rgba(96, 165, 250, 0.6);
             color: var(--text-primary);
             backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: rgba(96, 165, 250, 0.2);
+            background: rgba(96, 165, 250, 0.25);
             border-color: var(--octopus-primary);
-            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.2);
+            box-shadow: 0 4px 25px rgba(96, 165, 250, 0.5);
         }
 
         /* Hero Section */
@@ -243,8 +251,8 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem 2rem;
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
-            border: 1px solid rgba(74, 222, 128, 0.3);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(94, 234, 212, 0.15) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.6);
             border-radius: 9999px;
             margin-bottom: 3rem;
             backdrop-filter: blur(10px);
@@ -252,14 +260,14 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(74, 222, 128, 0.4); }
+            0%, 100% { box-shadow: 0 0 25px rgba(96, 165, 250, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(96, 165, 250, 0.6); }
         }
 
         .sparkle-icon {
             width: 24px;
             height: 24px;
-            fill: var(--success);
+            fill: var(--octopus-primary);
             animation: sparkle 1s ease-in-out infinite alternate;
         }
 
@@ -278,16 +286,16 @@
         .countdown-item {
             text-align: center;
             padding: 1rem;
-            background: rgba(96, 165, 250, 0.05);
+            background: rgba(96, 165, 250, 0.15);
             border-radius: 1rem;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.5);
             min-width: 80px;
         }
 
         .countdown-value {
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 100%);
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -319,9 +327,10 @@
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 50%, var(--octopus-gradient-end) 100%);
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 50%, var(--octopus-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
             animation: gradient-shift 3s ease-in-out infinite;
         }
 
@@ -336,7 +345,7 @@
             backdrop-filter: blur(10px);
             border-radius: 1.5rem;
             padding: 2rem;
-            border: 1px solid rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.4);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -349,15 +358,15 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
+            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(96, 165, 250, 0.3);
-            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+            border-color: rgba(96, 165, 250, 0.8);
+            box-shadow: 0 20px 50px rgba(96, 165, 250, 0.3);
         }
 
         .feature-card:hover::before {
@@ -369,7 +378,7 @@
             height: 60px;
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.25) 0%, rgba(94, 234, 212, 0.2) 100%);
             border-radius: 1rem;
             display: flex;
             align-items: center;
@@ -385,10 +394,10 @@
 
         /* LLMP Flow with enhanced visuals */
         .flow-container {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
             border-radius: 2rem;
             padding: 3rem;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.5);
             position: relative;
             overflow: hidden;
         }
@@ -400,7 +409,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.2) 0%, transparent 70%);
             animation: rotate 30s linear infinite;
         }
 
@@ -422,23 +431,23 @@
         }
 
         .flow-circle-blue {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(96, 165, 250, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3) 0%, rgba(96, 165, 250, 0.15) 100%);
             border: 2px solid var(--octopus-primary);
         }
 
-        .flow-circle-green {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
-            border: 2px solid var(--success);
+        .flow-circle-cyan {
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.3) 0%, rgba(94, 234, 212, 0.15) 100%);
+            border: 2px solid var(--octopus-secondary);
         }
 
-        .flow-circle-purple {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(129, 140, 248, 0.2) 100%);
-            border: 2px solid #A855F7;
+        .flow-circle-green {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.3) 0%, rgba(74, 222, 128, 0.15) 100%);
+            border: 2px solid var(--success);
         }
 
         .flow-circle:hover {
             transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+            box-shadow: 0 10px 40px rgba(96, 165, 250, 0.5);
         }
 
         /* Partner Logos Section */
@@ -450,9 +459,9 @@
             gap: 3rem;
             margin-top: 3rem;
             padding: 2rem;
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.7);
             border-radius: 1.5rem;
-            border: 1px solid rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.4);
         }
 
         .partner-logo {
@@ -471,7 +480,7 @@
             width: 100%;
             height: 8px;
             border-radius: 4px;
-            background: linear-gradient(90deg, var(--success) 0%, var(--octopus-primary) 100%);
+            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
             outline: none;
             -webkit-appearance: none;
             position: relative;
@@ -490,7 +499,7 @@
         }
 
         .slider::-webkit-slider-thumb:hover {
-            box-shadow: 0 0 0 10px rgba(96, 165, 250, 0.1);
+            box-shadow: 0 0 0 12px rgba(96, 165, 250, 0.3);
         }
 
         /* Testimonial Cards */
@@ -499,7 +508,7 @@
             backdrop-filter: blur(10px);
             border-radius: 1.5rem;
             padding: 2rem;
-            border: 1px solid rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.4);
             transition: all 0.3s ease;
             position: relative;
         }
@@ -511,7 +520,7 @@
             left: 1.5rem;
             font-size: 4rem;
             color: var(--octopus-primary);
-            opacity: 0.2;
+            opacity: 0.3;
         }
 
         .stars {
@@ -538,7 +547,7 @@
         .stat-value {
             font-size: 3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--success) 0%, var(--octopus-primary) 100%);
+            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline-block;
@@ -553,8 +562,8 @@
         /* Footer */
         footer {
             padding: 4rem 0 2rem;
-            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.8));
-            border-top: 1px solid rgba(96, 165, 250, 0.1);
+            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.9));
+            border-top: 1px solid rgba(96, 165, 250, 0.4);
             text-align: center;
         }
 
@@ -619,36 +628,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <!-- Launch Countdown -->
-            <div class="countdown-banner animate-in">
-                <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l2.09 6.26L20.35 9l-4.26 1.91L15 17.15l-3-5.24-3 5.24-1.09-6.24L3.65 9l6.26-.74z"/>
-                </svg>
-                <span style="color: var(--success); font-weight: 600;">Revolution Launches October 24, 2025</span>
-                <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l2.09 6.26L20.35 9l-4.26 1.91L15 17.15l-3-5.24-3 5.24-1.09-6.24L3.65 9l6.26-.74z"/>
-                </svg>
-            </div>
-
-            <div class="countdown" id="countdown">
-                <div class="countdown-item animate-in delay-1">
-                    <div class="countdown-value" id="days">0</div>
-                    <div class="countdown-label">Days</div>
-                </div>
-                <div class="countdown-item animate-in delay-2">
-                    <div class="countdown-value" id="hours">0</div>
-                    <div class="countdown-label">Hours</div>
-                </div>
-                <div class="countdown-item animate-in delay-3">
-                    <div class="countdown-value" id="minutes">0</div>
-                    <div class="countdown-label">Minutes</div>
-                </div>
-                <div class="countdown-item animate-in delay-4">
-                    <div class="countdown-value" id="seconds">0</div>
-                    <div class="countdown-label">Seconds</div>
-                </div>
-            </div>
-
             <h1>
                 Finally. A TMS that only<br>
                 <span class="gradient-text">wins when YOU win.</span>
@@ -660,11 +639,11 @@
             </p>
 
             <p style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
-                We said <span style="color: var(--error);">"fuck that."</span>
+                We said <span style="color: var(--error);">"no more."</span>
             </p>
 
-            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 2rem; padding: 2.5rem; max-width: 32rem; margin: 0 auto 3rem; border: 1px solid rgba(96, 165, 250, 0.2);">
-                <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">$20 per booked load.</div>
+            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 2rem; padding: 2.5rem; max-width: 32rem; margin: 0 auto 3rem; border: 2px solid rgba(96, 165, 250, 0.6);">
+                <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; color: var(--highlight);">$20 per booked load.</div>
                 <div style="font-size: 1.5rem; color: var(--success); font-weight: 700; margin-bottom: 1rem;">Zero loads = Zero cost.</div>
                 <div style="color: var(--text-secondary); font-size: 1.125rem;">Because software should be your partner, not your parasite.</div>
             </div>
@@ -740,7 +719,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; position: relative; z-index: 1;">
                     <div style="flex: 1; text-align: center; min-width: 150px;">
                         <div class="flow-circle flow-circle-blue">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2">
                                 <circle cx="12" cy="12" r="3"/>
                                 <circle cx="12" cy="12" r="8"/>
                                 <circle cx="12" cy="12" r="11"/>
@@ -750,11 +729,11 @@
                         <p style="font-size: 0.875rem; color: var(--text-muted);">Native DAT integration</p>
                     </div>
 
-                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
+                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
 
                     <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-green">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <div class="flow-circle flow-circle-cyan">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-secondary)" stroke-width="2">
                                 <path d="M20 6L9 17l-5-5"/>
                             </svg>
                         </div>
@@ -762,11 +741,11 @@
                         <p style="font-size: 0.875rem; color: var(--text-muted);">One click, done</p>
                     </div>
 
-                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
+                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
 
                     <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-purple">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <div class="flow-circle flow-circle-blue">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2">
                                 <rect x="3" y="11" width="18" height="10" rx="2"/>
                                 <path d="M7 11V7a5 5 0 0110 0v4"/>
                             </svg>
@@ -775,11 +754,11 @@
                         <p style="font-size: 0.875rem; color: var(--text-muted);">Auto-notify driver</p>
                     </div>
 
-                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
+                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
 
                     <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%); border: 2px solid #FBBF24;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2">
+                        <div class="flow-circle flow-circle-cyan">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-secondary)" stroke-width="2">
                                 <path d="M3 12h4l3-9 4 18 3-9h4"/>
                             </svg>
                         </div>
@@ -787,16 +766,16 @@
                         <p style="font-size: 0.875rem; color: var(--text-muted);">Public tracking links</p>
                     </div>
 
-                    <span style="color: var(--text-muted); font-size: 2rem;">→</span>
+                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
 
                     <div style="flex: 1; text-align: center; min-width: 150px;">
                         <div class="flow-circle flow-circle-green" style="animation: pulse-glow 2s ease-in-out infinite;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2">
                                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
                             </svg>
                         </div>
                         <h3 style="font-weight: 700;">Get Paid</h3>
-                        <p style="font-size: 0.875rem; color: var(--success); font-weight: 700;">"Cashanggg!"</p>
+                        <p style="font-size: 0.875rem; color: var(--success); font-weight: 700;">Revenue delivered</p>
                     </div>
                 </div>
 
@@ -811,11 +790,11 @@
     <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);" id="pricing">
         <div class="container">
             <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">The Partnership Promise</h2>
-            <p style="text-align: center; font-size: 1.5rem; color: var(--success); font-weight: 700; margin-bottom: 3rem;">
+            <p style="text-align: center; font-size: 1.5rem; color: var(--octopus-primary); font-weight: 700; margin-bottom: 3rem;">
                 "We Don't Demand Money. We Demand BUSINESS!"
             </p>
 
-            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.1);">
+            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.5);">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
                     <div>
                         <h3 style="color: var(--error); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Traditional TMS:</h3>
@@ -881,7 +860,7 @@
                         <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Traditional TMS</div>
                         <div style="font-size: 1.5rem; font-weight: 700; text-decoration: line-through; color: var(--text-muted);">$2,000</div>
                     </div>
-                    <div style="background: rgba(74, 222, 128, 0.1); padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <div style="background: rgba(74, 222, 128, 0.2); padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(74, 222, 128, 0.6);">
                         <div style="font-size: 0.875rem; color: var(--success); margin-bottom: 0.25rem;">You save</div>
                         <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="monthly-savings">$0/mo</div>
                     </div>
@@ -901,7 +880,7 @@
                         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
                     </div>
                     <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
-                        "I don't care how much it costs, if it keeps all my shit together"
+                        "I don't care how much it costs, if it keeps all my operations organized"
                     </p>
                     <p style="font-weight: 700;">- Salim</p>
                     <p style="font-size: 0.875rem; color: var(--text-muted);">15-truck fleet owner</p>
@@ -936,11 +915,11 @@
                     <div style="color: var(--text-muted);">Carriers already using</div>
                 </div>
                 <div style="text-align: center;">
-                    <div class="stat-value" style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4hrs</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--octopus-secondary) 0%, var(--highlight) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4hrs</div>
                     <div style="color: var(--text-muted);">Saved per dispatcher/day</div>
                 </div>
                 <div style="text-align: center;">
-                    <div class="stat-value" style="background: linear-gradient(135deg, #A855F7 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">3x</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--success) 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">3x</div>
                     <div style="color: var(--text-muted);">Faster settlements</div>
                 </div>
             </div>
@@ -952,8 +931,8 @@
         <div class="container">
             <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">Built By Truckers, For Truckers</h2>
             <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); max-width: 48rem; margin: 0 auto 3rem;">
-                We're not venture-funded bros trying to "disrupt" your industry.
-                We're truckers who got tired of shitty software and built what we wished existed.
+                We're not venture-funded outsiders trying to "disrupt" your industry.
+                We're truckers who got tired of inadequate software and built what we wished existed.
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
@@ -992,7 +971,7 @@
                 </div>
             </div>
 
-            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(74, 222, 128, 0.1) 100%); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(94, 234, 212, 0.15) 100%); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.5);">
                 <h3 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;">The Dream Squad</h3>
 
                 <div class="partner-logos">
@@ -1052,25 +1031,25 @@
     <!-- Final CTA -->
     <section style="padding: 5rem 0;">
         <div class="container">
-            <div style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--success) 100%); border-radius: 2rem; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
+            <div style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--accent-light) 50%, var(--octopus-secondary) 100%); border-radius: 2rem; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
                 <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 30s linear infinite;"></div>
 
-                <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; margin-bottom: 1rem; position: relative;">
+                <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; margin-bottom: 1rem; position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
                     Stop Accepting Broken.
                 </h2>
-                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto; position: relative;">
+                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.95); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto; position: relative; text-shadow: 0 1px 5px rgba(0,0,0,0.2);">
                     You move America. You deserve tools that respect your intelligence,
                     value your time, and share your success.
                 </p>
 
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative;">
-                    <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn" style="background: white; color: var(--octopus-primary); padding: 1rem 2rem; font-size: 1.125rem;">
+                    <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn" style="background: white; color: var(--octopus-primary); padding: 1rem 2rem; font-size: 1.125rem; font-weight: 700;">
                         Start Free Now
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                         </svg>
                     </a>
-                    <a href="https://cal.com/digital-ronin/15min" target="_blank" class="btn" style="background: transparent; color: white; border: 2px solid rgba(255, 255, 255, 0.5); padding: 1rem 2rem; font-size: 1.125rem;">
+                    <a href="https://cal.com/digital-ronin/15min" target="_blank" class="btn" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.6); padding: 1rem 2rem; font-size: 1.125rem;">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 0.5rem;">
                             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
                         </svg>
@@ -1092,8 +1071,8 @@
                 <p style="color: var(--text-muted); margin-bottom: 1rem;">
                     Octopus TMS - Where partnership replaces subscription.
                 </p>
-                <p style="color: var(--success); font-weight: 700; font-size: 1.25rem;">
-                    Coming October 24, 2025. The revolution has tentacles. 🐙
+                <p style="color: var(--octopus-primary); font-weight: 700; font-size: 1.25rem;">
+                    Coming October 24, 2025. The revolution has tentacles.
                 </p>
             </div>
 
@@ -1109,28 +1088,6 @@
     </footer>
 
     <script>
-        // Countdown Timer
-        function updateCountdown() {
-            const launchDate = new Date('2025-10-24T00:00:00').getTime();
-            const now = new Date().getTime();
-            const difference = launchDate - now;
-
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = hours;
-                document.getElementById('minutes').textContent = minutes;
-                document.getElementById('seconds').textContent = seconds;
-            }
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
         // Calculator
         const slider = document.getElementById('loads-slider');
         const loadsValue = document.getElementById('loads-value');
