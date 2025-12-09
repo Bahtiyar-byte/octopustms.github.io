@@ -684,19 +684,71 @@
             color: var(--text-gray);
         }
 
-        .logos-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 48px;
-            flex-wrap: wrap;
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
         }
 
-        .logos-grid span {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-light);
-            letter-spacing: 0.05em;
+        .integration-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .integration-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 102, 179, 0.1);
+        }
+
+        .integration-logo {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .integration-logo.stripe {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.1) 0%, rgba(99, 91, 255, 0.15) 100%);
+            color: #635BFF;
+        }
+
+        .integration-logo.twilio {
+            background: linear-gradient(135deg, rgba(241, 78, 78, 0.1) 0%, rgba(241, 78, 78, 0.15) 100%);
+            color: #F14E4E;
+        }
+
+        .integration-logo.mapbox {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+            color: #000000;
+        }
+
+        .integration-logo.quickbooks {
+            background: linear-gradient(135deg, rgba(44, 160, 28, 0.1) 0%, rgba(44, 160, 28, 0.15) 100%);
+            color: #2CA01C;
+        }
+
+        .integration-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .integration-desc {
+            font-size: 0.8rem;
+            color: var(--text-gray);
         }
 
         /* Features Section */
@@ -1316,6 +1368,7 @@
             .testimonials-grid { grid-template-columns: 1fr; }
             .audience-grid { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .integrations-grid { grid-template-columns: repeat(5, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .showcase-grid { grid-template-columns: repeat(2, 1fr); }
             .showcase-item:first-child { grid-column: span 2; grid-row: span 1; height: 300px; }
@@ -1338,7 +1391,8 @@
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; text-align: center; }
             .footer-legal { justify-content: center; }
-            .logos-grid { gap: 24px; }
+            .integrations-grid { grid-template-columns: repeat(2, 1fr); }
+            .integration-item:last-child { grid-column: span 2; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .showcase-grid { grid-template-columns: 1fr; }
             .showcase-item:first-child { grid-column: span 1; height: 250px; }
@@ -1358,7 +1412,6 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="#testimonials" class="nav-link">Testimonials</a>
             </div>
             <div class="nav-actions">
                 <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-small">Book Demo</a>
@@ -1389,7 +1442,6 @@
             <a href="#features" onclick="toggleMobileMenu()">Features</a>
             <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
             <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
-            <a href="#testimonials" onclick="toggleMobileMenu()">Testimonials</a>
         </div>
         <div class="mobile-menu-cta">
             <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-large">Book Demo</a>
@@ -1543,12 +1595,52 @@
             <div class="social-proof-header">
                 <p>Integrated with industry leaders</p>
             </div>
-            <div class="logos-grid">
-                <span>DAT</span>
-                <span>Stripe</span>
-                <span>Twilio</span>
-                <span>Google Maps</span>
-                <span>QuickBooks</span>
+            <div class="integrations-grid">
+                <div class="integration-item">
+                    <div class="integration-logo">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <span class="integration-name">DAT</span>
+                    <span class="integration-desc">Load Board</span>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo stripe">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
+                        </svg>
+                    </div>
+                    <span class="integration-name">Stripe</span>
+                    <span class="integration-desc">Payments</span>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo twilio">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M12 0C5.381 0 0 5.381 0 12s5.381 12 12 12 12-5.381 12-12S18.619 0 12 0zm0 20.4c-4.636 0-8.4-3.764-8.4-8.4S7.364 3.6 12 3.6s8.4 3.764 8.4 8.4-3.764 8.4-8.4 8.4zm3.6-8.4c0 1.988-1.612 3.6-3.6 3.6S8.4 13.988 8.4 12s1.612-3.6 3.6-3.6 3.6 1.612 3.6 3.6z"/>
+                        </svg>
+                    </div>
+                    <span class="integration-name">Twilio</span>
+                    <span class="integration-desc">SMS & Calls</span>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo mapbox">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.187 14.375l-7.083 3.542c-.271.135-.604-.198-.469-.469l3.542-7.083c.073-.146.219-.219.365-.219s.292.073.365.219l3.542 7.083c.135.271-.198.604-.469.469z"/>
+                        </svg>
+                    </div>
+                    <span class="integration-name">Mapbox</span>
+                    <span class="integration-desc">GPS Tracking</span>
+                </div>
+                <div class="integration-item">
+                    <div class="integration-logo quickbooks">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM9.6 16.8H7.2c-1.325 0-2.4-1.075-2.4-2.4V9.6c0-1.325 1.075-2.4 2.4-2.4h2.4v1.6H7.2c-.441 0-.8.359-.8.8v4.8c0 .441.359.8.8.8h2.4v1.6zm7.2-2.4c0 1.325-1.075 2.4-2.4 2.4h-2.4v-1.6h2.4c.441 0 .8-.359.8-.8V9.6c0-.441-.359-.8-.8-.8h-2.4V7.2h2.4c1.325 0 2.4 1.075 2.4 2.4v4.8z"/>
+                        </svg>
+                    </div>
+                    <span class="integration-name">QuickBooks</span>
+                    <span class="integration-desc">Accounting</span>
+                </div>
             </div>
         </div>
     </section>
@@ -1797,62 +1889,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="section" id="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Testimonials</span>
-                <h2 class="section-title">Trusted by carriers nationwide</h2>
-                <p class="section-description">
-                    See what our customers are saying about Octopus TMS.
-                </p>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">
-                        "Finally, software that doesn't feel like it was designed to torture dispatchers. The interface is clean and everything just works."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">S</div>
-                        <div>
-                            <div class="author-name">Salim</div>
-                            <div class="author-role">15-truck fleet owner</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">
-                        "My dispatcher saves 4 hours every day. The ROI is unbelievable. We've increased our load capacity without adding staff."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">M</div>
-                        <div>
-                            <div class="author-name">Marcus</div>
-                            <div class="author-role">Operations Manager</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">
-                        "Best decision I made for my business. Simple, fast, and actually affordable. The pay-per-load model is perfect for us."
-                    </p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">J</div>
-                        <div>
-                            <div class="author-name">Jennifer</div>
-                            <div class="author-role">Owner-Operator</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Image Showcase Section -->
     <section class="showcase-section">
