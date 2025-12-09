@@ -3,121 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus TMS - Finally. A TMS that only wins when YOU win.</title>
-    <meta name="description" content="$20 per booked load. Zero loads = Zero cost. The revolutionary TMS built by truckers, for truckers. No contracts, no monthly fees, just partnership.">
+    <title>Octopus TMS - Pay Only When You Book</title>
+    <meta name="description" content="$20 per booked load. Zero loads = Zero cost. The revolutionary TMS built by truckers, for truckers.">
     <meta property="og:title" content="Octopus TMS - Revolutionary Trucking Management Software">
     <meta property="og:description" content="$20 per booked load. Zero loads = Zero cost. Built by truckers, for truckers.">
     <meta property="og:image" content="https://octopustms.com/octopus-logo.svg">
-    <meta property="og:url" content="https://octopustms.com">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* Ultra Bright Blue Color Palette */
-            --octopus-primary: #60A5FA; /* Vivid Sky Blue */
-            --octopus-primary-dark: #3B82F6; /* Bright Blue */
-            --octopus-secondary: #5EEAD4; /* Vivid Teal */
-            --octopus-gradient-start: #60A5FA; /* Sky Blue */
-            --octopus-gradient-end: #5EEAD4; /* Teal */
-
-            /* Dark backgrounds for contrast */
-            --bg-primary: #0F172A; /* Deep navy */
-            --bg-secondary: #1E293B; /* Dark slate */
-            --bg-tertiary: #334155; /* Slate */
-            --bg-card: rgba(30, 41, 59, 0.95);
-
-            /* Bright text */
-            --text-primary: #FFFFFF; /* Pure white */
-            --text-secondary: #F8FAFC; /* Almost white */
-            --text-muted: #E2E8F0; /* Light gray - more visible */
-
-            --border: #64748B;
-            --border-light: #94A3B8;
-
-            /* Ultra bright accent colors */
-            --success: #4ADE80; /* Vivid Green */
-            --warning: #FCD34D; /* Vivid Yellow */
-            --error: #FB7185; /* Vivid Rose */
-            --info: #5EEAD4; /* Vivid Teal */
-
-            /* Electric accent colors */
-            --accent-light: #93C5FD; /* Light sky blue */
-            --accent-glow: #BAE6FD; /* Very light blue */
-            --highlight: #A5F3FC; /* Electric cyan */
+            /* C.H. Robinson inspired colors */
+            --primary: #0066B3;
+            --primary-light: #00A3E0;
+            --primary-dark: #064979;
+            --primary-darker: #003057;
+            --secondary: #00B5E2;
+            --accent: #00C7B1;
+            --success: #00A94F;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --bg-gray: #F1F5F9;
+            --bg-dark: #001F3F;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --text-light: #94A3B8;
+            --border-light: #E2E8F0;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
-            color: var(--text-primary);
+            background: var(--bg-white);
+            color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated background elements */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                radial-gradient(circle at 20% 80%, var(--octopus-primary) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, var(--octopus-secondary) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, var(--accent-light) 0%, transparent 50%);
-            opacity: 0.08;
-            animation: float 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
+        /* Light section backgrounds */
+        .section-white {
+            background: var(--bg-white);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(20px) rotate(-1deg); }
+        .section-light {
+            background: var(--bg-light);
+        }
+
+        .section-gray {
+            background: var(--bg-gray);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             position: relative;
             z-index: 1;
         }
 
-        /* Enhanced Header */
-        header {
+        /* Top Trust Bar */
+        .trust-bar {
+            background: linear-gradient(90deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trust-bar-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .trust-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--success);
+        }
+
+        /* Navigation */
+        nav {
             position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(96, 165, 250, 0.4);
-            z-index: 1000;
-            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
             transition: all 0.3s ease;
         }
 
-        header.scrolled {
-            padding: 0.75rem 0;
-            background: rgba(15, 23, 42, 0.98);
-            box-shadow: 0 4px 30px rgba(96, 165, 250, 0.3);
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
-        nav {
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -126,291 +123,1022 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
             text-decoration: none;
-            transition: transform 0.3s ease;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo img {
-            width: 40px;
-            height: 40px;
-        }
+        .logo img { width: 40px; height: 40px; }
 
         .logo-text {
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-gradient-end) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
             align-items: center;
+            gap: 8px;
         }
 
         .nav-link {
-            color: var(--text-secondary);
+            color: var(--text-gray);
             text-decoration: none;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
             font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
             position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
-            transition: width 0.3s ease;
         }
 
         .nav-link:hover {
-            color: var(--text-primary);
+            color: var(--primary);
+            background: rgba(0, 102, 179, 0.05);
         }
 
-        .nav-link:hover::after {
-            width: 100%;
+        .nav-link.active {
+            color: var(--primary);
         }
 
-        /* Premium Buttons */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
             border: none;
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--octopus-secondary) 100%);
-            color: #0F172A;
-            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.5);
-            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 102, 179, 0.4);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(96, 165, 250, 0.7);
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
+            box-shadow: 0 6px 20px rgba(0, 102, 179, 0.5);
         }
 
         .btn-secondary {
-            background: rgba(96, 165, 250, 0.15);
-            border: 2px solid rgba(96, 165, 250, 0.6);
-            color: var(--text-primary);
-            backdrop-filter: blur(10px);
+            background: var(--bg-white);
+            color: var(--primary);
+            border: 1px solid var(--border-light);
         }
 
         .btn-secondary:hover {
-            background: rgba(96, 165, 250, 0.25);
-            border-color: var(--octopus-primary);
-            box-shadow: 0 4px 25px rgba(96, 165, 250, 0.5);
+            background: var(--bg-light);
+            border-color: var(--primary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 1.05rem;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-dark);
+            z-index: 200;
+            padding: 24px;
+            flex-direction: column;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 16px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-links a:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-menu-cta {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         /* Hero Section */
         .hero {
-            padding: 10rem 0 6rem;
-            text-align: center;
-            position: relative;
-        }
-
-        /* Enhanced Countdown Banner */
-        .countdown-banner {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(94, 234, 212, 0.15) 100%);
-            border: 1px solid rgba(96, 165, 250, 0.6);
-            border-radius: 9999px;
-            margin-bottom: 3rem;
-            backdrop-filter: blur(10px);
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 25px rgba(96, 165, 250, 0.4); }
-            50% { box-shadow: 0 0 50px rgba(96, 165, 250, 0.6); }
-        }
-
-        .sparkle-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--octopus-primary);
-            animation: sparkle 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes sparkle {
-            from { transform: scale(1) rotate(0deg); }
-            to { transform: scale(1.2) rotate(180deg); }
-        }
-
-        .countdown {
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .countdown-item {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(96, 165, 250, 0.15);
-            border-radius: 1rem;
-            border: 1px solid rgba(96, 165, 250, 0.5);
-            min-width: 80px;
-        }
-
-        .countdown-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .countdown-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 50%, var(--octopus-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradient-shift 3s ease-in-out infinite;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Feature Cards */
-        .feature-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(96, 165, 250, 0.4);
-            transition: all 0.3s ease;
+            align-items: center;
+            padding: 120px 0 100px;
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card::before {
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.95) 100%);
+            z-index: -1;
+        }
+
+        .hero-parallax-element {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .hero-circle-1 {
+            width: 600px;
+            height: 600px;
+            border: 1px solid rgba(0, 102, 179, 0.1);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+        }
+
+        .hero-circle-2 {
+            width: 400px;
+            height: 400px;
+            border: 1px solid rgba(0, 163, 224, 0.1);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .hero-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image:
+                linear-gradient(rgba(0, 102, 179, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 179, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
+            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--success);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 3.75rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+            color: var(--text-dark);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.counting {
+            color: var(--primary-light);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Hero Visual - Pricing Card */
+        .hero-visual {
+            position: relative;
+        }
+
+        .pricing-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
+        }
+
+        .pricing-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .pricing-amount {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .pricing-amount span {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.1rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        /* Audience Segmentation */
+        .audience-section {
+            padding: 80px 0;
+            background: var(--bg-white);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .audience-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .audience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .audience-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
+        }
+
+        .audience-card:hover::before {
+            opacity: 1;
+        }
+
+        .audience-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .audience-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .audience-card:hover .audience-image img {
+            transform: scale(1.05);
+        }
+
+        .audience-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .audience-card p {
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            padding: 60px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .social-proof-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .social-proof-header p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .stats-item {
+            text-align: center;
+            padding: 24px;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stats-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .logos-grid span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.05em;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 64px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(0, 102, 179, 0.1);
+            border: 1px solid rgba(0, 102, 179, 0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: var(--text-dark);
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 32px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card.parallax-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(96, 165, 250, 0.8);
-            box-shadow: 0 20px 50px rgba(96, 165, 250, 0.3);
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
         }
 
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
+        .feature-card:nth-child(1) { transition-delay: 0s; }
+        .feature-card:nth-child(2) { transition-delay: 0.1s; }
+        .feature-card:nth-child(3) { transition-delay: 0.2s; }
+        .feature-card:nth-child(4) { transition-delay: 0.3s; }
+        .feature-card:nth-child(5) { transition-delay: 0.4s; }
+        .feature-card:nth-child(6) { transition-delay: 0.5s; }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.25) 0%, rgba(94, 234, 212, 0.2) 100%);
-            border-radius: 1rem;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Workflow Section */
+        .workflow-section {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            position: relative;
+        }
+
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            opacity: 0.3;
+        }
+
+        .workflow-step {
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .workflow-step.parallax-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .workflow-step:nth-child(1) { transition-delay: 0s; }
+        .workflow-step:nth-child(2) { transition-delay: 0.15s; }
+        .workflow-step:nth-child(3) { transition-delay: 0.3s; }
+        .workflow-step:nth-child(4) { transition-delay: 0.45s; }
+        .workflow-step:nth-child(5) { transition-delay: 0.6s; }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .workflow-step:hover .step-number {
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(0, 102, 179, 0.2);
+        }
+
+        .step-number svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+        }
+
+        .workflow-step h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .workflow-step p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .comparison-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 40px;
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-card:first-child {
+            transform: translateX(-50px);
+        }
+
+        .comparison-card:last-child {
+            transform: translateX(50px);
+        }
+
+        .comparison-card.parallax-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .comparison-card:first-child { transition-delay: 0.1s; }
+        .comparison-card:last-child { transition-delay: 0.3s; }
+
+        .comparison-card.highlight {
+            background: linear-gradient(145deg, rgba(0, 102, 179, 0.05) 0%, var(--bg-white) 100%);
+            border-color: var(--primary);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .comparison-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .feature-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--octopus-primary);
-            stroke-width: 2;
+        .comparison-card:not(.highlight) .comparison-icon {
+            background: rgba(239, 68, 68, 0.1);
         }
 
-        /* LLMP Flow with enhanced visuals */
-        .flow-container {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border-radius: 2rem;
-            padding: 3rem;
-            border: 1px solid rgba(96, 165, 250, 0.5);
+        .comparison-card.highlight .comparison-icon {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .comparison-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .comparison-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        .comparison-card:not(.highlight) .comparison-price {
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 32px;
+            opacity: 0;
+            transform: translateY(40px) rotateX(10deg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .testimonial-card.parallax-visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        .testimonial-card:nth-child(1) { transition-delay: 0s; }
+        .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
+        .testimonial-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
+        }
+
+        .testimonial-stars {
+            color: #F59E0B;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .author-role {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Image Showcase Section */
+        .showcase-section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-light);
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .showcase-item {
+            border-radius: 16px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+        }
+
+        .showcase-item:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+            height: auto;
+        }
+
+        .showcase-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .showcase-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .showcase-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 31, 63, 0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
+            border-radius: 24px;
+            padding: 80px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .flow-container::before {
+        .cta-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+
+        .cta-card::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.2) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
         }
 
         @keyframes rotate {
@@ -418,643 +1146,771 @@
             to { transform: rotate(360deg); }
         }
 
-        .flow-circle {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 50%;
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
             display: flex;
-            align-items: center;
+            gap: 16px;
             justify-content: center;
-            margin: 0 auto 1rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .flow-circle-blue {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3) 0%, rgba(96, 165, 250, 0.15) 100%);
-            border: 2px solid var(--octopus-primary);
-        }
-
-        .flow-circle-cyan {
-            background: linear-gradient(135deg, rgba(94, 234, 212, 0.3) 0%, rgba(94, 234, 212, 0.15) 100%);
-            border: 2px solid var(--octopus-secondary);
-        }
-
-        .flow-circle-green {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.3) 0%, rgba(74, 222, 128, 0.15) 100%);
-            border: 2px solid var(--success);
-        }
-
-        .flow-circle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 40px rgba(96, 165, 250, 0.5);
-        }
-
-        /* Partner Logos Section */
-        .partner-logos {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 3rem;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 1.5rem;
-            border: 1px solid rgba(96, 165, 250, 0.4);
         }
 
-        .partner-logo {
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            height: 50px;
-        }
-
-        .partner-logo:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* Pricing Calculator */
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: linear-gradient(90deg, var(--octopus-primary) 0%, var(--highlight) 100%);
-            outline: none;
-            -webkit-appearance: none;
-            position: relative;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
+        .btn-white {
             background: white;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            color: var(--primary-dark);
         }
 
-        .slider::-webkit-slider-thumb:hover {
-            box-shadow: 0 0 0 12px rgba(96, 165, 250, 0.3);
+        .btn-white:hover {
+            background: #F3F4F6;
+            transform: translateY(-2px);
         }
 
-        /* Testimonial Cards */
-        .testimonial-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(96, 165, 250, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 1rem;
-            left: 1.5rem;
-            font-size: 4rem;
-            color: var(--octopus-primary);
-            opacity: 0.3;
-        }
-
-        .stars {
-            color: #FBBF24;
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .star {
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover .star {
-            animation: twinkle 0.5s ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        /* Stats with animated numbers */
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--highlight) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            animation: count-up 2s ease-out;
-        }
-
-        @keyframes count-up {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Footer */
         footer {
-            padding: 4rem 0 2rem;
-            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.9));
-            border-top: 1px solid rgba(96, 165, 250, 0.4);
-            text-align: center;
+            padding: 80px 0 40px;
+            background: var(--bg-dark);
+            color: white;
         }
 
-        /* Mobile Responsive */
+        .footer-logo .logo-text {
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; gap: 60px; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .workflow-steps { grid-template-columns: repeat(3, 1fr); }
+            .workflow-steps::before { display: none; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+            .showcase-item:first-child { grid-column: span 2; grid-row: span 1; height: 300px; }
+        }
+
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .partner-logos {
-                gap: 2rem;
-            }
-
-            .countdown {
-                gap: 1rem;
-            }
-
-            .countdown-item {
-                min-width: 60px;
-                padding: 0.5rem;
-            }
-
-            .countdown-value {
-                font-size: 1.5rem;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
+            .nav-links, .nav-actions { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero { padding: 120px 0 80px; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-stats { flex-direction: column; gap: 24px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .workflow-steps { grid-template-columns: repeat(2, 1fr); }
+            .cta-card { padding: 48px 24px; }
+            .cta-title { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; }
+            .section { padding: 80px 0; }
+            .pricing-amount { font-size: 3rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-legal { justify-content: center; }
+            .logos-grid { gap: 24px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .showcase-grid { grid-template-columns: 1fr; }
+            .showcase-item:first-child { grid-column: span 1; height: 250px; }
+            .showcase-item { height: 200px; }
         }
-
-        /* Loading Animation */
-        .animate-in {
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header id="header">
-        <nav class="container">
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
             <a href="/" class="logo">
                 <img src="octopus-logo.svg" alt="Octopus TMS">
                 <span class="logo-text">Octopus TMS</span>
             </a>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
                 <a href="#testimonials" class="nav-link">Testimonials</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="https://app.octopustms.com/login" class="btn btn-primary">Start Free</a>
             </div>
-        </nav>
-    </header>
+            <div class="nav-actions">
+                <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-small">Book Demo</a>
+                <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary btn-small">Get Started Free</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="/" class="logo">
+                <img src="octopus-logo.svg" alt="Octopus TMS">
+                <span class="logo-text">Octopus TMS</span>
+            </a>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="#features" onclick="toggleMobileMenu()">Features</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
+            <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
+            <a href="#testimonials" onclick="toggleMobileMenu()">Testimonials</a>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-large">Book Demo</a>
+            <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary btn-large">Get Started Free</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-bg-image"></div>
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-parallax-element hero-grid" data-parallax-speed="0.05"></div>
+        <div class="hero-parallax-element hero-circle-1" data-parallax-speed="0.15"></div>
+        <div class="hero-parallax-element hero-circle-2" data-parallax-speed="0.1"></div>
+
         <div class="container">
-            <h1>
-                Finally. A TMS that only<br>
-                <span class="gradient-text">wins when YOU win.</span>
-            </h1>
+            <div class="hero-content">
+                <div class="hero-text" data-parallax-fade>
+                    <div class="hero-badge">Now Available Nationwide</div>
+                    <h1>The TMS that <span>wins when you win</span></h1>
+                    <p class="hero-description">
+                        Stop paying thousands for software that doesn't care if you succeed.
+                        Octopus charges only when you book loads. Zero loads? Zero cost.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary btn-large">
+                            Start Free Today
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                            </svg>
+                        </a>
+                        <a href="https://cal.com/digital-ronin/15min" class="btn btn-outline btn-large">Schedule Demo</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" data-count="20">$20</div>
+                            <div class="stat-label">Per booked load</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" data-count="4">4hrs</div>
+                            <div class="stat-label">Saved daily</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$0</div>
+                            <div class="stat-label">Monthly fees</div>
+                        </div>
+                    </div>
+                </div>
 
-            <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 1rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
-                Every other TMS charges you $500-5,000/month whether you book 1 load or 100.
-                Whether you're profitable or bleeding money.
-            </p>
-
-            <p style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
-                We said <span style="color: var(--error);">"no more."</span>
-            </p>
-
-            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 2rem; padding: 2.5rem; max-width: 32rem; margin: 0 auto 3rem; border: 2px solid rgba(96, 165, 250, 0.6);">
-                <div style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; color: var(--highlight);">$20 per booked load.</div>
-                <div style="font-size: 1.5rem; color: var(--success); font-weight: 700; margin-bottom: 1rem;">Zero loads = Zero cost.</div>
-                <div style="color: var(--text-secondary); font-size: 1.125rem;">Because software should be your partner, not your parasite.</div>
-            </div>
-
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary">
-                    Start Free - No Card Required
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-                <button class="btn btn-secondary" onclick="alert('Demo video coming soon!')">Watch 2-Min Demo</button>
+                <div class="hero-visual">
+                    <div class="pricing-card">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-label">Simple Pricing</div>
+                        <div class="pricing-amount">$20 <span>/ load</span></div>
+                        <div class="pricing-subtitle">Only pay when you book</div>
+                        <ul class="pricing-features">
+                            <li>
+                                <span class="check-icon">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 6l3 3 5-6"/>
+                                    </svg>
+                                </span>
+                                No monthly subscription
+                            </li>
+                            <li>
+                                <span class="check-icon">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 6l3 3 5-6"/>
+                                    </svg>
+                                </span>
+                                No setup fees
+                            </li>
+                            <li>
+                                <span class="check-icon">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 6l3 3 5-6"/>
+                                    </svg>
+                                </span>
+                                No annual contracts
+                            </li>
+                            <li>
+                                <span class="check-icon">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 6l3 3 5-6"/>
+                                    </svg>
+                                </span>
+                                Cancel anytime
+                            </li>
+                        </ul>
+                        <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary" style="width: 100%;">
+                            Get Started Free
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- The "FINALLY" Moment -->
-    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);">
+    <!-- Audience Segmentation -->
+    <section class="audience-section">
         <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">
-                "Finally, someone who GETS it!"
-            </h2>
-            <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem;">
-                - Every dispatcher who sees Octopus
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor"/>
-                            <path d="M12 6v6l4 2" stroke="currentColor" stroke-linecap="round"/>
-                        </svg>
+            <div class="section-header">
+                <span class="section-tag">Who We Serve</span>
+                <h2 class="section-title">Built for carriers of all sizes</h2>
+                <p class="section-description">
+                    Whether you're an owner-operator or managing a fleet, Octopus scales with your business.
+                </p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-image">
+                        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Owner-operator truck driver">
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the 2 AM panic</h3>
-                    <p style="color: var(--text-muted);">When the broker calls asking "where's my load?" We've lived it.</p>
+                    <h3>Owner-Operators</h3>
+                    <p>Run your business without expensive software overhead. Pay only when you haul, keep more profit in your pocket.</p>
+                    <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-primary">Start Hauling</a>
                 </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <rect x="5" y="4" width="14" height="17" stroke="currentColor" rx="2"/>
-                            <path d="M9 9h6M9 13h6M9 17h4" stroke="currentColor" stroke-linecap="round"/>
-                        </svg>
+                <div class="audience-card">
+                    <div class="audience-image">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Fleet of trucks">
                     </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the Friday scramble</h3>
-                    <p style="color: var(--text-muted);">To get settlements done before everyone goes home. We've done it.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">We know the rage</h3>
-                    <p style="color: var(--text-muted);">When your TMS crashes during peak booking hours. We've felt it.</p>
+                    <h3>Fleet Managers</h3>
+                    <p>Manage your entire fleet from one dashboard. Driver assignments, settlements, and tracking all in one place.</p>
+                    <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary">Schedule Demo</a>
                 </div>
             </div>
-
-            <p style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-top: 3rem;">
-                We built Octopus because we were YOU.
-            </p>
         </div>
     </section>
 
-    <!-- One-Click Magic (LLMP Flow) -->
-    <section style="padding: 5rem 0;">
+    <!-- Social Proof Section -->
+    <section class="social-proof">
         <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">One-Click Magic</h2>
+            <div class="stats-grid">
+                <div class="stats-item">
+                    <div class="stats-number" data-count="500">500+</div>
+                    <div class="stats-label">Active Carriers</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-number" data-count="10000">10,000+</div>
+                    <div class="stats-label">Loads Booked</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-number" data-count="4">4+ hrs</div>
+                    <div class="stats-label">Saved Daily</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-number">99.9%</div>
+                    <div class="stats-label">Uptime</div>
+                </div>
+            </div>
+            <div class="social-proof-header">
+                <p>Integrated with industry leaders</p>
+            </div>
+            <div class="logos-grid">
+                <span>DAT</span>
+                <span>Stripe</span>
+                <span>Twilio</span>
+                <span>Google Maps</span>
+                <span>QuickBooks</span>
+            </div>
+        </div>
+    </section>
 
-            <div class="flow-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; position: relative; z-index: 1;">
-                    <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-blue">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"/>
-                                <circle cx="12" cy="12" r="8"/>
-                                <circle cx="12" cy="12" r="11"/>
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Everything you need to run your fleet</h2>
+                <p class="section-description">
+                    Built by truckers who know the pain of overcomplicated software.
+                    Simple, powerful, and actually useful.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                    </div>
+                    <h3>DAT Integration</h3>
+                    <p>Search and book loads directly from DAT without switching between apps. Find the best rates instantly.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+                        </svg>
+                    </div>
+                    <h3>Instant Settlements</h3>
+                    <p>Generate driver settlements in seconds, not hours. Built-in Stripe payments for fast transfers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Live GPS Tracking</h3>
+                    <p>Real-time GPS tracking with shareable links for brokers and shippers. Full visibility, always.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                        </svg>
+                    </div>
+                    <h3>Document Management</h3>
+                    <p>All your BOLs, rate confirmations, and PODs in one organized place. Never lose a document again.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>Driver Management</h3>
+                    <p>Assign loads, track availability, and communicate with your team effortlessly from one dashboard.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                        </svg>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>See your profit margins, top lanes, and performance metrics at a glance. Make data-driven decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="section workflow-section" id="how-it-works">
+        <div class="workflow-parallax-bg" data-parallax-speed="0.1"></div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How It Works</span>
+                <h2 class="section-title">From load to payment in 5 simple steps</h2>
+                <p class="section-description">
+                    What takes 47 clicks in other systems takes just a few in Octopus.
+                </p>
+            </div>
+
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                    </div>
+                    <h4>Find</h4>
+                    <p>Search loads from DAT</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                    </div>
+                    <h4>Book</h4>
+                    <p>One click booking</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <path d="M20 8v6M23 11h-6"/>
+                        </svg>
+                    </div>
+                    <h4>Assign</h4>
+                    <p>Notify your driver</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h4>Track</h4>
+                    <p>Real-time location</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+                        </svg>
+                    </div>
+                    <h4>Get Paid</h4>
+                    <p>Fast settlements</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Comparison -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Pricing</span>
+                <h2 class="section-title">Traditional vs Partnership Model</h2>
+                <p class="section-description">
+                    We only make money when you make money. That's real partnership.
+                </p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M15 9l-6 6M9 9l6 6"/>
                             </svg>
                         </div>
-                        <h3 style="font-weight: 700;">Find</h3>
-                        <p style="font-size: 0.875rem; color: var(--text-muted);">Native DAT integration</p>
+                        <div class="comparison-title">Traditional TMS</div>
                     </div>
+                    <div class="comparison-price">$2,000/mo</div>
+                    <ul class="comparison-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
+                                <path d="M12 4L4 12M4 4l8 8"/>
+                            </svg>
+                            Pay even during slow weeks
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
+                                <path d="M12 4L4 12M4 4l8 8"/>
+                            </svg>
+                            Locked into annual contracts
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
+                                <path d="M12 4L4 12M4 4l8 8"/>
+                            </svg>
+                            Hidden fees and add-ons
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
+                                <path d="M12 4L4 12M4 4l8 8"/>
+                            </svg>
+                            Data held hostage
+                        </li>
+                    </ul>
+                </div>
 
-                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
-
-                    <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-cyan">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-secondary)" stroke-width="2">
+                <div class="comparison-card highlight">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
                                 <path d="M20 6L9 17l-5-5"/>
                             </svg>
                         </div>
-                        <h3 style="font-weight: 700;">Book</h3>
-                        <p style="font-size: 0.875rem; color: var(--text-muted);">One click, done</p>
+                        <div class="comparison-title">Octopus TMS</div>
                     </div>
-
-                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
-
-                    <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-blue">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="10" rx="2"/>
-                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    <div class="comparison-price">$20/load</div>
+                    <ul class="comparison-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
+                                <path d="M3 8l4 4 6-8"/>
                             </svg>
-                        </div>
-                        <h3 style="font-weight: 700;">Assign</h3>
-                        <p style="font-size: 0.875rem; color: var(--text-muted);">Auto-notify driver</p>
-                    </div>
-
-                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
-
-                    <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-cyan">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-secondary)" stroke-width="2">
-                                <path d="M3 12h4l3-9 4 18 3-9h4"/>
+                            Slow week? Pay less
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
+                                <path d="M3 8l4 4 6-8"/>
                             </svg>
-                        </div>
-                        <h3 style="font-weight: 700;">Track</h3>
-                        <p style="font-size: 0.875rem; color: var(--text-muted);">Public tracking links</p>
-                    </div>
-
-                    <span style="color: var(--highlight); font-size: 2rem;">→</span>
-
-                    <div style="flex: 1; text-align: center; min-width: 150px;">
-                        <div class="flow-circle flow-circle-green" style="animation: pulse-glow 2s ease-in-out infinite;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2">
-                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+                            Cancel anytime
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
+                                <path d="M3 8l4 4 6-8"/>
                             </svg>
-                        </div>
-                        <h3 style="font-weight: 700;">Get Paid</h3>
-                        <p style="font-size: 0.875rem; color: var(--success); font-weight: 700;">Revenue delivered</p>
-                    </div>
+                            No hidden costs ever
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
+                                <path d="M3 8l4 4 6-8"/>
+                            </svg>
+                            Export your data anytime
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <p style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-top: 3rem;">
-                    What takes 47 clicks in other systems takes ONE in Octopus.
+    <!-- Testimonials -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">Trusted by carriers nationwide</h2>
+                <p class="section-description">
+                    See what our customers are saying about Octopus TMS.
                 </p>
             </div>
-        </div>
-    </section>
 
-    <!-- Partnership Promise & Calculator -->
-    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);" id="pricing">
-        <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">The Partnership Promise</h2>
-            <p style="text-align: center; font-size: 1.5rem; color: var(--octopus-primary); font-weight: 700; margin-bottom: 3rem;">
-                "We Don't Demand Money. We Demand BUSINESS!"
-            </p>
-
-            <div style="background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.5);">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-                    <div>
-                        <h3 style="color: var(--error); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Traditional TMS:</h3>
-                        <p style="font-size: 1.875rem; font-weight: 900; margin-bottom: 1rem;">$2,000/month forever</p>
-                        <ul style="list-style: none; space-y: 0.5rem;">
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--error);">✗</span>
-                                <span>Pay even during slow weeks</span>
-                            </li>
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--error);">✗</span>
-                                <span>Pay even if the software breaks</span>
-                            </li>
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--error);">✗</span>
-                                <span>Locked into annual contracts</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 style="color: var(--success); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Octopus:</h3>
-                        <p style="font-size: 1.875rem; font-weight: 900; margin-bottom: 1rem;">$20 only when you book</p>
-                        <ul style="list-style: none; space-y: 0.5rem;">
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--success);">✓</span>
-                                <span>Slow week with 10 loads? $200</span>
-                            </li>
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--success);">✓</span>
-                                <span>Vacation week with 0 loads? $0</span>
-                            </li>
-                            <li style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <span style="color: var(--success);">✓</span>
-                                <span>Boom week with 100 loads? Fair share</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;">
-
-                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Calculate Your Savings</h3>
-
-                <div style="margin: 2rem 0;">
-                    <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span>Loads per week:</span>
-                        <span id="loads-value" style="font-size: 1.5rem; font-weight: 700;">50</span>
-                    </label>
-                    <input type="range" class="slider" id="loads-slider" min="0" max="200" value="50">
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
-                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
-                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Weekly with Octopus</div>
-                        <div style="font-size: 1.5rem; font-weight: 700;" id="weekly-cost">$1,000</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
-                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Monthly estimate</div>
-                        <div style="font-size: 1.5rem; font-weight: 700;" id="monthly-cost">$4,330</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border);">
-                        <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.25rem;">Traditional TMS</div>
-                        <div style="font-size: 1.5rem; font-weight: 700; text-decoration: line-through; color: var(--text-muted);">$2,000</div>
-                    </div>
-                    <div style="background: rgba(74, 222, 128, 0.2); padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(74, 222, 128, 0.6);">
-                        <div style="font-size: 0.875rem; color: var(--success); margin-bottom: 0.25rem;">You save</div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="monthly-savings">$0/mo</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof -->
-    <section style="padding: 5rem 0;" id="testimonials">
-        <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">Carriers Already Living the Revolution</h2>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="stars">
-                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                    </div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
-                        "I don't care how much it costs, if it keeps all my operations organized"
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Finally, software that doesn't feel like it was designed to torture dispatchers. The interface is clean and everything just works."
                     </p>
-                    <p style="font-weight: 700;">- Salim</p>
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">15-truck fleet owner</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div>
+                            <div class="author-name">Salim</div>
+                            <div class="author-role">15-truck fleet owner</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="stars">
-                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                    </div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
-                        "My dispatcher literally dreams about this workflow"
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "My dispatcher saves 4 hours every day. The ROI is unbelievable. We've increased our load capacity without adding staff."
                     </p>
-                    <p style="font-weight: 700;">- Marcus</p>
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">Operations Manager</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div>
+                            <div class="author-name">Marcus</div>
+                            <div class="author-role">Operations Manager</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="stars">
-                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                    </div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">
-                        "First TMS that doesn't make me want to throw my computer out the window"
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Best decision I made for my business. Simple, fast, and actually affordable. The pay-per-load model is perfect for us."
                     </p>
-                    <p style="font-weight: 700;">- Jennifer</p>
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">Owner-Operator</p>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; flex-wrap: wrap;">
-                <div style="text-align: center;">
-                    <div class="stat-value">10+</div>
-                    <div style="color: var(--text-muted);">Carriers already using</div>
-                </div>
-                <div style="text-align: center;">
-                    <div class="stat-value" style="background: linear-gradient(135deg, var(--octopus-secondary) 0%, var(--highlight) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4hrs</div>
-                    <div style="color: var(--text-muted);">Saved per dispatcher/day</div>
-                </div>
-                <div style="text-align: center;">
-                    <div class="stat-value" style="background: linear-gradient(135deg, var(--success) 0%, var(--octopus-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">3x</div>
-                    <div style="color: var(--text-muted);">Faster settlements</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trust Architecture -->
-    <section style="padding: 5rem 0; background: rgba(30, 41, 59, 0.3);">
-        <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-align: center; margin-bottom: 3rem;">Built By Truckers, For Truckers</h2>
-            <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); max-width: 48rem; margin: 0 auto 3rem;">
-                We're not venture-funded outsiders trying to "disrupt" your industry.
-                We're truckers who got tired of inadequate software and built what we wished existed.
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
-                <div class="feature-card" style="text-align: center;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="margin: 0 auto 1rem;">
-                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                        <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Contracts</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem;">Cancel anytime (but nobody does)</p>
-                </div>
-                <div class="feature-card" style="text-align: center;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--octopus-primary)" stroke-width="2" style="margin: 0 auto 1rem;">
-                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                    </svg>
-                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Setup Fees</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem;">We're partners from day one</p>
-                </div>
-                <div class="feature-card" style="text-align: center;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" style="margin: 0 auto 1rem;">
-                        <rect x="1" y="4" width="22" height="16" rx="2"/>
-                        <path d="M1 10h22"/>
-                    </svg>
-                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Hidden Costs</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem;">Just $20 per booked load, forever</p>
-                </div>
-                <div class="feature-card" style="text-align: center;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" style="margin: 0 auto 1rem;">
-                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-                    </svg>
-                    <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No Data Hostage</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem;">Export everything, anytime</p>
-                </div>
-            </div>
-
-            <div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(94, 234, 212, 0.15) 100%); border-radius: 1.5rem; padding: 2rem; border: 1px solid rgba(96, 165, 250, 0.5);">
-                <h3 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;">The Dream Squad</h3>
-
-                <div class="partner-logos">
-                    <!-- Octopus Logo -->
-                    <div style="text-align: center;">
-                        <img src="octopus-logo.svg" alt="Octopus" class="partner-logo" style="height: 60px;">
-                        <p style="font-weight: 700; margin-top: 0.5rem;">Octopus</p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Orchestration</p>
-                    </div>
-
-                    <!-- Stripe Logo -->
-                    <div style="text-align: center;">
-                        <svg class="partner-logo" viewBox="0 0 100 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 21c0 11.598-9.402 21-21 21s-21-9.402-21-21S67.402 0 79 0s21 9.402 21 21z" fill="#635BFF"/>
-                            <path d="M79 10.5c-5.799 0-10.5 4.701-10.5 10.5S73.201 31.5 79 31.5 89.5 26.799 89.5 21 84.799 10.5 79 10.5z" fill="white"/>
-                            <path d="M12.965 16.523c0-1.548.633-2.21 1.65-2.21 1.018 0 1.728.662 1.728 2.21v1.115h3.67v-1.508c0-3.542-1.806-5.13-3.904-5.13-1.454 0-2.666.547-3.36 1.625-.694-1.078-1.883-1.625-3.398-1.625C7.33 11 6.196 11.779 5.58 12.97h-.078V11.27H2v11.46h3.67v-6.09c0-1.586.556-2.247 1.495-2.247s1.572.661 1.572 2.246v6.092h3.67v-6.091c0-1.585.557-2.247 1.495-2.247.94 0 1.573.662 1.573 2.247v6.091h3.67V16.64c0-.04 0-.078-.002-.116h.002v-.001zM23.5 23c2.485 0 4.5-2.015 4.5-4.5S25.985 14 23.5 14 19 16.015 19 18.5 21.015 23 23.5 23z" fill="#94A3B8"/>
-                        </svg>
-                        <p style="font-weight: 700; margin-top: 0.5rem;">Stripe</p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Settlements</p>
-                    </div>
-
-                    <!-- DAT Logo -->
-                    <div style="text-align: center;">
-                        <svg class="partner-logo" viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="120" height="50" rx="8" fill="#FF6B35"/>
-                            <text x="60" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">DAT</text>
-                        </svg>
-                        <p style="font-weight: 700; margin-top: 0.5rem;">DAT</p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Load Board</p>
-                    </div>
-
-                    <!-- AWS Logo -->
-                    <div style="text-align: center;">
-                        <svg class="partner-logo" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M31.007 24.668c0 1.854.196 3.362.557 4.482.392.1.196 0.879 1.334 1.887.196.294.294.588.294.784 0 .343-.196.686-.687 1.078l-2.284 1.519c-.343.196-.686.343-.98.343-.392 0-.784-.196-1.078-.49-.49-.49-.92-1.029-1.274-1.568-.343-.588-.687-1.225-1.078-2.009-2.726 3.215-6.147 4.825-10.287 4.825-2.94 0-5.291-.833-6.979-2.499-1.687-1.666-2.548-3.901-2.548-6.685 0-2.96 1.048-5.361 3.185-7.154 2.137-1.793 4.971-2.695 8.542-2.695 1.177 0 2.401.098 3.724.245 1.323.147 2.695.392 4.166.637v-2.107c0-2.205-.461-3.724-1.372-4.629-.931-.902-2.509-1.342-4.776-1.342-1.029 0-2.088.123-3.176.392-1.088.27-2.156.588-3.176.98-.49.196-.833.294-1.029.343-.196.049-.343.049-.49.049-.441 0-.662-.323-.662-.98v-1.548c0-.49.049-.862.196-1.058.147-.196.441-.392.833-.588 1.029-.539 2.254-.98 3.675-1.323 1.421-.392 2.94-.557 4.531-.557 3.459 0 5.987.784 7.625 2.352 1.607 1.568 2.421 3.95 2.421 7.154v9.419h.049zm-14.207 5.263c.951 0 1.95-.176 2.999-.529 1.048-.353 1.999-1.009 2.802-1.911.49-.588.833-1.225 1.009-1.96.176-.735.294-1.617.294-2.666V21.61c-.833-.196-1.715-.353-2.646-.49-.931-.137-1.842-.196-2.744-.196-1.95 0-3.381.392-4.361 1.225-.98.833-1.47 2.009-1.47 3.528 0 1.421.362 2.479 1.127 3.205.735.755 1.764 1.107 2.989 1.107zm23.137 4.237c-.539 0-.902-.098-1.127-.343-.225-.196-.441-.637-.637-1.225L30.45 10.478c-.196-.637-.294-1.029-.294-1.274 0-.49.245-.784.735-.784h3.224c.568 0 .951.098 1.176.343.226.196.392.637.588 1.225l5.508 21.669 5.116-21.669c.147-.637.343-1.029.568-1.225.226-.196.662-.343 1.177-.343h2.646c.568 0 .95.098 1.176.343.226.196.441.637.568 1.225l5.165 21.963 5.684-21.963c.196-.637.392-1.029.617-1.225.225-.196.608-.343 1.177-.343h3.058c.49 0 .784.245.784.784 0 .147-.029.294-.078.49-.049.196-.147.461-.245.833L60.647 32.39c-.196.637-.392 1.029-.617 1.225-.226.196-.637.343-1.177.343h-2.842c-.568 0-.95-.098-1.177-.343-.225-.225-.44-.637-.568-1.274l-5.087-20.591-5.038 20.542c-.147.637-.343 1.049-.568 1.274-.225.226-.657.343-1.225.343h-2.842zm37.1.637c-1.568 0-3.137-.196-4.608-.557-1.47-.362-2.617-.764-3.381-1.225-.49-.294-.784-.588-.882-.882-.098-.295-.147-.608-.147-.931v-1.597c0-.657.245-.98.706-.98.196 0 .392.049.588.098.196.049.49.176.784.294.98.392 2.058.706 3.185.931 1.156.226 2.284.324 3.43.324 1.813 0 3.224-.314 4.186-.951.961-.617 1.47-1.548 1.47-2.724 0-.803-.265-1.47-.784-2.009-.519-.539-1.499-.98-2.92-1.372l-4.187-.98c-2.107-.49-3.655-1.323-4.608-2.45-.951-1.107-1.421-2.333-1.421-3.655 0-1.078.245-2.029.735-2.842.49-.813 1.156-1.519 1.96-2.107.833-.557 1.764-.98 2.891-1.274 1.127-.265 2.313-.412 3.538-.412.618 0 1.274.029 1.891.118.637.078 1.225.176 1.842.274.557.118 1.098.236 1.597.373.5.137.902.274 1.225.412.412.196.706.392.882.588.176.225.265.519.265.902v1.48c0 .657-.245 1.009-.706 1.009-.265 0-.686-.118-1.225-.353-1.646-.706-3.489-1.058-5.508-1.058-1.646 0-2.95.255-3.832.803-.882.549-1.343 1.382-1.343 2.548 0 .803.294 1.48.882 2.009.588.529 1.686 1.048 3.264 1.499l4.088.98c2.078.49 3.577 1.225 4.461 2.205.882.98 1.313 2.107 1.313 3.401 0 1.098-.245 2.088-.706 2.96-.49.872-1.156 1.637-2.009 2.254-.853.637-1.881 1.107-3.058 1.441-1.235.382-2.528.549-3.93.549z" fill="#FF9900"/>
-                            <path d="M80.748 44.343c-6.879 5.067-16.859 7.762-25.459 7.762-12.045 0-22.892-4.451-31.091-11.86-.637-.588-.069-1.382.706-.931 8.846 5.145 19.781 8.248 31.063 8.248 7.615 0 15.998-1.578 23.703-4.853 1.176-.52 2.137.764 1.078 1.634z" fill="#FF9900"/>
-                            <path d="M83.542 41.168c-.882-1.127-5.821-.539-8.053-.265-.676.078-.784-.51-.176-.961 3.94-2.773 10.415-1.96 11.17-.98.755 1.009-.196 7.958-3.901 11.278-.568.51-1.107.245-.853-.412.833-2.137 2.695-6.918 1.813-8.66z" fill="#FF9900"/>
-                        </svg>
-                        <p style="font-weight: 700; margin-top: 0.5rem;">AWS</p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Infrastructure</p>
-                    </div>
-
-                    <!-- Claude Logo -->
-                    <div style="text-align: center;">
-                        <svg class="partner-logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="100" height="50" rx="8" fill="linear-gradient(135deg, #9333EA 0%, #7C3AED 100%)"/>
-                            <text x="50" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Claude</text>
-                        </svg>
-                        <p style="font-weight: 700; margin-top: 0.5rem;">Claude</p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Intelligence</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">J</div>
+                        <div>
+                            <div class="author-name">Jennifer</div>
+                            <div class="author-role">Owner-Operator</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
-    <section style="padding: 5rem 0;">
+    <!-- Image Showcase Section -->
+    <section class="showcase-section">
         <div class="container">
-            <div style="background: linear-gradient(135deg, var(--octopus-primary) 0%, var(--accent-light) 50%, var(--octopus-secondary) 100%); border-radius: 2rem; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 30s linear infinite;"></div>
+            <div class="section-header">
+                <span class="section-tag">On The Road</span>
+                <h2 class="section-title">Powering America's trucking industry</h2>
+            </div>
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Semi truck on highway">
+                </div>
+                <div class="showcase-item">
+                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Semi truck at loading dock">
+                </div>
+                <div class="showcase-item">
+                    <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Truck on road">
+                </div>
+                <div class="showcase-item">
+                    <img src="https://images.unsplash.com/photo-1591768793355-74d04bb6608f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Truck driver">
+                </div>
+                <div class="showcase-item">
+                    <img src="https://images.unsplash.com/photo-1616432043562-3671ea2e5242?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Logistics warehouse">
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; margin-bottom: 1rem; position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
-                    Stop Accepting Broken.
-                </h2>
-                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.95); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto; position: relative; text-shadow: 0 1px 5px rgba(0,0,0,0.2);">
-                    You move America. You deserve tools that respect your intelligence,
-                    value your time, and share your success.
-                </p>
-
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative;">
-                    <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn" style="background: white; color: var(--octopus-primary); padding: 1rem 2rem; font-size: 1.125rem; font-weight: 700;">
-                        Start Free Now
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                        </svg>
-                    </a>
-                    <a href="https://cal.com/digital-ronin/15min" target="_blank" class="btn" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.6); padding: 1rem 2rem; font-size: 1.125rem;">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="margin-right: 0.5rem;">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-                        </svg>
-                        Book Quick Demo
-                    </a>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-bg-image"></div>
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to transform your operations?</h2>
+                    <p class="cta-description">
+                        Join carriers who are saving time and money with Octopus TMS.
+                        No credit card required to start.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="https://digital-ronin-llc.github.io/octopus/register" class="btn btn-white btn-large">
+                            Start Free Today
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                            </svg>
+                        </a>
+                        <a href="https://cal.com/digital-ronin/15min" class="btn btn-ghost btn-large">
+                            Schedule Demo
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1063,54 +1919,81 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div style="text-align: center;">
-                <img src="octopus-logo.svg" alt="Octopus" style="height: 60px; margin: 0 auto 1rem;">
-                <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    "We lived the pain. We built the cure. Now we share the success."
-                </p>
-                <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                    Octopus TMS - Where partnership replaces subscription.
-                </p>
-                <p style="color: var(--octopus-primary); font-weight: 700; font-size: 1.25rem;">
-                    Coming October 24, 2025. The revolution has tentacles.
-                </p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="octopus-logo.svg" alt="Octopus TMS">
+                        <span class="logo-text">Octopus TMS</span>
+                    </div>
+                    <p class="footer-tagline">
+                        Built by truckers, for truckers. The TMS that wins when you win.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#">Integrations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
+                </div>
             </div>
-
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-                <p style="color: var(--text-muted); font-size: 0.875rem;">
-                    © 2025 Octopus TMS. Built with ❤️ by a trucker who codes.
-                </p>
-                <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">
-                    From Charjou to Chicago. From truck cab to tech revolution.
-                </p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Octopus TMS. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Calculator
-        const slider = document.getElementById('loads-slider');
-        const loadsValue = document.getElementById('loads-value');
-        const weeklyCost = document.getElementById('weekly-cost');
-        const monthlyCost = document.getElementById('monthly-cost');
-        const monthlySavings = document.getElementById('monthly-savings');
-
-        function updateCalculator() {
-            const loads = parseInt(slider.value);
-            const weekly = loads * 20;
-            const monthly = Math.round(weekly * 4.33);
-            const savings = Math.max(0, 2000 - monthly);
-
-            loadsValue.textContent = loads;
-            weeklyCost.textContent = `$${weekly.toLocaleString()}`;
-            monthlyCost.textContent = `$${monthly.toLocaleString()}`;
-            monthlySavings.textContent = savings > 0 ? `$${savings.toLocaleString()}/mo` : 'Scales with success';
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
         }
 
-        slider.addEventListener('input', updateCalculator);
-        updateCalculator();
-
-        // Smooth scrolling
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1121,33 +2004,148 @@
             });
         });
 
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
+        // Parallax Effect System
+        const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
+
+        let ticking = false;
+        function updateParallax() {
+            const scrollY = window.pageYOffset;
+
+            parallaxElements.forEach(el => {
+                const speed = parseFloat(el.getAttribute('data-parallax-speed'));
+                const yPos = -(scrollY * speed);
+                el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            });
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+
+            // Nav scroll effect
+            const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+                nav.classList.add('scrolled');
             } else {
-                header.classList.remove('scrolled');
+                nav.classList.remove('scrolled');
             }
         });
 
-        // Animate elements on scroll
+        // Intersection Observer for scroll-triggered animations
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            root: null,
+            rootMargin: '0px 0px -100px 0px',
+            threshold: 0.1
         };
 
-        const observer = new IntersectionObserver(function(entries) {
+        const parallaxObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                    entry.target.classList.add('parallax-visible');
                 }
             });
         }, observerOptions);
 
-        // Observe all feature cards and testimonials
-        document.querySelectorAll('.feature-card, .testimonial-card').forEach(el => {
-            observer.observe(el);
+        // Observe elements
+        document.querySelectorAll('.feature-card, .workflow-step, .comparison-card, .testimonial-card').forEach(el => {
+            parallaxObserver.observe(el);
+        });
+
+        // Mouse-based parallax for hero section
+        const hero = document.querySelector('.hero');
+        const heroElements = document.querySelectorAll('.hero-parallax-element');
+
+        hero.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { width, height, left, top } = hero.getBoundingClientRect();
+
+            const xPos = (clientX - left) / width - 0.5;
+            const yPos = (clientY - top) / height - 0.5;
+
+            heroElements.forEach(el => {
+                const speed = parseFloat(el.getAttribute('data-parallax-speed')) * 50;
+                const x = xPos * speed;
+                const y = yPos * speed;
+                el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+        });
+
+        hero.addEventListener('mouseleave', () => {
+            heroElements.forEach(el => {
+                el.style.transform = 'translate3d(0, 0, 0)';
+                el.style.transition = 'transform 0.5s ease-out';
+            });
+        });
+
+        hero.addEventListener('mouseenter', () => {
+            heroElements.forEach(el => {
+                el.style.transition = 'none';
+            });
+        });
+
+        // Pricing card 3D tilt effect
+        const pricingCard = document.querySelector('.pricing-card');
+        if (pricingCard) {
+            pricingCard.addEventListener('mousemove', (e) => {
+                const { width, height, left, top } = pricingCard.getBoundingClientRect();
+                const x = (e.clientX - left) / width - 0.5;
+                const y = (e.clientY - top) / height - 0.5;
+
+                pricingCard.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            pricingCard.addEventListener('mouseleave', () => {
+                pricingCard.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
+            });
+
+            pricingCard.style.transition = 'transform 0.3s ease-out';
+        }
+
+        // Animated counter for stats
+        const animateCounter = (element, target, suffix = '') => {
+            const duration = 2000;
+            const start = 0;
+            const startTime = performance.now();
+
+            const updateCounter = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(start + (target - start) * easeOutQuart);
+
+                element.textContent = current.toLocaleString() + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            };
+
+            requestAnimationFrame(updateCounter);
+        };
+
+        // Observe stats for animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const text = element.textContent;
+                    const match = text.match(/(\d+)/);
+                    if (match) {
+                        const target = parseInt(match[1]);
+                        const suffix = text.replace(/[\d,]+/, '');
+                        animateCounter(element, target, suffix);
+                    }
+                    statsObserver.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stats-number').forEach(stat => {
+            statsObserver.observe(stat);
         });
     </script>
 </body>
