@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Octopus TMS</title>
+    <meta name="description" content="Terms of Service for Octopus TMS Platform - Transportation Management System">
+    <link rel="canonical" href="https://octopustms.com/terms">
+    <link rel="icon" type="image/svg+xml" href="../octopus-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #0066B3;
+            --primary-light: #00A3E0;
+            --primary-dark: #064979;
+            --primary-darker: #003057;
+            --secondary: #00B5E2;
+            --accent: #00C7B1;
+            --success: #00A94F;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --bg-gray: #F1F5F9;
+            --bg-dark: #001F3F;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --text-light: #94A3B8;
+            --border-light: #E2E8F0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img { width: 40px; height: 40px; }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(0, 102, 179, 0.05);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 102, 179, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 179, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--bg-white);
+            color: var(--primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-light);
+            border-color: var(--primary);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-dark);
+            z-index: 200;
+            padding: 24px;
+            flex-direction: column;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .mobile-menu-header .logo-text {
+            color: white;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 16px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-links a:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-menu-cta {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 1.05rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 140px 24px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+
+        .page-header p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        /* Content Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 32px;
+            background: var(--bg-white);
+            margin-top: -40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 32px;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+            gap: 12px;
+        }
+
+        .effective-date {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            padding: 12px 16px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-light);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            color: var(--text-dark);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        li::marker {
+            color: var(--primary);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 102, 179, 0.05) 0%, rgba(0, 163, 224, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            margin: 28px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .highlight-box p {
+            color: var(--text-dark);
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%);
+            border-left: 4px solid var(--warning);
+            padding: 24px;
+            margin: 28px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .warning-box p {
+            color: var(--text-dark);
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, rgba(0, 169, 79, 0.05) 0%, rgba(0, 199, 177, 0.05) 100%);
+            border: 1px solid rgba(0, 169, 79, 0.2);
+            padding: 28px;
+            border-radius: 12px;
+            margin: 32px 0;
+        }
+
+        .contact-box h3 {
+            color: var(--success);
+            margin-top: 0;
+        }
+
+        .contact-box p {
+            color: var(--text-dark);
+        }
+
+        .contact-box a {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .acknowledgment-box {
+            margin-top: 48px;
+            padding: 24px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .acknowledgment-box p {
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            background: var(--bg-dark);
+            color: white;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-logo .logo-text {
+            color: white;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-main {
+            max-width: 320px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 64px;
+        }
+
+        .footer-column h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content { flex-direction: column; }
+            .footer-links { gap: 48px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions { display: none; }
+            .mobile-menu-btn { display: block; }
+
+            .page-header {
+                padding: 120px 20px 60px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                margin: -20px 16px 40px;
+                padding: 32px 24px;
+                border-radius: 16px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                margin-top: 36px;
+            }
+
+            .footer-links { flex-direction: column; gap: 32px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-legal { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <img src="../octopus-logo.svg" alt="Octopus TMS">
+                <span class="logo-text">Octopus TMS</span>
+            </a>
+            <div class="nav-links">
+                <a href="/#features" class="nav-link">Features</a>
+                <a href="/#how-it-works" class="nav-link">How It Works</a>
+                <a href="/#pricing" class="nav-link">Pricing</a>
+            </div>
+            <div class="nav-actions">
+                <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-small">Book Demo</a>
+                <a href="https://app.octopustms.com/register" class="btn btn-primary btn-small">Get Started Free</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="/" class="logo">
+                <img src="../octopus-logo.svg" alt="Octopus TMS">
+                <span class="logo-text">Octopus TMS</span>
+            </a>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="/#features" onclick="toggleMobileMenu()">Features</a>
+            <a href="/#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
+            <a href="/#pricing" onclick="toggleMobileMenu()">Pricing</a>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-large">Book Demo</a>
+            <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">Get Started Free</a>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Terms of Service</h1>
+        <p>Octopus TMS Platform</p>
+    </header>
+
+    <!-- Content -->
+    <main class="container">
+        <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 12L6 8l4-4"/>
+            </svg>
+            Back to Octopus TMS
+        </a>
+
+        <p class="effective-date"><strong>Effective Date:</strong> January 2025</p>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using the Octopus TMS Platform ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access the Service.</p>
+        <p>These Terms constitute a legally binding agreement between you and The Digital Ronin LLC ("Octopus", "we", "us", or "our").</p>
+
+        <h2>2. Description of Service</h2>
+        <p>Octopus TMS provides a comprehensive transportation management platform that:</p>
+        <ul>
+            <li>Connects carriers with shippers and load boards</li>
+            <li>Facilitates load bookings and dispatch operations</li>
+            <li>Manages fleet and driver information</li>
+            <li>Processes settlements through integrated payment systems</li>
+            <li>Enables email communications via Gmail integration</li>
+            <li>Provides document management and compliance tracking</li>
+        </ul>
+
+        <h2>3. Account Registration</h2>
+
+        <h3>3.1 Eligibility</h3>
+        <p>To use our Service, you must:</p>
+        <ul>
+            <li>Be a legally registered business entity</li>
+            <li>Possess valid DOT and MC numbers (for carriers)</li>
+            <li>Be 18 years or older to create an account</li>
+            <li>Provide accurate and complete information</li>
+        </ul>
+
+        <h3>3.2 Account Security</h3>
+        <ul>
+            <li>You are responsible for maintaining account confidentiality</li>
+            <li>You must notify us immediately of unauthorized access</li>
+            <li>You are liable for all activities under your account</li>
+            <li>Do not share login credentials with unauthorized parties</li>
+        </ul>
+
+        <h2>4. User Conduct</h2>
+
+        <h3>4.1 Acceptable Use</h3>
+        <p>Users agree to:</p>
+        <ul>
+            <li>Provide accurate information in all transactions</li>
+            <li>Honor all confirmed bookings and commitments</li>
+            <li>Maintain proper insurance and compliance</li>
+            <li>Communicate professionally with all parties</li>
+            <li>Use the Service only for lawful purposes</li>
+        </ul>
+
+        <h3>4.2 Prohibited Conduct</h3>
+        <div class="warning-box">
+            <p><strong>Users may NOT:</strong></p>
+            <ul>
+                <li>Create false or misleading listings</li>
+                <li>Manipulate ratings or reviews</li>
+                <li>Engage in discriminatory practices</li>
+                <li>Violate any applicable laws or regulations</li>
+                <li>Attempt to circumvent platform fees</li>
+                <li>Share login credentials or account access</li>
+                <li>Use automated systems without permission</li>
+                <li>Use the Service to send spam or unsolicited communications</li>
+            </ul>
+        </div>
+
+        <h2>5. Gmail Integration</h2>
+
+        <div class="highlight-box">
+            <h3>5.1 Authorization</h3>
+            <p>When you connect your Gmail account:</p>
+            <ul>
+                <li>You authorize Octopus TMS to send emails on your behalf</li>
+                <li>You retain full control over your Gmail account</li>
+                <li>You can revoke access at any time</li>
+            </ul>
+        </div>
+
+        <h3>5.2 Permitted Use</h3>
+        <p>Gmail integration is provided solely for:</p>
+        <ul>
+            <li>Sending invoices to customers</li>
+            <li>Sending load confirmations and rate agreements</li>
+            <li>Communicating with brokers and shippers</li>
+            <li>Sending business-related documents</li>
+        </ul>
+
+        <h3>5.3 Prohibited Use</h3>
+        <p>You may <strong>NOT</strong> use Gmail integration to:</p>
+        <ul>
+            <li>Send spam or unsolicited bulk emails</li>
+            <li>Send harassing or abusive messages</li>
+            <li>Violate Gmail's Terms of Service</li>
+            <li>Send content that violates any laws</li>
+        </ul>
+
+        <h3>5.4 Responsibility</h3>
+        <p>You are solely responsible for the content of emails sent through our platform. We do not monitor or control email content.</p>
+
+        <h2>6. Load Bookings and Transactions</h2>
+
+        <h3>6.1 Booking Process</h3>
+        <ul>
+            <li>All bookings are binding contracts once confirmed</li>
+            <li>Cancellations must follow platform procedures</li>
+            <li>Disputes must be reported within 48 hours</li>
+        </ul>
+
+        <h3>6.2 Payment Processing</h3>
+        <ul>
+            <li>All payments processed through Stripe</li>
+            <li>Platform fees automatically deducted</li>
+            <li>Settlements processed per agreed schedule</li>
+            <li>Users responsible for their tax obligations</li>
+        </ul>
+
+        <h2>7. Platform Fees</h2>
+        <ul>
+            <li>Subscription fees as per selected plan</li>
+            <li>Transaction fees on completed loads (if applicable)</li>
+            <li>Additional fees for premium services</li>
+            <li>All fees subject to change with 30 days notice</li>
+            <li>Fees are non-refundable except as required by law</li>
+        </ul>
+
+        <h2>8. Disclaimers and Limitations</h2>
+
+        <h3>8.1 Service Availability</h3>
+        <ul>
+            <li>Platform provided "AS IS" and "AS AVAILABLE"</li>
+            <li>No guarantee of uninterrupted service</li>
+            <li>Scheduled maintenance with advance notice when possible</li>
+        </ul>
+
+        <h3>8.2 Limitation of Liability</h3>
+        <div class="warning-box">
+            <ul>
+                <li>Maximum liability limited to fees paid in past 12 months</li>
+                <li>No liability for indirect, incidental, or consequential damages</li>
+                <li>No liability for user-to-user disputes</li>
+                <li>No liability for lost profits, data, or business opportunities</li>
+            </ul>
+        </div>
+
+        <h2>9. Indemnification</h2>
+        <p>You agree to indemnify and hold harmless Octopus TMS, The Digital Ronin LLC, its affiliates, officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:</p>
+        <ul>
+            <li>Your use of the Service</li>
+            <li>Your violation of these Terms</li>
+            <li>Your violation of any third-party rights</li>
+            <li>Emails sent through Gmail integration</li>
+            <li>Your business operations and transactions</li>
+        </ul>
+
+        <h2>10. Dispute Resolution</h2>
+
+        <h3>10.1 Informal Resolution</h3>
+        <p>First attempt to resolve disputes informally by contacting support within 30 days of the issue.</p>
+
+        <h3>10.2 Arbitration</h3>
+        <ul>
+            <li>Binding arbitration for unresolved disputes</li>
+            <li>Conducted by American Arbitration Association</li>
+            <li>Individual claims only, no class actions</li>
+            <li>Arbitration location: Delaware, USA</li>
+        </ul>
+
+        <h2>11. Termination</h2>
+
+        <h3>11.1 Termination by User</h3>
+        <ul>
+            <li>Cancel subscription anytime through account settings</li>
+            <li>Complete all pending transactions before termination</li>
+            <li>Data export available for 60 days after termination</li>
+        </ul>
+
+        <h3>11.2 Termination by Octopus</h3>
+        <p>We may terminate or suspend your account for:</p>
+        <ul>
+            <li>Terms violation</li>
+            <li>Inactivity exceeding 12 months</li>
+            <li>Fraud or illegal activity (immediate)</li>
+            <li>Non-payment of fees</li>
+        </ul>
+
+        <h2>12. Changes to Terms</h2>
+        <ul>
+            <li>Octopus may modify Terms at any time</li>
+            <li>Material changes with 30 days notice</li>
+            <li>Continued use constitutes acceptance</li>
+            <li>Notification via email and platform login</li>
+        </ul>
+
+        <h2>13. Governing Law</h2>
+        <p>These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict of law provisions. Any legal action must be filed in the state or federal courts located in Delaware.</p>
+
+        <h2>14. Contact Information</h2>
+        <div class="contact-box">
+            <h3>Octopus TMS Platform</h3>
+            <p><strong>The Digital Ronin LLC</strong></p>
+            <p>Email: <a href="mailto:info@thedigitalronin.com">info@thedigitalronin.com</a></p>
+        </div>
+
+        <div class="acknowledgment-box">
+            <p><em>By using the Octopus TMS Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</em></p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <img src="../octopus-logo.svg" alt="Octopus TMS">
+                        <span class="logo-text">Octopus TMS</span>
+                    </div>
+                    <p class="footer-tagline">
+                        Built by truckers, for truckers. The TMS that wins when you win.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="/#features">Features</a></li>
+                            <li><a href="/#pricing">Pricing</a></li>
+                            <li><a href="/#how-it-works">How It Works</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Get Started</h4>
+                        <ul>
+                            <li><a href="https://app.octopustms.com/register">Sign Up Free</a></li>
+                            <li><a href="https://cal.com/digital-ronin/15min">Book a Demo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Octopus TMS. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="/privacy/">Privacy Policy</a>
+                    <a href="/terms/">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
