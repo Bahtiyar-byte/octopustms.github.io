@@ -1,827 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Octopus TMS</title>
-    <meta name="description" content="Privacy Policy for Octopus TMS Platform - Transportation Management System">
-    <link rel="canonical" href="https://octopustms.com/privacy">
-    <link rel="icon" type="image/svg+xml" href="../octopus-logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --primary: #0066B3;
-            --primary-light: #00A3E0;
-            --primary-dark: #064979;
-            --primary-darker: #003057;
-            --secondary: #00B5E2;
-            --accent: #00C7B1;
-            --success: #00A94F;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --bg-white: #FFFFFF;
-            --bg-light: #F8FAFC;
-            --bg-gray: #F1F5F9;
-            --bg-dark: #001F3F;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --text-light: #94A3B8;
-            --border-light: #E2E8F0;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 16px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo img { width: 40px; height: 40px; }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-            background: rgba(0, 102, 179, 0.05);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 4px 14px rgba(0, 102, 179, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 179, 0.5);
-        }
-
-        .btn-secondary {
-            background: var(--bg-white);
-            color: var(--primary);
-            border: 1px solid var(--border-light);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-light);
-            border-color: var(--primary);
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-dark);
-            z-index: 200;
-            padding: 24px;
-            flex-direction: column;
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-
-        .mobile-menu-header .logo-text {
-            color: white;
-        }
-
-        .mobile-menu-close {
-            background: none;
-            border: none;
-            color: white;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mobile-menu-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 16px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .mobile-menu-links a:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .mobile-menu-cta {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 1.05rem;
-        }
-
-        /* Page Header */
-        .page-header {
-            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 140px 24px 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .page-header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-            position: relative;
-        }
-
-        .page-header p {
-            font-size: 1.15rem;
-            opacity: 0.9;
-            position: relative;
-        }
-
-        /* Content Container */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 48px 32px;
-            background: var(--bg-white);
-            margin-top: -40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 32px;
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--primary-dark);
-            gap: 12px;
-        }
-
-        .effective-date {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            margin-bottom: 32px;
-            padding: 12px 16px;
-            background: var(--bg-light);
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        h2 {
-            color: var(--primary-dark);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 48px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border-light);
-            letter-spacing: -0.01em;
-        }
-
-        h3 {
-            color: var(--text-dark);
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-top: 28px;
-            margin-bottom: 16px;
-        }
-
-        p {
-            margin-bottom: 16px;
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
-
-        ul, ol {
-            margin: 16px 0;
-            padding-left: 24px;
-        }
-
-        li {
-            margin-bottom: 12px;
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
-
-        li::marker {
-            color: var(--primary);
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(0, 102, 179, 0.05) 0%, rgba(0, 163, 224, 0.05) 100%);
-            border-left: 4px solid var(--primary);
-            padding: 24px;
-            margin: 28px 0;
-            border-radius: 0 12px 12px 0;
-        }
-
-        .highlight-box p {
-            color: var(--text-dark);
-        }
-
-        .contact-box {
-            background: linear-gradient(135deg, rgba(0, 169, 79, 0.05) 0%, rgba(0, 199, 177, 0.05) 100%);
-            border: 1px solid rgba(0, 169, 79, 0.2);
-            padding: 28px;
-            border-radius: 12px;
-            margin: 32px 0;
-        }
-
-        .contact-box h3 {
-            color: var(--success);
-            margin-top: 0;
-        }
-
-        .contact-box p {
-            color: var(--text-dark);
-        }
-
-        .contact-box a {
-            color: var(--success);
-            font-weight: 500;
-        }
-
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        a:hover {
-            color: var(--primary-dark);
-        }
-
-        .acknowledgment-box {
-            margin-top: 48px;
-            padding: 24px;
-            background: var(--bg-light);
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid var(--border-light);
-        }
-
-        .acknowledgment-box p {
-            color: var(--text-gray);
-            margin: 0;
-        }
-
-        /* Footer */
-        footer {
-            padding: 60px 0 40px;
-            background: var(--bg-dark);
-            color: white;
-        }
-
-        .footer-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .footer-logo .logo-text {
-            color: white;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-main {
-            max-width: 320px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .footer-logo img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .footer-tagline {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 64px;
-        }
-
-        .footer-column h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            color: white;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column li {
-            margin-bottom: 10px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .footer-column a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-legal a:hover {
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .footer-content { flex-direction: column; }
-            .footer-links { gap: 48px; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links, .nav-actions { display: none; }
-            .mobile-menu-btn { display: block; }
-
-            .page-header {
-                padding: 120px 20px 60px;
-            }
-
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .container {
-                margin: -20px 16px 40px;
-                padding: 32px 24px;
-                border-radius: 16px;
-            }
-
-            h2 {
-                font-size: 1.3rem;
-                margin-top: 36px;
-            }
-
-            .footer-links { flex-direction: column; gap: 32px; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-            .footer-legal { justify-content: center; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Octopus TMS</title>
+<meta name="description" content="Privacy Policy for Octopus TMS, the carrier partner platform by Digital Ronin LLC.">
+<link rel="canonical" href="https://octopustms.com/privacy/">
+<meta property="og:title" content="Privacy Policy — Octopus TMS">
+<meta property="og:url" content="https://octopustms.com/privacy/">
+<meta property="og:type" content="article">
+<link rel="icon" href="../octopus-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E1726;--ink-2:#3A4556;--muted:#69737F;--line:#D9DFE8;--paper:#EEF2F7;--accent:#0A5BFF;--accent-ink:#0646C7;
+  --display:'Unbounded','Golos Text',system-ui,sans-serif;--body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:var(--accent-ink)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,32px);max-width:1180px;margin:0 auto}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem}
+.brand .logo{width:34px;height:34px}
+.back{font-weight:600;text-decoration:none;color:var(--ink-2);font-size:.95rem}
+.back:hover{color:var(--accent-ink)}
+main{background:#fff;border:1px solid var(--line);border-radius:24px;max-width:840px;margin:8px auto 32px;padding:clamp(22px,4vw,48px)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:0 0 8px}
+h2{font-size:1.25rem;margin:32px 0 10px;letter-spacing:-.01em}
+h3{font-size:1.02rem;margin:22px 0 8px}
+p,li{color:var(--ink-2);max-width:72ch}
+p{margin:0 0 12px}
+.doc-meta{color:var(--muted);font-size:.92rem;line-height:1.7}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin:0 0 6px}
+strong{color:var(--ink)}
+blockquote{margin:16px 0;padding:14px 18px;border-left:3px solid var(--accent);background:#F4F7FD;border-radius:0 12px 12px 0}
+blockquote p{margin:0;max-width:none}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--paper);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.table-wrap{overflow-x:auto;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink);font-weight:600}
+.foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 28px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">
-                <img src="../octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </a>
-            <div class="nav-links">
-                <a href="/#features" class="nav-link">Features</a>
-                <a href="/#how-it-works" class="nav-link">How It Works</a>
-                <a href="/#pricing" class="nav-link">Pricing</a>
-            </div>
-            <div class="nav-actions">
-                <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-small">Book Demo</a>
-                <a href="https://app.octopustms.com/register" class="btn btn-primary btn-small">Get Started Free</a>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <a href="/" class="logo">
-                <img src="../octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </a>
-            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        <div class="mobile-menu-links">
-            <a href="/#features" onclick="toggleMobileMenu()">Features</a>
-            <a href="/#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
-            <a href="/#pricing" onclick="toggleMobileMenu()">Pricing</a>
-        </div>
-        <div class="mobile-menu-cta">
-            <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-large">Book Demo</a>
-            <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">Get Started Free</a>
-        </div>
-    </div>
-
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Privacy Policy</h1>
-        <p>Octopus TMS Platform</p>
-    </header>
-
-    <!-- Content -->
-    <main class="container">
-        <a href="/" class="back-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10 12L6 8l4-4"/>
-            </svg>
-            Back to Octopus TMS
-        </a>
-
-        <p class="effective-date"><strong>Effective Date:</strong> May 5, 2026</p>
-
-        <h2>1. Introduction</h2>
-        <p>Octopus TMS Platform ("Octopus", "we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our transportation management platform and related services.</p>
-
-        <h2>2. Information We Collect</h2>
-
-        <h3>2.1 Business Information</h3>
-        <ul>
-            <li>Company name, DOT/MC numbers</li>
-            <li>Business address and contact information</li>
-            <li>Tax identification numbers</li>
-            <li>Insurance and compliance documentation</li>
-        </ul>
-
-        <h3>2.2 User Account Information</h3>
-        <ul>
-            <li>Names and contact details of authorized users</li>
-            <li>Login credentials (encrypted)</li>
-            <li>Role and permission settings</li>
-        </ul>
-
-        <h3>2.3 Operational Data</h3>
-        <ul>
-            <li>Load booking and dispatch history</li>
-            <li>Fleet and driver information</li>
-            <li>Location data for tracking shipments</li>
-            <li>Communication logs between parties</li>
-        </ul>
-
-        <h3>2.4 Financial Information</h3>
-        <ul>
-            <li>Banking details for settlements</li>
-            <li>Payment method information (processed securely by Stripe)</li>
-            <li>Transaction history and invoices</li>
-        </ul>
-
-        <h3>2.5 Gmail Integration Data</h3>
-        <div class="highlight-box">
-            <p>When you connect your Gmail account to Octopus TMS:</p>
-            <ul>
-                <li>We request permission to send emails on your behalf</li>
-                <li>We store encrypted OAuth tokens to maintain your connection</li>
-                <li>We do <strong>NOT</strong> read, store, or access your email content</li>
-                <li>We only send emails when you explicitly initiate the action</li>
-            </ul>
-        </div>
-
-        <h2>3. How We Use Your Information</h2>
-
-        <h3>3.1 Service Delivery</h3>
-        <ul>
-            <li>Process load bookings and dispatch assignments</li>
-            <li>Facilitate communication between shippers and carriers</li>
-            <li>Send emails on your behalf (invoices, documents, notifications)</li>
-            <li>Process payments and settlements</li>
-            <li>Provide customer support</li>
-        </ul>
-
-        <h3>3.2 Platform Improvement</h3>
-        <ul>
-            <li>Analyze usage patterns to improve features</li>
-            <li>Develop new services and functionality</li>
-            <li>Ensure platform security and prevent fraud</li>
-        </ul>
-
-        <h2>4. Information Sharing</h2>
-
-        <h3>4.1 Service Providers</h3>
-        <p>We share information with trusted third-party service providers including:</p>
-        <ul>
-            <li><strong>Stripe</strong> for payment processing</li>
-            <li><strong>Google</strong> for Gmail integration (OAuth2)</li>
-            <li><strong>DAT</strong> for load board integration</li>
-            <li><strong>AWS</strong> for cloud infrastructure</li>
-        </ul>
-
-        <h3>4.2 Legal Requirements</h3>
-        <p>We may disclose information when required by law or to protect rights and safety.</p>
-
-        <h2>5. Data Security</h2>
-        <ul>
-            <li>Encryption of data in transit (TLS/SSL) and at rest (AES-256)</li>
-            <li>OAuth tokens encrypted before database storage</li>
-            <li>Regular security audits</li>
-            <li>Access controls and authentication protocols</li>
-        </ul>
-
-        <h2>6. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-            <li>Request access to your personal data</li>
-            <li>Correct inaccurate information</li>
-            <li>Delete your account and associated data</li>
-            <li>Export your data</li>
-            <li>Disconnect third-party integrations (like Gmail)</li>
-        </ul>
-
-        <h3>Revoking Gmail Access</h3>
-        <p>You can disconnect your Gmail account at any time through Octopus TMS Settings or through your Google Account at <a href="https://myaccount.google.com/permissions" target="_blank">myaccount.google.com/permissions</a>.</p>
-
-        <h2>7. Data Retention</h2>
-        <ul>
-            <li>Active account data: Duration of business relationship</li>
-            <li>Financial records: 7 years per regulatory requirements</li>
-            <li>OAuth tokens: Until you disconnect or delete your account</li>
-        </ul>
-
-        <h2>8. California Privacy Rights (CCPA)</h2>
-        <p>California residents have additional rights including the right to know what personal information is collected, request deletion, and opt-out of sale of personal information. <strong>We do not sell personal information.</strong></p>
-
-        <h2>9. Google API Services User Data Policy</h2>
-        <div class="highlight-box">
-            <p>Octopus TMS's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
-            <p>When you connect your Google account to Octopus TMS, we access your Google account data solely to provide the user-facing features you have explicitly requested — specifically, sending emails on your behalf from your Gmail account to brokers, carriers, and drivers in connection with load operations.</p>
-            <p>We commit to the following:</p>
-            <ul>
-                <li><strong>Limited use.</strong> We use Google user data only to provide and improve the specific user-facing features you have authorized.</li>
-                <li><strong>No advertising.</strong> We do not transfer, sell, or use Google user data for serving advertisements, retargeting, or any personalized or interest-based advertising.</li>
-                <li><strong>No lending decisions.</strong> We do not use Google user data to determine credit-worthiness or for lending purposes.</li>
-                <li><strong>No AI/ML training.</strong> We do <strong>not</strong> use Google user data to develop, improve, or train generalized or non-personalized artificial intelligence (AI) or machine learning (ML) models. We do not retain Google user data for any AI/ML training purpose.</li>
-                <li><strong>No human access</strong>, except: (a) with your specific affirmative consent for particular messages, (b) for security purposes such as investigating a bug or abuse, (c) to comply with applicable law, or (d) where the data is aggregated and anonymized and used solely for internal operations.</li>
-                <li><strong>Token storage.</strong> OAuth access and refresh tokens are encrypted at rest using AES-256-GCM and are accessible only to the authenticated user's Octopus TMS account.</li>
-                <li><strong>Disconnection.</strong> You may disconnect your Google account at any time from Settings → Integrations. On disconnect we revoke the tokens with Google and delete them from our systems.</li>
-            </ul>
-        </div>
-
-        <h2>10. Updates to This Policy</h2>
-        <p>We may update this Privacy Policy periodically. Changes will be posted on this page with an updated revision date. Material changes will be notified via email.</p>
-
-        <h2>11. Contact Us</h2>
-        <div class="contact-box">
-            <h3>Octopus TMS Platform</h3>
-            <p><strong>The Digital Ronin LLC</strong></p>
-            <p>Email: <a href="mailto:info@thedigitalronin.com">info@thedigitalronin.com</a></p>
-        </div>
-
-        <div class="acknowledgment-box">
-            <p><em>By using the Octopus TMS Platform, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.</em></p>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-main">
-                    <div class="footer-logo">
-                        <img src="../octopus-logo.svg" alt="Octopus TMS">
-                        <span class="logo-text">Octopus TMS</span>
-                    </div>
-                    <p class="footer-tagline">
-                        Built by truckers, for truckers. The TMS that wins when you win.
-                    </p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="/#features">Features</a></li>
-                            <li><a href="/#pricing">Pricing</a></li>
-                            <li><a href="/#how-it-works">How It Works</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Get Started</h4>
-                        <ul>
-                            <li><a href="https://app.octopustms.com/register">Sign Up Free</a></li>
-                            <li><a href="https://cal.com/digital-ronin/15min">Book a Demo</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Octopus TMS. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="/privacy/">Privacy Policy</a>
-                    <a href="/terms/">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        // Nav scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-    </script>
+<header class="top">
+  <a class="brand" href="../"><svg class="logo" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true" focusable="false">
+<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
+<text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
+</svg><span>Octopus TMS</span></a>
+  <a class="back" href="../">← Back to octopustms.com</a>
+</header>
+<main>
+<h1>Privacy Policy</h1>
+<p><strong>Effective Date: August 28, 2026</strong></p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>Octopus TMS, operated by Digital Ronin LLC ("Octopus", "we", "us"), runs a transportation management platform for motor carriers. This policy explains what we collect, why, who we share it with, and what you can do about it. Plain language, no games.</p>
+<p><strong>The short version:</strong> we use your data to run the platform for you. We don't sell it, we don't rent it, we don't hand it to advertisers, and we don't train AI models on it.</p>
+<h2 id="2-what-we-collect">2. What We Collect</h2>
+<h3 id="2-1-business-information">2.1 Business Information</h3>
+<ul><li>Company name, business address, phone and email</li><li>DOT and MC numbers, operating authority and FMCSA rating, where you provide them</li><li>EIN / tax ID — <strong>stored encrypted</strong></li><li>Insurance carriers, policy numbers, coverage amounts and expiry dates</li><li>Bank account and routing numbers used for settlements — <strong>stored encrypted</strong></li><li>Factoring company details, if you use one</li></ul>
+<h3 id="2-2-people-on-your-account">2.2 People on Your Account</h3>
+<ul><li>Names, emails, phone numbers and roles for your admins, dispatchers and drivers</li><li>Passwords, stored only as salted hashes — we can't read them</li><li>Driver records: license details, emergency contacts, pay settings and assignment history</li></ul>
+<h3 id="2-3-trip-location-history">2.3 Trip Location History</h3>
+<p>Precise location is sensitive data and we treat it that way:</p>
+<ul><li>The driver app collects location <strong>only while a driver is running a load they consented to</strong></li><li>No active consented load means no location history is written — off-duty movement is not tracked</li><li>A driver can decline or withdraw tracking consent from the app</li><li>We use it to deliver load tracking, ETAs and proof of service, <strong>and to defend delivery, detention and cargo claims</strong> — the trip record is evidence, and disputes surface years after the freight moves. Nothing else</li><li>We keep it for <strong>5 years from the date of the trip</strong>, then delete it (§7)</li></ul>
+<h3 id="2-4-operational-data">2.4 Operational Data</h3>
+<ul><li>Loads, bookings, dispatch assignments and status history</li><li>Documents you upload or we generate — rate confirmations, BOLs, PODs, invoices</li><li>Broker and customer contact details you enter</li><li>Messages and notifications sent through the platform</li></ul>
+<h3 id="2-5-financial-data">2.5 Financial Data</h3>
+<ul><li>Invoices, settlements, expenses and factoring submissions</li><li>Your subscription plan and billing history</li><li>Card details go directly to Stripe. <strong>We never receive or store your full card number</strong></li></ul>
+<h3 id="2-6-technical-data">2.6 Technical Data</h3>
+<ul><li>IP address, browser and device information</li><li>Login and session activity, for security and audit</li><li>Error logs and usage patterns, used to fix and improve the platform</li></ul>
+<h2 id="3-why-we-use-it">3. Why We Use It</h2>
+<h3 id="3-1-running-the-service">3.1 Running the Service</h3>
+<ul><li>Searching and booking loads, dispatching drivers, tracking freight</li><li>Generating documents and invoices, submitting to factoring, calculating settlements</li><li>Billing you, and supporting you when something breaks</li></ul>
+<h3 id="3-2-keeping-it-safe-and-working">3.2 Keeping It Safe and Working</h3>
+<ul><li>Detecting fraud and abuse, and investigating security incidents</li><li>Diagnosing failures and improving features, using aggregated usage data</li></ul>
+<h3 id="3-3-what-we-never-do">3.3 What We Never Do</h3>
+<ul><li>Sell or rent your data, or share it for cross-context behavioral advertising</li><li>Use your data to train generalized or non-personalized AI or ML models</li><li>Use it for credit or lending decisions</li><li>Show your loads, rates or customers to another carrier on the platform</li></ul>
+<h2 id="4-who-sees-it">4. Who Sees It</h2>
+<h3 id="4-1-service-providers">4.1 Service Providers</h3>
+<p>These providers process data on our behalf, only as needed to deliver the Service:</p>
+<ul><li><strong>Amazon Web Services</strong> — hosting, database and document storage (United States)</li><li><strong>Stripe</strong> — payment processing and payouts</li><li><strong>DAT</strong> — load board search and booking</li><li><strong>Intuit QuickBooks</strong> — invoice and customer sync, only if you connect it</li><li><strong>Google / Gmail</strong> — sending email from your own address, only if you connect it</li><li><strong>Firebase (Google)</strong> — driver app push notifications and messaging</li><li><strong>Twilio</strong> — SMS notifications</li><li><strong>Mapbox</strong> — map rendering and tracking display</li><li>Email delivery providers for transactional mail</li></ul>
+<h3 id="4-2-people-you-choose-to-share-with">4.2 People You Choose to Share With</h3>
+<ul><li>Brokers and shippers on the loads you book, and on the documents you send them</li><li>Your factoring company, when you submit an invoice packet</li><li><strong>Public tracking links.</strong> When you generate one for a load, anyone holding that link can see that load's status and location updates. Send them deliberately</li></ul>
+<h3 id="4-3-legal">4.3 Legal</h3>
+<p>We disclose data when we're legally required to, or to:</p>
+<ul><li>Comply with a valid legal process</li><li>Investigate fraud or protect someone's safety</li><li>Enforce our Terms</li></ul>
+<p>If we're ever acquired or merged, your data may transfer with the business. We'll tell you first, and this policy keeps applying until it's replaced by one you're told about.</p>
+<h2 id="5-how-we-protect-it">5. How We Protect It</h2>
+<h3 id="5-1-what-we-actually-do">5.1 What We Actually Do</h3>
+<ul><li>Encryption in transit (TLS) and at rest</li><li>Field-level encryption for bank details, tax IDs and integration tokens</li><li>Passwords stored as salted hashes, never in readable form</li><li>Every carrier's data isolated at the database layer, enforced on every query</li><li>Role-based access, and audit trails on sensitive actions</li><li>Internal security review before releases, and prompt patching of dependencies</li></ul>
+<p>We'd rather be straight with you than impressive: we do not currently hold SOC 2 certification or a third-party penetration test report. When that changes, this section will say so.</p>
+<h3 id="5-2-if-something-goes-wrong">5.2 If Something Goes Wrong</h3>
+<ul><li>We investigate immediately</li><li>We notify affected accounts within 72 hours of confirming a breach</li><li>We tell you what happened, what was exposed and what we're doing — without spin</li></ul>
+<h2 id="google-api-services-user-data-policy-compliance">Google API Services User Data Policy Compliance</h2>
+<p>Octopus TMS's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+<p>When you connect your Google account to Octopus TMS, we access your Google account data solely to provide the user-facing features you have explicitly requested — specifically, sending emails on your behalf from your Gmail account to brokers, carriers, and drivers in connection with load operations.</p>
+<p>We commit to the following:</p>
+<ul><li><strong>Limited use.</strong> We use Google user data only to provide and improve the specific user-facing features you have authorized.</li><li><strong>No advertising.</strong> We do not transfer, sell, or use Google user data for serving advertisements, retargeting, or any personalized or interest-based advertising.</li><li><strong>No lending decisions.</strong> We do not use Google user data to determine credit-worthiness or for lending purposes.</li><li><strong>No AI/ML training.</strong> We do <strong>not</strong> use Google user data to develop, improve, or train generalized or non-personalized artificial intelligence (AI) or machine learning (ML) models. We do not retain Google user data for any AI/ML training purpose.</li><li><strong>No human access</strong>, except: (a) with your specific affirmative consent for particular messages, (b) for security purposes such as investigating a bug or abuse, (c) to comply with applicable law, or (d) where the data is aggregated and anonymized and used solely for internal operations.</li><li><strong>Token storage.</strong> OAuth access and refresh tokens are encrypted at rest using AES-256-GCM and are accessible only to the authenticated user's Octopus TMS account.</li><li><strong>Disconnection.</strong> You may disconnect your Google account at any time from Settings → Integrations. On disconnect we revoke the tokens with Google and delete them from our systems.</li></ul>
+<h2 id="6-your-rights">6. Your Rights</h2>
+<h3 id="6-1-what-you-can-ask-for">6.1 What You Can Ask For</h3>
+<ul><li>A copy of the personal data we hold about you</li><li>Correction of anything inaccurate</li><li>Deletion of your account and its data, subject to the retention rules below</li><li>An export of your data in a machine-readable format, any time</li></ul>
+<p>Email private@thedigitalronin.com and we'll respond within 30 days. We won't charge you, and we won't treat you differently for asking.</p>
+<h3 id="6-2-communication-preferences">6.2 Communication Preferences</h3>
+<ul><li>You can opt out of non-essential notifications any time</li><li>Transactional messages — load assignments, payment and security alerts — can't be turned off while your account is active. They're how the platform works</li></ul>
+<h2 id="7-how-long-we-keep-it">7. How Long We Keep It</h2>
+<div class="table-wrap"><table><thead><tr><th>Data</th><th>Retention</th></tr></thead><tbody><tr><td>Account and operational data</td><td>For as long as your account is active</td></tr><tr><td>Financial records — invoices, settlements, tax documents</td><td>7 years, as tax and DOT rules require</td></tr><tr><td><strong>Trip location history — raw GPS breadcrumbs</strong></td><td><strong>5 years</strong> from the date of the trip, then deleted. Deletion runs monthly, so records may remain up to one month longer</td></tr><tr><td>Route summary and stop times attached to a completed load</td><td>7 years, with the load record</td></tr><tr><td>Messages and notification logs</td><td>3 years</td></tr><tr><td>Technical and security logs</td><td>90 days</td></tr><tr><td>Closed account</td><td>Exportable for 60 days, then deleted except records we must keep by law</td></tr></tbody></table></div>
+<p>If data is subject to a legal hold, we keep the affected records until the hold is lifted.</p>
+<p><strong>Why trip location is kept for 5 years.</strong> Freight disputes surface long after the truck has moved: cargo claims run about three years, accident records must be kept three years by federal rule, and injury and contract claims run two to four years in most states. Five years covers those windows and mirrors the period the DOT already sets for other driver records. It is a limit, not a default — nothing is kept indefinitely, and off-duty location is never collected in the first place.</p>
+<h2 id="8-where-your-data-lives">8. Where Your Data Lives</h2>
+<p>Your data is stored and processed in the United States. If you access the platform from elsewhere, you're sending it to the US. Where the law requires safeguards for those transfers, we put them in place.</p>
+<h2 id="9-california-privacy-rights-ccpa-cpra">9. California Privacy Rights (CCPA/CPRA)</h2>
+<p>If you're a California resident, you have the right to know what we collect, to correct it, to delete it, to receive a portable copy, to limit our use of sensitive personal information, and not to be discriminated against for exercising any of those rights.</p>
+<p><strong>We do not sell or share personal information</strong> as those terms are defined by the CCPA/CPRA, and we have not in the past 12 months. There is nothing for you to opt out of.</p>
+<p><strong>Sensitive personal information:</strong> precise geolocation, financial account numbers and government identifiers. We use them to deliver the Service you asked for and to defend claims arising from it — never to infer characteristics about anyone, and never for profiling or advertising. Those are permitted purposes under CPRA, so no separate limit-the-use request is needed. You can still make one.</p>
+<p><strong>Drivers.</strong> If you drive for a carrier that uses Octopus, that carrier decides that you are tracked and for which loads; we process trip location on their instructions as a service provider. You hold the same rights listed above and can exercise them with us directly at the address below, and your carrier may owe you separate written notice of monitoring under your state's law.</p>
+<p>To exercise any right, email private@thedigitalronin.com. An authorized agent may act for you with written permission.</p>
+<h2 id="10-children-s-privacy">10. Children's Privacy</h2>
+<p>This is a commercial trucking platform. It isn't for anyone under 18, and we don't knowingly collect data from children. If we learn we have, we delete it.</p>
+<h2 id="11-updates-to-this-policy">11. Updates to This Policy</h2>
+<p>We update this policy when the platform changes — a new integration, a new data type, a new retention rule. Material changes get 30 days' notice by email and in-app. The effective date at the top always tells you which version you're reading.</p>
+<h2 id="12-contact-us">12. Contact Us</h2>
+<p>Privacy questions, data requests, or anything in this policy that reads wrong to you:</p>
+<p><strong>Octopus TMS</strong> Operated by Digital Ronin LLC Email: private@thedigitalronin.com Phone: +1 (412)510-5854</p>
+<h2 id="13-cookies">13. Cookies</h2>
+<p>We use cookies and local storage to keep you logged in, remember your preferences such as language and theme, and understand which features get used so we know what to improve.</p>
+<p>No advertising cookies. No third-party tracking pixels. Blocking cookies in your browser will break login.</p>
+<hr>
+<p>By using Octopus TMS, you acknowledge that you've read and understood this Privacy Policy.</p>
+<h2 id="14-version-history">14. Version History</h2>
+<ul><li><strong>2.1</strong> — August 28, 2026: Added Data Processing Addendum cross-reference and version history. Acceptance is now recorded per user, document version, and timestamp at signup.</li><li><strong>2.0</strong> — August 2026: Full rewrite against the real product.</li><li><strong>1.0</strong> — December 2024: Initial version.</li></ul>
+</main>
+<footer class="foot">
+  <span>© 2026 Digital Ronin LLC · <a href="mailto:ask@octopustms.com">ask@octopustms.com</a></span>
+  <nav><a href="../terms/">Terms of Service</a> <a href="../payment-terms/">Payment Terms</a> <a href="../refund-policy/">Refund & Cancellation Policy</a></nav>
+</footer>
 </body>
 </html>

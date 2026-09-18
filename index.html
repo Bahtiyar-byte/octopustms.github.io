@@ -1,2143 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus TMS - Pay Only When You Book</title>
-    <meta name="description" content="$20 per booked load. Zero loads = Zero cost. The revolutionary TMS built by truckers, for truckers.">
-    <meta property="og:title" content="Octopus TMS - Revolutionary Trucking Management Software">
-    <meta property="og:description" content="$20 per booked load. Zero loads = Zero cost. Built by truckers, for truckers.">
-    <meta property="og:image" content="https://octopustms.com/octopus-logo.svg">
-    <link rel="icon" type="image/svg+xml" href="octopus-logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            /* C.H. Robinson inspired colors */
-            --primary: #0066B3;
-            --primary-light: #00A3E0;
-            --primary-dark: #064979;
-            --primary-darker: #003057;
-            --secondary: #00B5E2;
-            --accent: #00C7B1;
-            --success: #00A94F;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --bg-white: #FFFFFF;
-            --bg-light: #F8FAFC;
-            --bg-gray: #F1F5F9;
-            --bg-dark: #001F3F;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --text-light: #94A3B8;
-            --border-light: #E2E8F0;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Light section backgrounds */
-        .section-white {
-            background: var(--bg-white);
-        }
-
-        .section-light {
-            background: var(--bg-light);
-        }
-
-        .section-gray {
-            background: var(--bg-gray);
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Top Trust Bar */
-        .trust-bar {
-            background: linear-gradient(90deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .trust-bar-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 48px;
-            flex-wrap: wrap;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .trust-item svg {
-            width: 16px;
-            height: 16px;
-            color: var(--success);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 16px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo img { width: 40px; height: 40px; }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-            background: rgba(0, 102, 179, 0.05);
-        }
-
-        .nav-link.active {
-            color: var(--primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 4px 14px rgba(0, 102, 179, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 179, 0.5);
-        }
-
-        .btn-secondary {
-            background: var(--bg-white);
-            color: var(--primary);
-            border: 1px solid var(--border-light);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-light);
-            border-color: var(--primary);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 1.05rem;
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-white);
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-dark);
-            z-index: 200;
-            padding: 24px;
-            flex-direction: column;
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-
-        .mobile-menu-close {
-            background: none;
-            border: none;
-            color: var(--text-white);
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mobile-menu-links a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 16px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .mobile-menu-links a:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .mobile-menu-cta {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 0 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('images/img.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            z-index: -1;
-        }
-
-        .hero-bg-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.95) 100%);
-            z-index: -1;
-        }
-
-        .hero-parallax-element {
-            position: absolute;
-            pointer-events: none;
-            will-change: transform;
-        }
-
-        .hero-circle-1 {
-            width: 600px;
-            height: 600px;
-            border: 1px solid rgba(0, 102, 179, 0.1);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-        }
-
-        .hero-circle-2 {
-            width: 400px;
-            height: 400px;
-            border: 1px solid rgba(0, 163, 224, 0.1);
-            border-radius: 50%;
-            bottom: -100px;
-            left: -100px;
-        }
-
-        .hero-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-image:
-                linear-gradient(rgba(0, 102, 179, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 179, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
-            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--success);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .hero h1 {
-            font-size: 3.75rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            color: var(--text-dark);
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 1.25rem;
-            color: var(--text-gray);
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .stat-item {
-            text-align: left;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .stat-value.counting {
-            color: var(--primary-light);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        /* Hero Visual - Pricing Card */
-        .hero-visual {
-            position: relative;
-        }
-
-        .pricing-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 48px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .pricing-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-
-        .pricing-amount {
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .pricing-amount span {
-            font-size: 1.5rem;
-            color: var(--text-gray);
-            font-weight: 500;
-        }
-
-        .pricing-subtitle {
-            font-size: 1.1rem;
-            color: var(--success);
-            font-weight: 600;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-light);
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-
-        .check-icon {
-            width: 20px;
-            height: 20px;
-            background: rgba(16, 185, 129, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--success);
-            flex-shrink: 0;
-        }
-
-        /* Audience Segmentation */
-        .audience-section {
-            padding: 80px 0;
-            background: var(--bg-white);
-        }
-
-        .audience-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .audience-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 32px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .audience-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .audience-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .audience-card:hover::before {
-            opacity: 1;
-        }
-
-        .audience-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .audience-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .audience-card:hover .audience-image img {
-            transform: scale(1.05);
-        }
-
-        .audience-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .audience-card p {
-            color: var(--text-gray);
-            margin-bottom: 24px;
-            line-height: 1.7;
-        }
-
-        /* Social Proof Section */
-        .social-proof {
-            padding: 60px 0;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .social-proof-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .social-proof-header p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-
-        .stats-item {
-            text-align: center;
-            padding: 24px;
-            background: var(--bg-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .stats-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        .integrations-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-        }
-
-        .integration-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 16px;
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .integration-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 102, 179, 0.1);
-        }
-
-        .integration-logo {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-
-        .integration-logo.dat {
-            background: linear-gradient(135deg, rgba(0, 70, 224, 0.1) 0%, rgba(28, 96, 242, 0.15) 100%);
-        }
-
-        .integration-logo.stripe {
-            background: linear-gradient(135deg, rgba(99, 91, 255, 0.1) 0%, rgba(99, 91, 255, 0.15) 100%);
-            color: #635BFF;
-        }
-
-        .integration-logo.twilio {
-            background: linear-gradient(135deg, rgba(241, 78, 78, 0.1) 0%, rgba(241, 78, 78, 0.15) 100%);
-            color: #F14E4E;
-        }
-
-        .integration-logo.mapbox {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
-            color: #000000;
-        }
-
-        .integration-logo.quickbooks {
-            background: linear-gradient(135deg, rgba(44, 160, 28, 0.1) 0%, rgba(44, 160, 28, 0.15) 100%);
-            color: #2CA01C;
-        }
-
-        .integration-name {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .integration-desc {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-        }
-
-        /* Features Section */
-        .section {
-            padding: 120px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 64px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: rgba(0, 102, 179, 0.1);
-            border: 1px solid rgba(0, 102, 179, 0.3);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            color: var(--text-dark);
-        }
-
-        .section-description {
-            font-size: 1.15rem;
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
-
-        /* Feature Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card.parallax-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .feature-card:nth-child(1) { transition-delay: 0s; }
-        .feature-card:nth-child(2) { transition-delay: 0.1s; }
-        .feature-card:nth-child(3) { transition-delay: 0.2s; }
-        .feature-card:nth-child(4) { transition-delay: 0.3s; }
-        .feature-card:nth-child(5) { transition-delay: 0.4s; }
-        .feature-card:nth-child(6) { transition-delay: 0.5s; }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .feature-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--primary);
-        }
-
-        .feature-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .feature-card p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* Workflow Section */
-        .workflow-section {
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .workflow-steps {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-            position: relative;
-        }
-
-        .workflow-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
-            opacity: 0.3;
-        }
-
-        .workflow-step {
-            text-align: center;
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .workflow-step.parallax-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .workflow-step:nth-child(1) { transition-delay: 0s; }
-        .workflow-step:nth-child(2) { transition-delay: 0.15s; }
-        .workflow-step:nth-child(3) { transition-delay: 0.3s; }
-        .workflow-step:nth-child(4) { transition-delay: 0.45s; }
-        .workflow-step:nth-child(5) { transition-delay: 0.6s; }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: var(--bg-white);
-            border: 2px solid var(--border-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .workflow-step:hover .step-number {
-            border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(0, 102, 179, 0.2);
-        }
-
-        .step-number svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--primary);
-        }
-
-        .workflow-step h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-
-        .workflow-step p {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* Comparison Section */
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .comparison-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 40px;
-            opacity: 0;
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .comparison-card:first-child {
-            transform: translateX(-50px);
-        }
-
-        .comparison-card:last-child {
-            transform: translateX(50px);
-        }
-
-        .comparison-card.parallax-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .comparison-card:first-child { transition-delay: 0.1s; }
-        .comparison-card:last-child { transition-delay: 0.3s; }
-
-        .comparison-card.highlight {
-            background: linear-gradient(145deg, rgba(0, 102, 179, 0.05) 0%, var(--bg-white) 100%);
-            border-color: var(--primary);
-        }
-
-        .comparison-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .comparison-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .comparison-card:not(.highlight) .comparison-icon {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .comparison-card.highlight .comparison-icon {
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .comparison-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .comparison-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 24px;
-            color: var(--text-dark);
-        }
-
-        .comparison-card:not(.highlight) .comparison-price {
-            color: var(--text-light);
-            text-decoration: line-through;
-        }
-
-        .comparison-list {
-            list-style: none;
-        }
-
-        .comparison-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            font-size: 0.95rem;
-            color: var(--text-gray);
-        }
-
-        /* Testimonials */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .testimonial-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(40px) rotateX(10deg);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .testimonial-card.parallax-visible {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
-        }
-
-        .testimonial-card:nth-child(1) { transition-delay: 0s; }
-        .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
-        .testimonial-card:nth-child(3) { transition-delay: 0.3s; }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .testimonial-stars {
-            color: #F59E0B;
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-        }
-
-        .testimonial-text {
-            font-size: 1rem;
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-        }
-
-        .author-name {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .author-role {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* Image Showcase Section */
-        .showcase-section {
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-light);
-        }
-
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .showcase-item {
-            border-radius: 16px;
-            overflow: hidden;
-            height: 300px;
-            position: relative;
-        }
-
-        .showcase-item:first-child {
-            grid-column: span 1;
-            grid-row: span 1;
-            height: 300px;
-        }
-
-        .showcase-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .showcase-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .showcase-item::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 31, 63, 0.6) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .cta-card {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
-            border-radius: 24px;
-            padding: 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-bg-image {
-            display: none;
-        }
-
-        .cta-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-
-        .cta-description {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 32px;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--primary-dark);
-        }
-
-        .btn-white:hover {
-            background: #F3F4F6;
-            transform: translateY(-2px);
-        }
-
-        .btn-ghost {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Footer */
-        footer {
-            padding: 60px 0 40px;
-            background: var(--bg-dark);
-            color: white;
-        }
-
-        .footer-logo .logo-text {
-            color: white;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-main {
-            max-width: 320px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .footer-logo img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .footer-tagline {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 64px;
-        }
-
-        .footer-column h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            color: white;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-legal a:hover {
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content { grid-template-columns: 1fr; gap: 60px; }
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
-            .workflow-steps { grid-template-columns: repeat(3, 1fr); }
-            .workflow-steps::before { display: none; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .audience-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .integrations-grid { grid-template-columns: repeat(5, 1fr); }
-            .footer-content { flex-direction: column; }
-            .footer-links { gap: 48px; }
-            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
-            .showcase-item:first-child { grid-column: span 2; grid-row: span 1; height: 300px; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links, .nav-actions { display: none; }
-            .mobile-menu-btn { display: block; }
-            .hero { padding: 120px 0 80px; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-stats { flex-direction: column; gap: 24px; }
-            .features-grid { grid-template-columns: 1fr; }
-            .comparison-grid { grid-template-columns: 1fr; }
-            .workflow-steps { grid-template-columns: repeat(2, 1fr); }
-            .cta-card { padding: 48px 24px; }
-            .cta-title { font-size: 2rem; }
-            .cta-buttons { flex-direction: column; }
-            .section { padding: 80px 0; }
-            .pricing-amount { font-size: 3rem; }
-            .footer-links { flex-direction: column; gap: 32px; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-            .footer-legal { justify-content: center; }
-            .integrations-grid { grid-template-columns: repeat(2, 1fr); }
-            .integration-item:last-child { grid-column: span 2; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .showcase-grid { grid-template-columns: 1fr; }
-            .showcase-item:first-child { grid-column: span 1; height: 250px; }
-            .showcase-item { height: 200px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free to Start TMS for Small Carriers — $20 Per Booked Load | Octopus TMS</title>
+<meta name="description" content="Octopus TMS is free to start and charges $20 only when you book a load — refunded if the load falls through. DAT + 123Loadboard search, dispatch, tracking, documents, driver settlements and QuickBooks in one place. English and Russian.">
+<link rel="canonical" href="https://octopustms.com/">
+<link rel="alternate" hreflang="en" href="https://octopustms.com/">
+<link rel="alternate" hreflang="ru" href="https://octopustms.com/ru/">
+<link rel="alternate" hreflang="x-default" href="https://octopustms.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Octopus TMS">
+<meta property="og:url" content="https://octopustms.com/">
+<meta property="og:title" content="Octopus TMS — Free to Start. $20 Per Booked Load.">
+<meta property="og:description" content="The carrier&#x27;s partner, not a subscription: find, book, track and get paid in one place. $20 per booked load, refunded if the load falls through.">
+<meta property="og:image" content="https://octopustms.com/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EEF2F7">
+<link rel="icon" href="octopus-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://octopustms.com/#app","name":"Octopus TMS","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://octopustms.com/","inLanguage":["en","ru"],"description":"Octopus TMS is free to start and charges $20 only when you book a load — refunded if the load falls through. DAT + 123Loadboard search, dispatch, tracking, documents, driver settlements and QuickBooks in one place. English and Russian.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free plan","description":"One truck, one driver, up to 10 booked loads a month. No card required."},{"@type":"Offer","price":"20.00","priceCurrency":"USD","name":"Partnership plan","description":"$20 per booked load, refunded automatically if the load is cancelled before transport. No monthly fee."}],"publisher":{"@id":"https://octopustms.com/#org"}},{"@type":"Organization","@id":"https://octopustms.com/#org","name":"Digital Ronin LLC","alternateName":"Octopus TMS","url":"https://octopustms.com","logo":"https://octopustms.com/octopus-logo.svg","email":"ask@octopustms.com"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Octopus TMS free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Octopus TMS is free to start: register with no card, one truck, one driver and up to 10 booked loads a month. On the Partnership plan you pay $20 per booked load with no monthly fee, and the $20 is refunded automatically if the load is cancelled before the truck moves."}}]}]}</script>
+<style>
+:root{
+  --ink:#0E1726;--ink-2:#3A4556;--muted:#69737F;--line:#D9DFE8;--paper:#EEF2F7;--card:#FFFFFF;
+  --accent:#0A5BFF;--accent-ink:#0646C7;--accent-soft:#E7EEFF;--money:#0E9F6E;
+  --radius:18px;
+  --display:'Unbounded','Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-text-size-adjust:100%;font-size:16px}
+body{margin:0;min-height:100dvh;display:grid;grid-template-rows:auto auto 1fr auto;background:var(--paper);color:var(--ink);line-height:1.45}
+a{color:var(--accent-ink)}
+h1,h2,h3{margin:0;font-weight:700}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* ---- top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(8px,1.4vh,14px) clamp(16px,3vw,32px)}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;white-space:nowrap}
+.brand .logo{width:34px;height:34px;flex:none}
+.top-right{display:flex;align-items:center;gap:clamp(10px,1.6vw,22px)}
+.lang{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.lang button{border:0;background:transparent;font:inherit;font-weight:600;font-size:.82rem;letter-spacing:.02em;color:var(--muted);padding:6px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:background .15s,color .15s}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.flag{border-radius:2px;flex:none}
+.link-demo{font-weight:600;text-decoration:none;color:var(--ink-2);font-size:.95rem;white-space:nowrap}
+.link-demo:hover{color:var(--accent-ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.95rem;padding:10px 18px;border-radius:999px;white-space:nowrap;transition:transform .15s,background .15s}
+.btn:hover{background:var(--accent-ink);transform:translateY(-1px)}
+.btn::after{content:"→"}
+
+/* ---- hero */
+.hero{width:100%;max-width:1180px;margin:0 auto;padding:clamp(4px,1.6vh,18px) clamp(16px,3vw,32px) clamp(10px,2vh,20px)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,calc(1vw + 2.2vh),2.6rem);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:22ch;margin:0 0 clamp(6px,1.2vh,12px)}
+.hero .sub{font-size:clamp(.94rem,1.9vh,1.2rem);color:var(--ink-2);max-width:66ch;margin:0 0 clamp(8px,1.6vh,16px);text-wrap:pretty}
+.qa{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;border-left:3px solid var(--accent);padding-left:14px;max-width:78ch;font-size:clamp(.88rem,1.7vh,1.05rem)}
+.qa .q{font-family:var(--display);font-weight:700;font-size:1.02em;white-space:nowrap;color:var(--ink)}
+.qa .a{color:var(--ink-2);flex:1 1 40ch;text-wrap:pretty}
+
+/* ---- card grid */
+.grid{width:100%;max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) clamp(10px,1.6vh,16px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(10px,1.4vw,16px);min-height:0}
+.card{position:relative;display:flex;flex-direction:column;gap:clamp(4px,.9vh,10px);min-height:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(12px,2vh,22px) clamp(14px,1.6vw,22px);cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.card:hover,.card:has(button:focus-visible){transform:translateY(-2px);border-color:var(--accent);box-shadow:0 18px 34px -22px rgba(10,91,255,.55)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.more{margin-top:auto;padding-top:8px;display:none;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;font-weight:600;color:var(--accent-ink);letter-spacing:.01em}
+.eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.plus{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--accent);font-weight:600;font-size:1.05rem;line-height:1;flex:none;transition:background .15s,color .15s,transform .18s}
+.card:hover .plus,.card:has(button:focus-visible) .plus{background:var(--accent);color:#fff;border-color:var(--accent);transform:rotate(90deg)}
+.card h2{font-family:var(--display);font-weight:700;font-size:clamp(.98rem,calc(.4vw + 1.35vh),1.6rem);line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+.card h2 button{all:unset;cursor:pointer;color:inherit;font:inherit;display:block}
+.card h2 button::before{content:"";position:absolute;inset:0;border-radius:var(--radius)}
+.card h2 button:focus-visible{outline:none}
+.card:has(button:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.teaser{margin:0;color:var(--ink-2);font-size:clamp(.84rem,calc(.1vw + 1.55vh),1.1rem);line-height:1.55;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;text-wrap:pretty}
+.card-body{display:none}
+
+/* ---- footer */
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;padding:clamp(8px,1.2vh,12px) clamp(16px,3vw,32px);font-size:.8rem;color:var(--muted)}
+.foot nav{display:flex;flex-wrap:wrap;gap:4px 14px}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot .foot-demo{display:none}
+
+/* ---- expanded card */
+.panel{border:0;border-radius:24px;padding:0;width:min(760px,94vw);max-height:min(88dvh,940px);background:#fff;color:var(--ink);box-shadow:0 40px 90px -30px rgba(14,23,38,.55);display:none;flex-direction:column;overflow:hidden;margin:auto}
+.panel[open]{display:flex}
+.panel::backdrop{background:rgba(14,23,38,.5);backdrop-filter:blur(6px)}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:26px 28px 6px}
+.panel-hook{font-family:var(--display);font-weight:700;font-size:clamp(1.15rem,2.2vw,1.55rem);line-height:1.15;letter-spacing:-.01em;margin-top:6px;text-wrap:balance}
+.close{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:1.3rem;line-height:1;color:var(--ink-2);flex:none}
+.close:hover{background:var(--paper);color:var(--ink)}
+.panel-body{padding:6px 28px 18px;overflow:auto;overscroll-behavior:contain;font-size:.98rem;line-height:1.6;color:var(--ink-2)}
+.panel-body h3{color:var(--ink);font-size:1rem;margin:18px 0 6px}
+.panel-body p{margin:0 0 12px}
+.panel-body em{font-style:normal;font-weight:600;color:var(--ink)}
+.panel-body strong{color:var(--ink)}
+.panel-body .fine{font-size:.86rem;color:var(--muted);margin-top:14px}
+.panel-body .motto{font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.05rem;margin:18px 0 6px}
+.panel-body .photo{display:block;width:100%;height:auto;border-radius:14px;margin:4px 0 16px}
+.checks{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:8px}
+.checks li{position:relative;padding-left:26px}
+.checks li::before{content:"";position:absolute;left:0;top:.55em;width:14px;height:8px;border-left:2.5px solid var(--money);border-bottom:2.5px solid var(--money);transform:rotate(-45deg)}
+.steps{list-style:none;counter-reset:step;padding:0;margin:8px 0 6px;display:grid;gap:10px}
+.steps li{display:grid;grid-template-columns:32px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:start}
+.steps li::before{counter-increment:step;content:counter(step);grid-row:1/3;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:.9rem;font-variant-numeric:tabular-nums}
+.steps li strong{color:var(--ink)}
+.steps li span{grid-column:2;font-size:.93rem}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 12px}
+.compare-item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:4px;font-size:.92rem}
+.compare-item strong{color:var(--ink)}
+.compare-item.is-us{border-color:var(--money);background:#F1FBF6}
+.callout{background:var(--accent-soft);color:var(--ink);border-radius:14px;padding:16px 18px;margin:0 0 6px;font-size:1rem;line-height:1.55}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 6px}
+.trust div{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:2px}
+.trust strong{font-family:var(--display);font-size:1.05rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.trust span{font-size:.82rem;color:var(--muted)}
+.panel-foot{display:flex;align-items:center;gap:16px;padding:14px 28px 22px;border-top:1px solid var(--line)}
+
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel[open]{animation:pop .22s cubic-bezier(.2,.8,.2,1)}
+.panel[open]::backdrop{animation:fade .22s ease}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- the no-scroll lock: one screen, no scrolling, on real desktops */
+@media (min-width:1000px) and (min-height:760px), (max-width:999px){
+  .more{display:flex}
+  .plus-top{display:none}
+}
+@media (min-width:1000px) and (min-height:600px){
+  html,body{height:100dvh;overflow:hidden}
+}
+@media (max-width:999px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}
+  .card{min-height:150px}
+  .teaser{-webkit-line-clamp:unset;display:block}
+}
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .link-demo{display:none}
+  .foot .foot-demo{display:inline}
+  .foot{justify-content:center;text-align:center}
+  .lang button span{display:none}
+  .lang button{padding:7px 9px}
+  .compare,.trust{grid-template-columns:1fr}
+  .panel-head,.panel-body,.panel-foot{padding-left:18px;padding-right:18px}
+  .panel{width:100vw;max-width:100vw;max-height:92dvh;margin:auto 0 0;border-radius:22px 22px 0 0}
+  .btn{padding:9px 14px;font-size:.9rem}
+}
+@media (max-width:420px){
+  .brand span{display:none}
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <img src="octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </div>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#how-it-works" class="nav-link">How It Works</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-            </div>
-            <div class="nav-actions">
-                <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-small">Book Demo</a>
-                <a href="https://app.octopustms.com/register" class="btn btn-primary btn-small">Get Started Free</a>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <div class="logo">
-                <img src="octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </div>
-            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        <div class="mobile-menu-links">
-            <a href="#features" onclick="toggleMobileMenu()">Features</a>
-            <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
-            <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
-        </div>
-        <div class="mobile-menu-cta">
-            <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary btn-large">Book Demo</a>
-            <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">Get Started Free</a>
-        </div>
+<header class="top">
+  <a class="brand" href="./"><svg class="logo" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true" focusable="false">
+<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
+<text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
+</svg><span data-i18n="ui.brand">Octopus TMS</span></a>
+  <div class="top-right">
+    <div class="lang" role="group" aria-label="Language / Язык">
+      <button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English"><svg class="flag" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false"><rect width="20" height="14" rx="2" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.31" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.5" r=".45"/><circle cx="4.3" cy="1.5" r=".45"/><circle cx="7" cy="1.5" r=".45"/><circle cx="2.95" cy="3.1" r=".45"/><circle cx="5.65" cy="3.1" r=".45"/><circle cx="1.6" cy="4.7" r=".45"/><circle cx="4.3" cy="4.7" r=".45"/><circle cx="7" cy="4.7" r=".45"/><circle cx="2.95" cy="6.2" r=".45"/><circle cx="5.65" cy="6.2" r=".45"/></g></svg><span>EN</span></button>
+      <button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский"><svg class="flag" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false"><rect width="20" height="14" rx="2" fill="#fff"/><rect y="4.67" width="20" height="4.67" fill="#0039A6"/><path d="M0 9.33h20V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2z" fill="#D52B1E"/></svg><span>RU</span></button>
     </div>
+    <a class="link-demo" href="https://cal.com/digital-ronin/15min" data-i18n="ui.demo">Book a 15-min demo</a>
+    <a class="btn" href="https://app.octopustms.com/register" data-i18n="ui.start">Start free</a>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg-image"></div>
-        <div class="hero-bg-overlay"></div>
-        <div class="hero-parallax-element hero-grid" data-parallax-speed="0.05"></div>
-        <div class="hero-parallax-element hero-circle-1" data-parallax-speed="0.15"></div>
-        <div class="hero-parallax-element hero-circle-2" data-parallax-speed="0.1"></div>
+<section class="hero">
+  <h1 data-i18n="hero.h1">The TMS that wins when you win.</h1>
+  <p class="sub" data-i18n="hero.sub">Octopus TMS is your carrier partner, not a subscription — one place to find the load, book it, track it and get paid.</p>
+  <div class="qa"><span class="q" data-i18n="hero.q">Is it free?</span><span class="a" data-i18n="hero.a">Yes. If you don't book a load, you don't pay. Octopus isn't built to make money without its partner — the carrier. $20 per booked load, refunded if the load falls through.</span></div>
+</section>
 
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text" data-parallax-fade>
-                    <div class="hero-badge">Now Available Nationwide</div>
-                    <h1>The TMS that <span>wins when you win</span></h1>
-                    <p class="hero-description">
-                        Stop paying thousands for software that doesn't care if you succeed.
-                        Octopus charges only when you book loads. Zero loads? Zero cost.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">
-                            Start Free Today
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <a href="https://cal.com/digital-ronin/15min" class="btn btn-outline btn-large">Schedule Demo</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-value" data-count="20">$20</div>
-                            <div class="stat-label">Per booked load</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" data-count="4">4hrs</div>
-                            <div class="stat-label">Saved daily</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">$0</div>
-                            <div class="stat-label">Monthly fees</div>
-                        </div>
-                    </div>
-                </div>
+<main class="grid" id="cards">
+  <article class="card" data-card="free">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.free.eyebrow">Pricing</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.free.hook">Is it really FREE though?!</button></h2>
+    <p class="teaser" data-i18n="cards.free.teaser">Yes. Every feature, no card on file. You pay $20 for a load you book — and it comes back if the load dies before the truck moves.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.free.body"><h3>What free means here</h3>
+<p>Register and use the whole platform — load search, dispatch, tracking, documents, invoices, settlements — with no card on file. The free plan covers one truck, one driver and up to 10 booked loads a month.</p>
+<h3>When you grow: $20 per booked load</h3>
+<p>Switch to the Partnership plan and everything is unlimited. You pay $20 the moment a load is created in Octopus. No monthly fee, no per-seat fee, no setup fee, no minimum.</p>
+<h3>Refunded if the load falls through</h3>
+<p>Cancel a load before the truck moves and the $20 comes back automatically — in full, every time, no ticket, no asking. Once the load is in transit, the fee is earned.</p>
+<div class="compare">
+  <div class="compare-item"><strong>Any subscription TMS</strong><span>A fixed fee every month — whether you moved 0 loads or 100.</span></div>
+  <div class="compare-item is-us"><strong>Octopus</strong><span>$0 in a dead month. $20 × the loads you booked in a good one.</span></div>
+</div>
+<div class="callout"><strong>$600 in a month with Octopus</strong> means you booked 30 loads — roughly <strong>$75,000 of freight</strong> moved. A subscription doesn't know if you earned anything at all.</div>
+<p class="motto">We don't eat until you eat.</p>
+<p class="fine">The exact rules live in the <a href="payment-terms/">Payment Terms</a> and the <a href="refund-policy/">Refund &amp; Cancellation Policy</a> — short, plain English.</p></div>
+  </article>
+  <article class="card" data-card="one">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.one.eyebrow">One place</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.one.hook">Find. Book. Track. Get paid.</button></h2>
+    <p class="teaser" data-i18n="cards.one.teaser">The whole life of a load — from the load board to the money in your account — without ever leaving Octopus.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.one.body"><p><em>Leaving</em> means a load board in one tab, a spreadsheet in another, a group chat with the drivers, a folder of BOL photos, an invoicing tool, and QuickBooks at the end of the month. Octopus is the one tab.</p>
+<ol class="steps">
+  <li><strong>Find</strong><span>Search DAT and 123Loadboard side by side — results in under a second.</span></li>
+  <li><strong>Book</strong><span>Booking creates the load: broker, rate, stops, dates — no retyping.</span></li>
+  <li><strong>Dispatch</strong><span>Assign the driver and the truck; the driver gets the load on their phone.</span></li>
+  <li><strong>Track</strong><span>Live location from the driver's phone; the broker gets a link, not a phone call.</span></li>
+  <li><strong>Paperwork</strong><span>BOL and POD photos uploaded from the road and read automatically.</span></li>
+  <li><strong>Invoice</strong><span>The invoice is built from the load — send it to the broker or your factoring company.</span></li>
+  <li><strong>Get paid</strong><span>Driver settlement calculated, QuickBooks in sync. Done.</span></li>
+</ol></div>
+  </article>
+  <article class="card" data-card="boards">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.boards.eyebrow">Load boards</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.boards.hook">Two load boards. One search. Under a second.</button></h2>
+    <p class="teaser" data-i18n="cards.boards.teaser">DAT and 123Loadboard, searched from inside Octopus — and the load you book is already in your system.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.boards.body"><p>Connect your DAT and 123Loadboard accounts once. Search a lane, equipment and dates and both boards answer in under a second. Book, and the load is created for you — broker, rate and stops included. DAT match alerts stream in as new loads are posted.</p>
+<ul class="checks">
+  <li>Built on the official DAT and 123Loadboard APIs.</li>
+  <li>One search form, both boards, one result list per board — no copy-pasting between tabs.</li>
+  <li>From a search result to a dispatched load in a couple of clicks.</li>
+</ul>
+<p class="fine">You bring your own DAT / 123Loadboard subscription — Octopus connects to it. We don't resell load board access.</p></div>
+  </article>
+  <article class="card" data-card="track">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.track.eyebrow">Tracking</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.track.hook">The driver's phone is the tracker.</button></h2>
+    <p class="teaser" data-i18n="cards.track.teaser">No ELD wiring, no extra hardware. The driver opens Octopus on their phone; you and your broker see the truck move.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.track.body"><p>Your driver accepts the load on their phone, shares location while the load is moving, and uploads the BOL and the POD straight from the dock. You see every truck on one map. The broker gets a tracking link that shows the truck — not your driver's phone number.</p>
+<ul class="checks">
+  <li>Location sharing is the driver's choice, turned on for a load — never a silent tracker.</li>
+  <li>No hardware to buy, install or wire. Any phone works.</li>
+  <li>"Where's my truck?" becomes a link you send once.</li>
+</ul></div>
+  </article>
+  <article class="card" data-card="paper">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.paper.eyebrow">Paperwork & money</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.paper.hook">Paperwork that does itself.</button></h2>
+    <p class="teaser" data-i18n="cards.paper.teaser">Rate confirmations, BOLs and PODs get read automatically. Invoices, driver pay and QuickBooks follow from the load — not from retyping.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.paper.body"><ul class="checks">
+  <li><strong>Documents that read themselves.</strong> Upload a rate confirmation or a POD and Octopus reads it — broker, rate, stops and reference numbers land in the load.</li>
+  <li><strong>Invoices from loads.</strong> One click; send it to the broker or hand it to your factoring company.</li>
+  <li><strong>Driver settlements.</strong> Percentage of gross, per load, weekly, owner-operator or employee — calculated per load, paid the way you pay.</li>
+  <li><strong>QuickBooks.</strong> Invoices go to QuickBooks; when they get paid there, Octopus knows.</li>
+  <li><strong>Load record export.</strong> Everything about a load — documents, invoice, settlement, timeline — in one file for audits and disputes.</li>
+  <li><strong>English and Russian, natively.</strong> Every screen, both languages.</li>
+</ul></div>
+  </article>
+  <article class="card" data-card="founder">
+    <div class="card-top"><span class="eyebrow" data-i18n="cards.founder.eyebrow">Who built it</span><span class="plus plus-top" aria-hidden="true">+</span></div>
+    <h2><button type="button" aria-haspopup="dialog" aria-controls="panel" data-i18n="cards.founder.hook">Driver. Dispatcher. Engineer.</button></h2>
+    <p class="teaser" data-i18n="cards.founder.teaser">150,000 miles behind the wheel and years of dispatching before the first line of code. Every screen comes from a real day on the road.</p>
+    <span class="more" aria-hidden="true"><span data-i18n="ui.open">Read more</span><span class="plus">+</span></span>
+    <div class="card-body" hidden data-i18n="cards.founder.body"><img class="photo" src="images/IMG_7073.webp" alt="Octopus truck at a truck stop" width="1200" height="670" loading="lazy">
+<p>Octopus wasn't designed in a conference room. Its founder drove 150,000 miles as an owner-operator — from Charjou to Chicago — then dispatched trucks, then learned to build software, because nothing on the market treated a small carrier like a partner.</p>
+<p>Every screen in Octopus exists because someone in this company has personally lived the 2&nbsp;AM "where's my load?" call, the Friday settlement scramble, and the software bill that arrived in a month with no freight. That's why the price is a share of the work — not rent on a tool.</p>
+<div class="trust">
+  <div><strong>2,000+</strong><span>automated tests before every release</span></div>
+  <div><strong>Isolated</strong><span>each carrier's data, at the database level</span></div>
+  <div><strong>Encrypted</strong><span>bank details and tax IDs at rest</span></div>
+</div>
+<p class="fine">Want to talk to the person who built it? <a href="https://cal.com/digital-ronin/15min">Book 15 minutes.</a></p></div>
+  </article>
+</main>
 
-                <div class="hero-visual">
-                    <div class="pricing-card">
-                        <div class="pricing-badge">Most Popular</div>
-                        <div class="pricing-label">Simple Pricing</div>
-                        <div class="pricing-amount">$20 <span>/ load</span></div>
-                        <div class="pricing-subtitle">Only pay when you book</div>
-                        <ul class="pricing-features">
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No monthly subscription
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No setup fees
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No annual contracts
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                Cancel anytime
-                            </li>
-                        </ul>
-                        <a href="https://app.octopustms.com/register" class="btn btn-primary" style="width: 100%;">
-                            Get Started Free
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer class="foot">
+  <span data-i18n="ui.footer_rights">© 2026 Digital Ronin LLC</span>
+  <nav aria-label="Legal">
+    <a href="privacy/" data-i18n="ui.privacy">Privacy</a>
+    <a href="terms/" data-i18n="ui.terms">Terms</a>
+    <a href="payment-terms/" data-i18n="ui.payment_terms">Payment terms</a>
+    <a href="refund-policy/" data-i18n="ui.refund_policy">Refund policy</a>
+    <a href="mailto:ask@octopustms.com">ask@octopustms.com</a>
+    <a class="foot-demo" href="https://cal.com/digital-ronin/15min" data-i18n="ui.demo">Book a 15-min demo</a>
+  </nav>
+</footer>
 
-    <!-- Audience Segmentation -->
-    <section class="audience-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Who We Serve</span>
-                <h2 class="section-title">Built for carriers of all sizes</h2>
-                <p class="section-description">
-                    Whether you're an owner-operator or managing a fleet, Octopus scales with your business.
-                </p>
-            </div>
-            <div class="audience-grid">
-                <div class="audience-card">
-                    <div class="audience-image">
-                        <img src="images/IMG_7073.JPG" alt="Owner-operator truck driver">
-                    </div>
-                    <h3>Owner-Operators</h3>
-                    <p>Run your business without expensive software overhead. Pay only when you haul, keep more profit in your pocket.</p>
-                    <a href="https://app.octopustms.com/register" class="btn btn-primary">Start Now</a>
-                </div>
-                <div class="audience-card">
-                    <div class="audience-image">
-                        <img src="images/IMG_7074.JPG" alt="Fleet of trucks">
-                    </div>
-                    <h3>Fleet Managers</h3>
-                    <p>Manage your entire fleet from one dashboard. Driver assignments, settlements, and tracking all in one place.</p>
-                    <a href="https://cal.com/digital-ronin/15min" class="btn btn-secondary">Schedule Demo</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<dialog class="panel" id="panel" aria-labelledby="panel-title">
+  <div class="panel-head">
+    <div><span class="eyebrow" id="panel-eyebrow"></span><h2 class="panel-hook" id="panel-title"></h2></div>
+    <button type="button" class="close" id="panel-close" data-i18n-attr="aria-label:ui.close" aria-label="Close">×</button>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-foot"><a class="btn" href="https://app.octopustms.com/register" data-i18n="ui.panel_cta">Start free — no card needed</a></div>
+</dialog>
 
-    <!-- Social Proof Section -->
-    <section class="social-proof">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stats-item">
-                    <div class="stats-number" data-count="10000">10,000+</div>
-                    <div class="stats-label">Loads Booked</div>
-                </div>
-                <div class="stats-item">
-                    <div class="stats-number" data-count="4">4+ hrs</div>
-                    <div class="stats-label">Saved Daily</div>
-                </div>
-                <div class="stats-item">
-                    <div class="stats-number">99.9%</div>
-                    <div class="stats-label">Uptime</div>
-                </div>
-            </div>
-            <div class="social-proof-header">
-                <p>Integrated with industry leaders</p>
-            </div>
-            <div class="integrations-grid">
-                <div class="integration-item">
-                    <div class="integration-logo dat">
-                        <svg viewBox="0 0 52 16" width="52" height="16">
-                            <rect x="0" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <rect x="18" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <rect x="36" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <text x="8" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">D</text>
-                            <text x="26" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">A</text>
-                            <text x="44" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">T</text>
-                        </svg>
-                    </div>
-                    <span class="integration-name">DAT</span>
-                    <span class="integration-desc">Load Board</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo stripe">
-                        <svg viewBox="0 0 60 25" width="60" height="25">
-                            <path fill="#635BFF" d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-6.3-5.63c-.98 0-2.1.72-2.1 2.71h4.09c0-1.99-1.01-2.71-1.99-2.71zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-5.13L32.37 0v3.51l-4.13.88V.44zm-4.32 9.35v10.22H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.45-3.32.43zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.47-2.76.47-2.76 0-4.52-1.65-4.52-4.89V3.54l4.13-.88v3.3H18.5v3.49h-3.13v4.06zm-8.33-4.44c-1.24-.37-2.25-.89-2.25-1.75 0-.75.5-1.15 1.45-1.15 1.44 0 2.94.72 4.34 1.8V5.62a10.14 10.14 0 0 0-4.34-.92c-3.45 0-5.58 1.92-5.58 4.65 0 2.3 1.7 3.73 4.15 4.51 1.49.46 2.14.96 2.14 1.72 0 .84-.64 1.27-1.7 1.27-1.48 0-3.35-.78-4.8-2.05v3.78a9.33 9.33 0 0 0 4.75 1.52c3.53 0 5.88-1.72 5.88-4.86 0-2.41-1.45-3.73-4.04-4.61z"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Stripe</span>
-                    <span class="integration-desc">Payments</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo twilio">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#F22F46"/>
-                            <circle cx="16" cy="16" r="11" fill="none" stroke="white" stroke-width="2"/>
-                            <circle cx="12" cy="12" r="2.5" fill="white"/>
-                            <circle cx="20" cy="12" r="2.5" fill="white"/>
-                            <circle cx="12" cy="20" r="2.5" fill="white"/>
-                            <circle cx="20" cy="20" r="2.5" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Twilio</span>
-                    <span class="integration-desc">SMS & Calls</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo mapbox">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#000000"/>
-                            <path d="M16 6C12.13 6 9 9.13 9 13c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Mapbox</span>
-                    <span class="integration-desc">GPS Tracking</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo quickbooks">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#2CA01C"/>
-                            <path d="M10.5 21h-2c-1.38 0-2.5-1.12-2.5-2.5v-5C6 12.12 7.12 11 8.5 11h2v2h-2c-.28 0-.5.22-.5.5v5c0 .28.22.5.5.5h2v2zm13-2.5c0 1.38-1.12 2.5-2.5 2.5h-2v-2h2c.28 0 .5-.22.5-.5v-5c0-.28-.22-.5-.5-.5h-2v-2h2c1.38 0 2.5 1.12 2.5 2.5v5zM14 8v16h2V8h-2z" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">QuickBooks</span>
-                    <span class="integration-desc">Accounting</span>
-                </div>
-            </div>
-        </div>
-    </section>
+<script id="i18n" type="application/json">{"en":{"meta":{"title":"Free to Start TMS for Small Carriers — $20 Per Booked Load | Octopus TMS","description":"Octopus TMS is free to start and charges $20 only when you book a load — refunded if the load falls through. DAT + 123Loadboard search, dispatch, tracking, documents, driver settlements and QuickBooks in one place. English and Russian.","og_title":"Octopus TMS — Free to Start. $20 Per Booked Load.","og_description":"The carrier's partner, not a subscription: find, book, track and get paid in one place. $20 per booked load, refunded if the load falls through."},"ui":{"brand":"Octopus TMS","lang_en":"English","lang_ru":"Русский","demo":"Book a 15-min demo","start":"Start free","open":"Read more","close":"Close","panel_cta":"Start free — no card needed","panel_demo":"or talk to the founder for 15 minutes","footer_rights":"© 2026 Digital Ronin LLC","privacy":"Privacy","terms":"Terms","payment_terms":"Payment terms","refund_policy":"Refund policy"},"hero":{"h1":"The TMS that wins when you win.","sub":"Octopus TMS is your carrier partner, not a subscription — one place to find the load, book it, track it and get paid.","q":"Is it free?","a":"Yes. If you don't book a load, you don't pay. Octopus isn't built to make money without its partner — the carrier. $20 per booked load, refunded if the load falls through."},"cards":{"free":{"eyebrow":"Pricing","hook":"Is it really FREE though?!","teaser":"Yes. Every feature, no card on file. You pay $20 for a load you book — and it comes back if the load dies before the truck moves.","body":"\n<h3>What free means here<\/h3>\n<p>Register and use the whole platform — load search, dispatch, tracking, documents, invoices, settlements — with no card on file. The free plan covers one truck, one driver and up to 10 booked loads a month.<\/p>\n<h3>When you grow: $20 per booked load<\/h3>\n<p>Switch to the Partnership plan and everything is unlimited. You pay $20 the moment a load is created in Octopus. No monthly fee, no per-seat fee, no setup fee, no minimum.<\/p>\n<h3>Refunded if the load falls through<\/h3>\n<p>Cancel a load before the truck moves and the $20 comes back automatically — in full, every time, no ticket, no asking. Once the load is in transit, the fee is earned.<\/p>\n<div class=\"compare\">\n  <div class=\"compare-item\"><strong>Any subscription TMS<\/strong><span>A fixed fee every month — whether you moved 0 loads or 100.<\/span><\/div>\n  <div class=\"compare-item is-us\"><strong>Octopus<\/strong><span>$0 in a dead month. $20 × the loads you booked in a good one.<\/span><\/div>\n<\/div>\n<div class=\"callout\"><strong>$600 in a month with Octopus<\/strong> means you booked 30 loads — roughly <strong>$75,000 of freight<\/strong> moved. A subscription doesn't know if you earned anything at all.<\/div>\n<p class=\"motto\">We don't eat until you eat.<\/p>\n<p class=\"fine\">The exact rules live in the <a href=\"payment-terms/\">Payment Terms<\/a> and the <a href=\"refund-policy/\">Refund &amp; Cancellation Policy<\/a> — short, plain English.<\/p>\n"},"one":{"eyebrow":"One place","hook":"Find. Book. Track. Get paid.","teaser":"The whole life of a load — from the load board to the money in your account — without ever leaving Octopus.","body":"\n<p><em>Leaving<\/em> means a load board in one tab, a spreadsheet in another, a group chat with the drivers, a folder of BOL photos, an invoicing tool, and QuickBooks at the end of the month. Octopus is the one tab.<\/p>\n<ol class=\"steps\">\n  <li><strong>Find<\/strong><span>Search DAT and 123Loadboard side by side — results in under a second.<\/span><\/li>\n  <li><strong>Book<\/strong><span>Booking creates the load: broker, rate, stops, dates — no retyping.<\/span><\/li>\n  <li><strong>Dispatch<\/strong><span>Assign the driver and the truck; the driver gets the load on their phone.<\/span><\/li>\n  <li><strong>Track<\/strong><span>Live location from the driver's phone; the broker gets a link, not a phone call.<\/span><\/li>\n  <li><strong>Paperwork<\/strong><span>BOL and POD photos uploaded from the road and read automatically.<\/span><\/li>\n  <li><strong>Invoice<\/strong><span>The invoice is built from the load — send it to the broker or your factoring company.<\/span><\/li>\n  <li><strong>Get paid<\/strong><span>Driver settlement calculated, QuickBooks in sync. Done.<\/span><\/li>\n<\/ol>\n"},"boards":{"eyebrow":"Load boards","hook":"Two load boards. One search. Under a second.","teaser":"DAT and 123Loadboard, searched from inside Octopus — and the load you book is already in your system.","body":"\n<p>Connect your DAT and 123Loadboard accounts once. Search a lane, equipment and dates and both boards answer in under a second. Book, and the load is created for you — broker, rate and stops included. DAT match alerts stream in as new loads are posted.<\/p>\n<ul class=\"checks\">\n  <li>Built on the official DAT and 123Loadboard APIs.<\/li>\n  <li>One search form, both boards, one result list per board — no copy-pasting between tabs.<\/li>\n  <li>From a search result to a dispatched load in a couple of clicks.<\/li>\n<\/ul>\n<p class=\"fine\">You bring your own DAT / 123Loadboard subscription — Octopus connects to it. We don't resell load board access.<\/p>\n"},"track":{"eyebrow":"Tracking","hook":"The driver's phone is the tracker.","teaser":"No ELD wiring, no extra hardware. The driver opens Octopus on their phone; you and your broker see the truck move.","body":"\n<p>Your driver accepts the load on their phone, shares location while the load is moving, and uploads the BOL and the POD straight from the dock. You see every truck on one map. The broker gets a tracking link that shows the truck — not your driver's phone number.<\/p>\n<ul class=\"checks\">\n  <li>Location sharing is the driver's choice, turned on for a load — never a silent tracker.<\/li>\n  <li>No hardware to buy, install or wire. Any phone works.<\/li>\n  <li>\"Where's my truck?\" becomes a link you send once.<\/li>\n<\/ul>\n"},"paper":{"eyebrow":"Paperwork & money","hook":"Paperwork that does itself.","teaser":"Rate confirmations, BOLs and PODs get read automatically. Invoices, driver pay and QuickBooks follow from the load — not from retyping.","body":"\n<ul class=\"checks\">\n  <li><strong>Documents that read themselves.<\/strong> Upload a rate confirmation or a POD and Octopus reads it — broker, rate, stops and reference numbers land in the load.<\/li>\n  <li><strong>Invoices from loads.<\/strong> One click; send it to the broker or hand it to your factoring company.<\/li>\n  <li><strong>Driver settlements.<\/strong> Percentage of gross, per load, weekly, owner-operator or employee — calculated per load, paid the way you pay.<\/li>\n  <li><strong>QuickBooks.<\/strong> Invoices go to QuickBooks; when they get paid there, Octopus knows.<\/li>\n  <li><strong>Load record export.<\/strong> Everything about a load — documents, invoice, settlement, timeline — in one file for audits and disputes.<\/li>\n  <li><strong>English and Russian, natively.<\/strong> Every screen, both languages.<\/li>\n<\/ul>\n"},"founder":{"eyebrow":"Who built it","hook":"Driver. Dispatcher. Engineer.","teaser":"150,000 miles behind the wheel and years of dispatching before the first line of code. Every screen comes from a real day on the road.","body":"\n<img class=\"photo\" src=\"images/IMG_7073.webp\" alt=\"Octopus truck at a truck stop\" width=\"1200\" height=\"670\" loading=\"lazy\">\n<p>Octopus wasn't designed in a conference room. Its founder drove 150,000 miles as an owner-operator — from Charjou to Chicago — then dispatched trucks, then learned to build software, because nothing on the market treated a small carrier like a partner.<\/p>\n<p>Every screen in Octopus exists because someone in this company has personally lived the 2&nbsp;AM \"where's my load?\" call, the Friday settlement scramble, and the software bill that arrived in a month with no freight. That's why the price is a share of the work — not rent on a tool.<\/p>\n<div class=\"trust\">\n  <div><strong>2,000+<\/strong><span>automated tests before every release<\/span><\/div>\n  <div><strong>Isolated<\/strong><span>each carrier's data, at the database level<\/span><\/div>\n  <div><strong>Encrypted<\/strong><span>bank details and tax IDs at rest<\/span><\/div>\n<\/div>\n<p class=\"fine\">Want to talk to the person who built it? <a href=\"https://cal.com/digital-ronin/15min\">Book 15 minutes.<\/a><\/p>\n"}},"faq":{"q":"Is Octopus TMS free?","a":"Yes. Octopus TMS is free to start: register with no card, one truck, one driver and up to 10 booked loads a month. On the Partnership plan you pay $20 per booked load with no monthly fee, and the $20 is refunded automatically if the load is cancelled before the truck moves."}},"ru":{"meta":{"title":"Бесплатная TMS для небольших перевозчиков — $20 за забронированный груз | Octopus TMS","description":"Octopus TMS: старт бесплатный, $20 только за забронированный груз — с возвратом, если груз сорвался. Поиск по DAT и 123Loadboard, диспетчерская, трекинг, документы, расчёты с водителями и QuickBooks в одном месте. Русский и английский.","og_title":"Octopus TMS — старт бесплатный. $20 за забронированный груз.","og_description":"Партнёр перевозчика, а не подписка: найти, забронировать, отследить и получить деньги в одном месте. $20 за забронированный груз, возврат, если груз сорвался."},"ui":{"brand":"Octopus TMS","lang_en":"English","lang_ru":"Русский","demo":"Демо за 15 минут","start":"Начать бесплатно","open":"Подробнее","close":"Закрыть","panel_cta":"Начать бесплатно — карта не нужна","panel_demo":"или 15 минут с основателем","footer_rights":"© 2026 Digital Ronin LLC","privacy":"Конфиденциальность","terms":"Условия","payment_terms":"Оплата","refund_policy":"Возвраты"},"hero":{"h1":"TMS, которая выигрывает, когда выигрываете вы.","sub":"Octopus TMS — партнёр перевозчика, а не подписка: одно место, где вы находите груз, бронируете, отслеживаете и получаете деньги.","q":"Это бесплатно?","a":"Да. Не забронировали груз — ничего не платите. Octopus не создан зарабатывать без своего партнёра — перевозчика. $20 за забронированный груз, и они возвращаются, если груз сорвался."},"cards":{"free":{"eyebrow":"Цена","hook":"А это точно БЕСПЛАТНО?!","teaser":"Да. Все функции, без карты. $20 вы платите только за груз, который забронировали, — и они возвращаются, если груз сорвался до выезда.","body":"\n<h3>Что здесь значит «бесплатно»<\/h3>\n<p>Регистрируетесь и пользуетесь всей платформой — поиск грузов, диспетчерская, трекинг, документы, счета, расчёты — без карты. Бесплатный план: один грузовик, один водитель и до 10 забронированных грузов в месяц.<\/p>\n<h3>Когда вы растёте: $20 за забронированный груз<\/h3>\n<p>Переходите на план «Партнёрство» — и всё без ограничений. $20 списываются в момент создания груза в Octopus. Ни ежемесячной платы, ни платы за пользователей, ни за подключение, ни минимума.<\/p>\n<h3>Возврат, если груз сорвался<\/h3>\n<p>Отмените груз до того, как грузовик тронулся, — и $20 вернутся автоматически: полностью, каждый раз, без заявок и просьб. Как только груз в пути, плата считается заработанной.<\/p>\n<div class=\"compare\">\n  <div class=\"compare-item\"><strong>Любая TMS по подписке<\/strong><span>Фиксированная сумма каждый месяц — перевезли вы 0 грузов или 100.<\/span><\/div>\n  <div class=\"compare-item is-us\"><strong>Octopus<\/strong><span>$0 в пустой месяц. $20 × число забронированных грузов в хороший.<\/span><\/div>\n<\/div>\n<div class=\"callout\"><strong>$600 за месяц в Octopus<\/strong> означают, что вы забронировали 30 грузов — примерно <strong>$75 000 перевезённого фрахта<\/strong>. Подписке всё равно, заработали ли вы хоть что-нибудь.<\/div>\n<p class=\"motto\">Мы не едим, пока не поели вы.<\/p>\n<p class=\"fine\">Точные правила — в <a href=\"payment-terms/\">Условиях оплаты<\/a> и <a href=\"refund-policy/\">Политике возвратов<\/a> (на английском, коротко и без юридического тумана).<\/p>\n"},"one":{"eyebrow":"Одно место","hook":"Найти. Забронировать. Отследить. Получить деньги.","teaser":"Вся жизнь груза — от доски грузов до денег на счёте — не выходя из Octopus.","body":"\n<p><em>Выйти<\/em> — это доска грузов в одной вкладке, таблица в другой, чат с водителями, папка с фото накладных, программа для счетов и QuickBooks в конце месяца. Octopus — одна вкладка.<\/p>\n<ol class=\"steps\">\n  <li><strong>Найти<\/strong><span>Поиск по DAT и 123Loadboard рядом — результаты меньше чем за секунду.<\/span><\/li>\n  <li><strong>Забронировать<\/strong><span>Бронирование создаёт груз: брокер, ставка, точки, даты — без перепечатывания.<\/span><\/li>\n  <li><strong>Отправить<\/strong><span>Назначьте водителя и грузовик; водитель получает рейс на телефон.<\/span><\/li>\n  <li><strong>Отследить<\/strong><span>Живая геолокация с телефона водителя; брокер получает ссылку, а не звонок.<\/span><\/li>\n  <li><strong>Документы<\/strong><span>Фото BOL и POD загружаются с дороги и распознаются автоматически.<\/span><\/li>\n  <li><strong>Выставить счёт<\/strong><span>Счёт собирается из груза — отправьте брокеру или в факторинговую компанию.<\/span><\/li>\n  <li><strong>Получить деньги<\/strong><span>Расчёт с водителем посчитан, QuickBooks синхронизирован. Готово.<\/span><\/li>\n<\/ol>\n"},"boards":{"eyebrow":"Доски грузов","hook":"Две доски грузов. Один поиск. Меньше секунды.","teaser":"DAT и 123Loadboard прямо внутри Octopus — а забронированный груз уже в вашей системе.","body":"\n<p>Подключите свои аккаунты DAT и 123Loadboard один раз. Задайте маршрут, тип прицепа и даты — обе доски ответят меньше чем за секунду. Бронируете — и груз создан за вас: брокер, ставка и точки уже на месте. Оповещения DAT о подходящих грузах приходят сразу, как только они появляются.<\/p>\n<ul class=\"checks\">\n  <li>Работает на официальных API DAT и 123Loadboard.<\/li>\n  <li>Одна форма поиска, обе доски, отдельный список результатов по каждой — без копирования между вкладками.<\/li>\n  <li>От результата поиска до отправленного в рейс груза — пара кликов.<\/li>\n<\/ul>\n<p class=\"fine\">Подписка на DAT / 123Loadboard — ваша собственная: Octopus подключается к ней. Мы не перепродаём доступ к доскам.<\/p>\n"},"track":{"eyebrow":"Трекинг","hook":"Телефон водителя — и есть трекер.","teaser":"Без проводов ELD и лишнего оборудования. Водитель открывает Octopus на телефоне — вы и брокер видите, как едет грузовик.","body":"\n<p>Водитель принимает рейс на телефоне, делится геолокацией, пока груз в пути, и загружает BOL и POD прямо с рампы. Вы видите все грузовики на одной карте. Брокер получает ссылку для отслеживания — видит грузовик, а не номер вашего водителя.<\/p>\n<ul class=\"checks\">\n  <li>Геолокация — выбор водителя, включается на рейс. Никакого тайного трекера.<\/li>\n  <li>Ничего не нужно покупать, ставить или подключать. Подходит любой телефон.<\/li>\n  <li>«Где грузовик?» превращается в ссылку, которую вы отправляете один раз.<\/li>\n<\/ul>\n"},"paper":{"eyebrow":"Документы и деньги","hook":"Бумаги, которые делают себя сами.","teaser":"Rate confirmation, BOL и POD распознаются сами. Счета, зарплата водителей и QuickBooks следуют из груза — без ручного ввода.","body":"\n<ul class=\"checks\">\n  <li><strong>Документы читают себя сами.<\/strong> Загрузите подтверждение ставки или POD — Octopus прочитает его: брокер, ставка, точки и номера попадут в груз.<\/li>\n  <li><strong>Счета из грузов.<\/strong> Один клик — брокеру или в вашу факторинговую компанию.<\/li>\n  <li><strong>Расчёты с водителями.<\/strong> Процент от гросса, за груз, понедельно, owner-operator или штатный водитель — считается по каждому грузу, платите как привыкли.<\/li>\n  <li><strong>QuickBooks.<\/strong> Счета уходят в QuickBooks; когда их там оплатили, Octopus об этом знает.<\/li>\n  <li><strong>Досье груза одним файлом.<\/strong> Всё о грузе — документы, счёт, расчёт, хронология — для проверок и споров.<\/li>\n  <li><strong>Русский и английский — родные.<\/strong> Каждый экран, оба языка.<\/li>\n<\/ul>\n"},"founder":{"eyebrow":"Кто это построил","hook":"Водитель. Диспетчер. Инженер.","teaser":"150 000 миль за рулём и годы в диспетчерской до первой строчки кода. Каждый экран — из реального дня на дороге.","body":"\n<img class=\"photo\" src=\"images/IMG_7073.webp\" alt=\"Грузовик Octopus на стоянке\" width=\"1200\" height=\"670\" loading=\"lazy\">\n<p>Octopus не придумали в переговорной. Основатель проехал 150 000 миль как owner-operator — от Чарджоу до Чикаго, — потом диспетчировал грузовики, потом научился писать софт, потому что ничего на рынке не относилось к небольшому перевозчику как к партнёру.<\/p>\n<p>Каждый экран Octopus существует потому, что кто-то в компании лично пережил звонок в два часа ночи «где мой груз?», пятничную гонку с расчётами и счёт за софт, пришедший в месяц без фрахта. Поэтому цена — доля от работы, а не аренда инструмента.<\/p>\n<div class=\"trust\">\n  <div><strong>2 000+<\/strong><span>автотестов перед каждым релизом<\/span><\/div>\n  <div><strong>Изолированы<\/strong><span>данные каждого перевозчика — на уровне базы данных<\/span><\/div>\n  <div><strong>Зашифрованы<\/strong><span>банковские реквизиты и налоговые номера<\/span><\/div>\n<\/div>\n<p class=\"fine\">Хотите поговорить с тем, кто это построил? <a href=\"https://cal.com/digital-ronin/15min\">15 минут — здесь.<\/a><\/p>\n"}},"faq":{"q":"Octopus TMS — это бесплатно?","a":"Да. Старт бесплатный: регистрация без карты, один грузовик, один водитель и до 10 забронированных грузов в месяц. На плане «Партнёрство» вы платите $20 за забронированный груз без ежемесячной платы, и $20 возвращаются автоматически, если груз отменён до выезда."}}}</script>
+<script>
+(function(){
+  var STR = JSON.parse(document.getElementById('i18n').textContent);
+  var root = document.documentElement;
+  var lang = root.lang === 'ru' ? 'ru' : 'en';
+  var panel = document.getElementById('panel');
+  var current = null, opener = null;
 
-    <!-- Features Section -->
-    <section class="section" id="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Features</span>
-                <h2 class="section-title">Everything you need to run your fleet</h2>
-                <p class="section-description">
-                    Built by truckers who know the pain of overcomplicated software.
-                    Simple, powerful, and actually useful.
-                </p>
-            </div>
+  function t(key, l){ return key.split('.').reduce(function(o,k){ return o == null ? o : o[k]; }, STR[l]); }
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                    </div>
-                    <h3>DAT Integration</h3>
-                    <p>Search and book loads directly from DAT without switching between apps. Find the best rates instantly.</p>
-                </div>
+  function apply(l){
+    lang = l;
+    root.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var v = t(el.getAttribute('data-i18n'), l); if (v != null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-i18n-attr]').forEach(function(el){
+      el.getAttribute('data-i18n-attr').split(',').forEach(function(pair){
+        var p = pair.split(':'); var v = t(p[1], l); if (v != null) el.setAttribute(p[0], v);
+      });
+    });
+    document.title = t('meta.title', l);
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === l)); });
+    try { localStorage.setItem('octopus.lang', l); } catch (e) {}
+    try {
+      if (/^https?:$/.test(location.protocol)) {
+        var want = l === 'ru' ? '/ru/' : '/';
+        if (location.pathname !== want) history.replaceState(null, '', want + location.search + location.hash);
+      }
+    } catch (e) {}
+    if (panel.open && current) fill(current);
+  }
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
-                        </svg>
-                    </div>
-                    <h3>Instant Settlements</h3>
-                    <p>Generate driver settlements in seconds, not hours. Built-in Stripe payments for fast transfers.</p>
-                </div>
+  function fill(card){
+    document.getElementById('panel-eyebrow').innerHTML = t('cards.' + card + '.eyebrow', lang);
+    document.getElementById('panel-title').innerHTML = t('cards.' + card + '.hook', lang);
+    document.getElementById('panel-body').innerHTML = t('cards.' + card + '.body', lang);
+  }
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
-                    <h3>Live GPS Tracking</h3>
-                    <p>Real-time GPS tracking with shareable links for brokers and shippers. Full visibility, always.</p>
-                </div>
+  function open(card, from){
+    current = card; opener = from || null;
+    fill(card);
+    document.getElementById('panel-body').scrollTop = 0;
+    if (typeof panel.showModal === 'function') { if (!panel.open) panel.showModal(); }
+    else panel.setAttribute('open', '');
+    try { history.replaceState(null, '', location.pathname + location.search + '#' + card); } catch (e) {}
+  }
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-                        </svg>
-                    </div>
-                    <h3>Document Management</h3>
-                    <p>All your BOLs, rate confirmations, and PODs in one organized place. Never lose a document again.</p>
-                </div>
+  function close(){
+    if (panel.open) panel.close(); else panel.removeAttribute('open');
+  }
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                        </svg>
-                    </div>
-                    <h3>Driver Management</h3>
-                    <p>Assign loads, track availability, and communicate with your team effortlessly from one dashboard.</p>
-                </div>
+  panel.addEventListener('close', function(){
+    try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (opener && opener.focus) opener.focus();
+    current = null;
+  });
+  panel.addEventListener('click', function(e){ if (e.target === panel) close(); });
+  document.getElementById('panel-close').addEventListener('click', close);
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M3 3v18h18"/>
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                        </svg>
-                    </div>
-                    <h3>Analytics Dashboard</h3>
-                    <p>See your profit margins, top lanes, and performance metrics at a glance. Make data-driven decisions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  document.querySelectorAll('.card').forEach(function(card){
+    var id = card.getAttribute('data-card');
+    var btn = card.querySelector('h2 button');
+    card.addEventListener('click', function(e){
+      if (e.target.closest('a')) return;
+      open(id, btn);
+    });
+  });
 
-    <!-- Workflow Section -->
-    <section class="section workflow-section" id="how-it-works">
-        <div class="workflow-parallax-bg" data-parallax-speed="0.1"></div>
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">How It Works</span>
-                <h2 class="section-title">From load to payment in 5 simple steps</h2>
-                <p class="section-description">
-                    What takes 47 clicks in other systems takes just a few in Octopus.
-                </p>
-            </div>
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
+  });
 
-            <div class="workflow-steps">
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                    </div>
-                    <h4>Find</h4>
-                    <p>Search loads from DAT</p>
-                </div>
+  // Initial language: an explicit earlier choice wins; otherwise a Russian browser gets Russian.
+  var saved = null;
+  try { saved = localStorage.getItem('octopus.lang'); } catch (e) {}
+  var wanted = (saved === 'ru' || saved === 'en') ? saved
+             : ((navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : lang);
+  if (wanted !== lang) apply(wanted);
 
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                    </div>
-                    <h4>Book</h4>
-                    <p>One click booking</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <path d="M20 8v6M23 11h-6"/>
-                        </svg>
-                    </div>
-                    <h4>Assign</h4>
-                    <p>Notify your driver</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
-                    <h4>Track</h4>
-                    <p>Real-time location</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
-                        </svg>
-                    </div>
-                    <h4>Get Paid</h4>
-                    <p>Fast settlements</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Comparison -->
-    <section class="section" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Pricing</span>
-                <h2 class="section-title">Traditional vs Partnership Model</h2>
-                <p class="section-description">
-                    We only make money when you make money. That's real partnership.
-                </p>
-            </div>
-
-            <div class="comparison-grid">
-                <div class="comparison-card">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M15 9l-6 6M9 9l6 6"/>
-                            </svg>
-                        </div>
-                        <div class="comparison-title">Traditional TMS</div>
-                    </div>
-                    <div class="comparison-price">$2,000/mo</div>
-                    <ul class="comparison-list">
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Pay even during slow weeks
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Locked into annual contracts
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Hidden fees and add-ons
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Data held hostage
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="comparison-card highlight">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M20 6L9 17l-5-5"/>
-                            </svg>
-                        </div>
-                        <div class="comparison-title">Octopus TMS</div>
-                    </div>
-                    <div class="comparison-price">$20/load</div>
-                    <ul class="comparison-list">
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Slow week? Pay less
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Cancel anytime
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            No hidden costs ever
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Export your data anytime
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Image Showcase Section -->
-    <section class="showcase-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">On The Road</span>
-                <h2 class="section-title">Powering America's trucking industry</h2>
-            </div>
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <img src="images/img.jpg" alt="Semi truck on highway">
-                </div>
-                <div class="showcase-item">
-                    <img src="images/IMG_7073.JPG" alt="Semi truck at loading dock">
-                </div>
-                <div class="showcase-item">
-                    <img src="images/IMG_7074.JPG" alt="Truck on road">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-bg-image"></div>
-                <div class="cta-content">
-                    <h2 class="cta-title">Ready to transform your operations?</h2>
-                    <p class="cta-description">
-                        Join carriers who are saving time and money with Octopus TMS.
-                        No credit card required to start.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="https://app.octopustms.com/register" class="btn btn-white btn-large">
-                            Start Free Today
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <a href="https://cal.com/digital-ronin/15min" class="btn btn-ghost btn-large">
-                            Schedule Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-main">
-                    <div class="footer-logo">
-                        <img src="octopus-logo.svg" alt="Octopus TMS">
-                        <span class="logo-text">Octopus TMS</span>
-                    </div>
-                    <p class="footer-tagline">
-                        Built by truckers, for truckers. The TMS that wins when you win.
-                    </p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#pricing">Pricing</a></li>
-                            <li><a href="#how-it-works">How It Works</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Get Started</h4>
-                        <ul>
-                            <li><a href="https://app.octopustms.com/register">Sign Up Free</a></li>
-                            <li><a href="https://cal.com/digital-ronin/15min">Book a Demo</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Octopus TMS. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="/privacy/">Privacy Policy</a>
-                    <a href="/terms/">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Parallax Effect System
-        const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
-
-        let ticking = false;
-        function updateParallax() {
-            const scrollY = window.pageYOffset;
-
-            parallaxElements.forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-parallax-speed'));
-                const yPos = -(scrollY * speed);
-                el.style.transform = `translate3d(0, ${yPos}px, 0)`;
-            });
-
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-
-            // Nav scroll effect
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Intersection Observer for scroll-triggered animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -100px 0px',
-            threshold: 0.1
-        };
-
-        const parallaxObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('parallax-visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements
-        document.querySelectorAll('.feature-card, .workflow-step, .comparison-card, .testimonial-card').forEach(el => {
-            parallaxObserver.observe(el);
-        });
-
-        // Mouse-based parallax for hero section
-        const hero = document.querySelector('.hero');
-        const heroElements = document.querySelectorAll('.hero-parallax-element');
-
-        hero.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { width, height, left, top } = hero.getBoundingClientRect();
-
-            const xPos = (clientX - left) / width - 0.5;
-            const yPos = (clientY - top) / height - 0.5;
-
-            heroElements.forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-parallax-speed')) * 50;
-                const x = xPos * speed;
-                const y = yPos * speed;
-                el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            });
-        });
-
-        hero.addEventListener('mouseleave', () => {
-            heroElements.forEach(el => {
-                el.style.transform = 'translate3d(0, 0, 0)';
-                el.style.transition = 'transform 0.5s ease-out';
-            });
-        });
-
-        hero.addEventListener('mouseenter', () => {
-            heroElements.forEach(el => {
-                el.style.transition = 'none';
-            });
-        });
-
-        // Pricing card 3D tilt effect
-        const pricingCard = document.querySelector('.pricing-card');
-        if (pricingCard) {
-            pricingCard.addEventListener('mousemove', (e) => {
-                const { width, height, left, top } = pricingCard.getBoundingClientRect();
-                const x = (e.clientX - left) / width - 0.5;
-                const y = (e.clientY - top) / height - 0.5;
-
-                pricingCard.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-
-            pricingCard.addEventListener('mouseleave', () => {
-                pricingCard.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
-            });
-
-            pricingCard.style.transition = 'transform 0.3s ease-out';
-        }
-
-        // Animated counter for stats
-        const animateCounter = (element, target, suffix = '') => {
-            const duration = 2000;
-            const start = 0;
-            const startTime = performance.now();
-
-            const updateCounter = (currentTime) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                const current = Math.floor(start + (target - start) * easeOutQuart);
-
-                element.textContent = current.toLocaleString() + suffix;
-
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounter);
-                }
-            };
-
-            requestAnimationFrame(updateCounter);
-        };
-
-        // Observe stats for animation
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const element = entry.target;
-                    const text = element.textContent;
-                    const match = text.match(/(\d+)/);
-                    if (match) {
-                        const target = parseInt(match[1]);
-                        const suffix = text.replace(/[\d,]+/, '');
-                        animateCounter(element, target, suffix);
-                    }
-                    statsObserver.unobserve(element);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.stats-number').forEach(stat => {
-            statsObserver.observe(stat);
-        });
-    </script>
+  // Deep link: octopustms.com/#free opens that card.
+  var h = (location.hash || '').replace('#', '');
+  if (h && STR.en.cards[h]) open(h, document.querySelector('.card[data-card="' + h + '"] h2 button'));
+})();
+</script>
 </body>
 </html>
