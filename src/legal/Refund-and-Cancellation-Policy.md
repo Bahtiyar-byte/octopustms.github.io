@@ -45,7 +45,7 @@ This Policy is governed by the laws of the State of Delaware, without regard to 
 
 ## 7. Contact
 
-Questions about a charge or a refund: **ask@octopustms.com** or **private@thedigitalronin.com**. A human answers.
+Questions about a charge or a refund: **ask@octopustms.com**. A human answers.
 
 ## Version History
 

@@ -58,7 +58,7 @@ These Payment Terms are governed by the laws of the State of Delaware, without r
 
 ## 9. Contact
 
-Billing questions: **ask@octopustms.com** or **private@thedigitalronin.com**.
+Billing questions: **ask@octopustms.com**.
 
 ## Version History
 

@@ -21,7 +21,8 @@ import re
 from datetime import date
 from pathlib import Path
 
-from strings import CONTACT_EMAIL, DEMO_URL, EN, REGISTER_URL, RU, SITE, STAGES
+from strings import (CALC, CONTACT_EMAIL, DEMO_URL, EN, PARTNERS_EMAIL, PRIVACY_EMAIL, REGISTER_URL, RU, SITE,
+                     STAGES)
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -55,6 +56,11 @@ def deep_get(d: dict, dotted: str):
     return d
 
 
+class _Keep(dict):
+    def __missing__(self, key):
+        return "{" + key + "}"
+
+
 def resolve(strings: dict, prefix: str) -> dict:
     """Fill any {placeholders} inside strings for a page living at `prefix`."""
     ctx = {
@@ -69,7 +75,8 @@ def resolve(strings: dict, prefix: str) -> dict:
         if isinstance(node, dict):
             return {k: walk(v) for k, v in node.items()}
         if isinstance(node, str):
-            return node.format(**ctx) if "{" in node else node
+            # Unknown {placeholders} (the calculator's {diff}, {month}...) are left for the page script.
+            return node.format_map(_Keep(ctx)) if "{" in node else node
         return node
 
     return walk(strings)
@@ -136,9 +143,12 @@ svg{max-width:100%}
 
 /* ---- top bar */
 .top{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:19px;font-family:var(--display);letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
 .brand:hover{color:var(--ink)}
-.brand .logo{width:34px;height:34px;flex:none}
+.brand .logo{width:38px;height:38px;flex:none}
+.nav{display:flex;gap:clamp(14px,1.8vw,28px);margin-right:auto;margin-left:clamp(20px,3vw,48px)}
+.nav a{font-weight:600;font-size:15px;color:var(--ink2);white-space:nowrap}
+.nav a:hover{color:var(--accent-ink)}
 .top-right{display:flex;align-items:center;gap:clamp(10px,1.4vw,18px)}
 .lang{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
 .lang button{border:0;background:transparent;font:inherit;font-weight:600;font-size:13px;color:var(--muted);padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:background .15s,color .15s}
@@ -154,14 +164,17 @@ svg{max-width:100%}
 /* ---- hero */
 .hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:64px;align-items:end;padding-top:64px;padding-bottom:72px}
 .hero-l{display:flex;flex-direction:column;gap:22px}
-.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(84px,12.8vw,184px);line-height:.86;letter-spacing:-.05em}
-.hero h3{font-family:var(--display);font-weight:600;font-size:clamp(20px,2vw,28px);line-height:1.2;letter-spacing:-.015em;color:var(--accent-ink)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(42px,5.6vw,84px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+.tag{align-self:flex-start;display:inline-block;max-width:100%;font-size:14px;font-weight:600;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+.tag b{font-family:var(--display);font-weight:800;color:var(--accent-ink);letter-spacing:.03em}
+.money{color:var(--money)}
 .hero .sub{font-size:clamp(18px,1.55vw,22px);line-height:1.5;color:var(--ink2);max-width:640px;text-wrap:pretty}
 .hero .sub em{white-space:nowrap;font-style:italic;color:var(--money);font-weight:600}
 .price{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,2.5vw,36px);display:flex;flex-direction:column;gap:20px;box-shadow:0 30px 60px -40px var(--glow)}
 .price .motto{color:var(--ink);font-family:var(--display);font-weight:800;font-size:clamp(26px,2.4vw,34px);line-height:1.1;letter-spacing:-.02em}
 .price p{font-size:19px;line-height:1.55;color:var(--ink2)}
-.price p b{font-family:var(--display);font-size:26px;color:var(--money);letter-spacing:-.02em}
+.price p b{font-family:var(--display);font-size:clamp(30px,2.6vw,38px);color:var(--money);letter-spacing:-.02em;display:block;margin-bottom:4px}
+.price .refund{font-size:15px;line-height:1.5;color:var(--muted)}
 
 /* ---- lifecycle */
 .band{background:var(--band);color:#fff;padding:64px 0 72px;scroll-margin-top:0}
@@ -196,7 +209,7 @@ svg{max-width:100%}
 /* ---- SASR */
 .sasr{padding-top:40px;padding-bottom:104px;scroll-margin-top:24px}
 .sasr-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin-bottom:36px}
-.sasr h2{flex:1;font-family:var(--display);font-weight:800;font-size:clamp(34px,3.1vw,44px);letter-spacing:-.025em;white-space:nowrap}
+.sasr h2{flex:none;font-family:var(--display);font-weight:800;font-size:clamp(34px,3.1vw,44px);letter-spacing:-.025em;white-space:nowrap}
 .sasr h2 span{font-weight:600;font-size:clamp(17px,1.55vw,22px);color:var(--muted);letter-spacing:-.01em}
 .rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .rule{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:22px}
@@ -222,13 +235,110 @@ svg{max-width:100%}
 .foot a{color:var(--muted)}
 .foot a:hover{color:var(--ink)}
 
+/* ---- lifecycle: interactive */
+.band-head .hint{font-size:14px;color:#8DB2FF;font-weight:600}
+.band-head .hint::before{content:"👆 "}
+.stop-btn{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;cursor:pointer;width:100%}
+.stop-btn:focus-visible{outline:3px solid #8DB2FF;outline-offset:8px;border-radius:8px}
+.stop{cursor:pointer}
+.stop.on{background:rgba(61,123,255,.18);box-shadow:inset 0 0 0 1.5px #3D7BFF}
+.stop.paid.on{background:rgba(52,211,153,.22);box-shadow:inset 0 0 0 2px #34D399}
+.stop .more{display:none}
+.detail{margin-top:20px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:24px 28px;display:grid;grid-template-columns:190px minmax(0,1fr) auto;gap:24px;align-items:center;min-height:118px}
+.detail h3{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em;color:#fff}
+.detail.is-paid h3{color:#34D399}
+.detail p{font-size:17px;line-height:1.6;color:#D5DCE7;max-width:820px}
+.hear{border:0;font:inherit;font-weight:700;font-size:15px;color:#052e16;background:#34D399;border-radius:999px;padding:11px 18px;cursor:pointer;display:none;align-items:center;gap:8px;white-space:nowrap}
+.hear:hover{filter:brightness(1.08)}
+.hear svg{width:18px;height:18px;fill:currentColor}
+.detail.is-paid .hear{display:inline-flex}
+.hear.ringing{animation:ring .55s ease-out}
+@keyframes ring{0%{transform:none}25%{transform:scale(1.1) rotate(-4deg)}55%{transform:scale(1.05) rotate(4deg)}100%{transform:none}}
+
+/* ---- section headings shared by pricing, who, founder, contact */
+.h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,3.2vw,46px);line-height:1.05;letter-spacing:-.03em;text-wrap:balance}
+.lead{font-size:clamp(18px,1.4vw,20px);line-height:1.6;color:var(--ink2);text-wrap:pretty}
+
+/* ---- pricing calculator */
+.calc{padding-top:104px;padding-bottom:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(36px,5vw,72px);align-items:start;scroll-margin-top:24px}
+.calc-text{display:flex;flex-direction:column;gap:18px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.tile{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--card);display:flex;flex-direction:column;gap:6px}
+.tile strong{font-size:15.5px}
+.tile span{font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.tile.us{border-color:var(--money);background:var(--money-soft)}
+.tile.us strong{color:var(--money)}
+.machine{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,2.4vw,34px);display:flex;flex-direction:column;gap:20px;box-shadow:0 30px 60px -44px var(--glow)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.field label{font-weight:600;font-size:15px;color:var(--ink2)}
+.field output{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.field input{width:100%;margin:0;height:28px;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none;--fill:50%}
+.field input::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(var(--accent),var(--accent)) 0 0/var(--fill) 100% no-repeat,var(--line)}
+.field input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--card);border:3px solid var(--accent);margin-top:-9px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.field input::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
+.field input::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
+.field input::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--card);border:3px solid var(--accent)}
+.bars{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid var(--line)}
+.bar{display:grid;grid-template-columns:96px minmax(0,1fr) 92px;gap:12px;align-items:center;font-size:15px;font-weight:600}
+.bar .track{height:14px;border-radius:99px;background:var(--card2);overflow:hidden}
+.bar .fill{display:block;height:100%;border-radius:99px;background:#EF4444;transition:width .3s ease}
+.bar.us .fill{background:var(--money)}
+.bar b{text-align:right;font-family:var(--display);font-size:18px}
+.bar.them b{color:#EF4444}
+.bar.us b{color:var(--money)}
+.result{font-size:clamp(19px,1.6vw,22px);line-height:1.45;font-weight:600}
+.result b{color:var(--money);font-family:var(--display);white-space:nowrap}
+.result-month{font-size:16px;line-height:1.55;color:var(--ink2)}
+.result-month b{color:var(--ink);white-space:nowrap}
+.fine{font-size:13.5px;line-height:1.55;color:var(--muted)}
+
+/* ---- who it's for */
+.who{padding-top:72px;padding-bottom:16px;scroll-margin-top:24px}
+.who .eyebrow{display:block;margin-bottom:22px}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.card h3{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.02em}
+.card p{font-size:16.5px;line-height:1.55;color:var(--ink2);flex:1}
+.card a{font-weight:700;font-size:15px}
+.card a::after{content:" →"}
+
+/* ---- founder */
+.why h2{margin-bottom:4px}
+.why .p0{font-size:clamp(18px,1.5vw,21px);line-height:1.6;color:var(--ink)}
+.sign{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:6px}
+.mono{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:.02em;flex:none}
+.sign strong{font-size:17px}
+.sign a{font-weight:700}
+
+/* ---- SASR status note */
+.sasr .note{font-size:13.5px;font-weight:600;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+
+/* ---- contact */
+.contact{padding-top:96px;padding-bottom:16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(32px,5vw,64px);align-items:start;scroll-margin-top:24px}
+.contact-text{display:flex;flex-direction:column;gap:16px}
+.lines{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lines a{display:flex;flex-direction:column;gap:4px;height:100%;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);transition:border-color .15s,transform .15s}
+.lines a:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+.lines strong{font-size:15.5px}
+.lines span{font-size:15px;color:var(--accent-ink);font-weight:600;overflow-wrap:anywhere}
+.lines .call a{background:var(--accent);border-color:var(--accent);color:#fff}
+.lines .call a:hover{color:#fff}
+.lines .call span{color:#DCE7FF;font-weight:500}
+
 /* ---- medium screens */
 @media (max-width:1180px){
   .std .in{grid-template-columns:1fr;gap:48px}
 }
+@media (max-width:1180px){
+  .nav{display:none}
+}
 @media (max-width:1080px){
   /* The spine turns vertical: one stop per row, the rail on the left. */
   .spine{display:none}
+  .detail{display:none}
+  .stop.on .more{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:10px;font-size:15px;line-height:1.6;color:#D5DCE7}
+  .stop.paid.on .hear{display:inline-flex}
   .band .chain{display:none}
   .stops{grid-template-columns:1fr;gap:0;margin:0}
   .stop{position:relative;padding:14px 16px 18px 60px;border-radius:14px}
@@ -247,6 +357,8 @@ svg{max-width:100%}
 @keyframes ching{0%,8%{opacity:0;transform:translateY(4px)}14%,70%{opacity:1;transform:none}85%,100%{opacity:0}}
 @media (max-width:960px){
   .hero{grid-template-columns:1fr;gap:36px;padding-top:40px;padding-bottom:56px}
+  .calc,.contact{grid-template-columns:1fr;padding-top:80px}
+  .cards{grid-template-columns:1fr}
   .why{grid-template-columns:1fr;gap:18px;padding-top:80px}
   .why .eyebrow{padding-top:0}
   .rules{grid-template-columns:1fr}
@@ -264,10 +376,23 @@ svg{max-width:100%}
   .sasr h2{white-space:normal}
   .sasr h2 span{display:block;margin-top:6px}
   .foot .in{justify-content:center;text-align:center}
+  .lines{grid-template-columns:1fr}
+  .top .link-demo{display:none}
   .foot nav{justify-content:center}
 }
 @media (max-width:440px){
-  .brand span{display:none}
+  .brand{font-size:16px;gap:8px}
+  .brand .logo{width:32px;height:32px}
+  .theme{display:none}
+}
+@media (max-width:400px){
+  .brand .tms{display:none}
+  .top .btn::after{content:none}
+  .top-right{gap:6px}
+  .lang button{padding:7px 7px}
+  .top .btn{padding:9px 12px}
+  .tiles{grid-template-columns:1fr}
+  .bar{grid-template-columns:76px minmax(0,1fr) 80px;gap:8px}
   .top-right{gap:8px}
   .rule{flex-direction:column;align-items:flex-start}
 }
@@ -287,6 +412,106 @@ JS = r"""
   var COLORS = __THEME_COLORS__;
 
   function t(key, l){ return key.split('.').reduce(function(o,k){ return o == null ? o : o[k]; }, STR[l]); }
+  function tpl(key, vars){ return String(t(key, lang) || '').replace(/\{(\w+)\}/g, function(m, k){ return vars[k] != null ? vars[k] : m; }); }
+  function setHTML(id, v){ var el = document.getElementById(id); if (el) el.innerHTML = v; }
+  var REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // ---- cha-ching: synthesized on the spot (no audio file), only ever after a tap.
+  var ac = null;
+  function chaChing(){
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) {
+        ac = ac || new AC();
+        if (ac.state === 'suspended') ac.resume();
+        var now = ac.currentTime + .02, out = ac.createGain();
+        out.gain.value = .9; out.connect(ac.destination);
+        // "cha": a short bright burst, like a register drawer
+        var len = Math.floor(ac.sampleRate * .07), buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2);
+        var nz = ac.createBufferSource(), hp = ac.createBiquadFilter(), ng = ac.createGain();
+        nz.buffer = buf; hp.type = 'highpass'; hp.frequency.value = 2500; ng.gain.value = .35;
+        nz.connect(hp); hp.connect(ng); ng.connect(out); nz.start(now);
+        // "ching": two bell strikes, each a tone plus a bright overtone
+        [[1568, .09], [2093, .2]].forEach(function(note){
+          [[1, .24, 1.2], [2.76, .07, .4]].forEach(function(part){
+            var o = ac.createOscillator(), g = ac.createGain(), t0 = now + note[1];
+            o.type = 'sine'; o.frequency.value = note[0] * part[0];
+            g.gain.setValueAtTime(.0001, t0);
+            g.gain.exponentialRampToValueAtTime(part[1], t0 + .008);
+            g.gain.exponentialRampToValueAtTime(.0001, t0 + part[2]);
+            o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + part[2] + .05);
+          });
+        });
+      }
+    } catch (e) {}
+    document.querySelectorAll('.hear').forEach(function(b){ b.classList.remove('ringing'); void b.offsetWidth; b.classList.add('ringing'); });
+  }
+  document.querySelectorAll('.hear').forEach(function(b){
+    b.addEventListener('click', function(e){ e.stopPropagation(); chaChing(); });
+  });
+
+  // ---- lifecycle: tap a stop to read what happens there. Until the first tap, it walks itself.
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop[data-stage]'));
+  var detail = document.getElementById('detail');
+  var current = 'found', timer = null, touched = false, visible = false;
+  function select(key){
+    current = key;
+    stops.forEach(function(li){
+      var on = li.getAttribute('data-stage') === key;
+      li.classList.toggle('on', on);
+      var b = li.querySelector('.stop-btn'); if (b) b.setAttribute('aria-expanded', String(on));
+    });
+    if (detail) {
+      detail.classList.toggle('is-paid', key === 'paid');
+      setHTML('detail-name', t('life.' + key + '.0', lang));
+      setHTML('detail-text', t('life.' + key + '.2', lang));
+    }
+  }
+  function stopWalk(){ if (timer) { clearInterval(timer); timer = null; } }
+  function walk(){
+    if (timer || touched || REDUCED || !visible) return;
+    timer = setInterval(function(){
+      var i = stops.findIndex(function(li){ return li.getAttribute('data-stage') === current; });
+      select(stops[(i + 1) % stops.length].getAttribute('data-stage'));
+    }, 3600);
+  }
+  stops.forEach(function(li){
+    var b = li.querySelector('.stop-btn');
+    if (!b) return;
+    b.addEventListener('click', function(){
+      touched = true; stopWalk();
+      var key = li.getAttribute('data-stage');
+      select(key);
+      if (key === 'paid') chaChing();
+    });
+  });
+  var band = document.getElementById('lifecycle');
+  if (band && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      visible = es[0].isIntersecting;
+      if (visible) walk(); else stopWalk();
+    }, {threshold: .35}).observe(band);
+  }
+
+  // ---- pricing: their percentage vs our $20, live.
+  var CALC = __CALC__;
+  var money = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+  var inRate = document.getElementById('c-rate'), inPct = document.getElementById('c-pct'), inLoads = document.getElementById('c-loads');
+  function fill(el){ el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+  function calc(){
+    if (!inRate) return;
+    var r = +inRate.value, c = +inPct.value, n = +inLoads.value;
+    var them = r * c / 100, us = CALC.fee, diff = Math.max(0, them - us);
+    [inRate, inPct, inLoads].forEach(fill);
+    setHTML('o-rate', money(r)); setHTML('o-pct', c + '%'); setHTML('o-loads', String(n));
+    setHTML('b-them', money(them)); setHTML('b-us', money(us));
+    var fu = document.getElementById('f-us'); if (fu) fu.style.width = Math.max(2, Math.min(100, us / them * 100)) + '%';
+    setHTML('r-keep', tpl('calc.keep', {diff: money(diff)}));
+    setHTML('r-month', tpl('calc.month', {month: money(diff * n), year: money(diff * n * 12)}));
+  }
+  [inRate, inPct, inLoads].forEach(function(el){ if (el) el.addEventListener('input', calc); });
+  calc();
 
   // ---- language: both dictionaries are embedded, so switching needs no reload.
   function apply(l){
@@ -301,6 +526,7 @@ JS = r"""
       });
     });
     document.title = t('meta.title', l);
+    select(current); calc();
     document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === l)); });
     try { localStorage.setItem('octopus.lang', l); } catch (e) {}
     try {
@@ -348,7 +574,7 @@ JS = r"""
   }
 
   // ---- old deep links from the six-card page (#free, #one, ...) land on the matching section.
-  var OLD = {free:'top', one:'lifecycle', boards:'lifecycle', track:'lifecycle', paper:'lifecycle', founder:'why'};
+  var OLD = {free:'pricing', one:'lifecycle', boards:'lifecycle', track:'lifecycle', paper:'lifecycle', why:'founder'};
   var h = (location.hash || '').slice(1);
   if (OLD[h]) {
     var el = document.getElementById(OLD[h]);
@@ -384,6 +610,12 @@ def jsonld(lang: str, strings: dict, canonical: str) -> str:
             "url": SITE,
             "logo": f"{SITE}/octopus-logo.svg",
             "email": CONTACT_EMAIL,
+            "founder": {"@type": "Person", "name": "Brandon Hay", "jobTitle": "Founder"},
+            "contactPoint": [
+                {"@type": "ContactPoint", "contactType": "customer support", "email": CONTACT_EMAIL, "availableLanguage": ["English", "Russian"]},
+                {"@type": "ContactPoint", "contactType": "partnerships", "email": PARTNERS_EMAIL},
+                {"@type": "ContactPoint", "contactType": "privacy", "email": PRIVACY_EMAIL},
+            ],
         },
     ]
     return json_for_script({"@context": "https://schema.org", "@graph": graph})
@@ -415,18 +647,106 @@ def spine_svg(s: dict) -> str:
     </svg>"""
 
 
+ICON_BELL = """<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg>"""
+
+
+def hear_btn(s: dict, extra: str = "") -> str:
+    return f'<button type="button" class="hear{extra}">{ICON_BELL}<span data-i18n="life.hear">{s["life"]["hear"]}</span></button>'
+
+
 def stops_html(s: dict) -> str:
     out = []
     for i, key in enumerate(STAGES):
-        name, desc = s["life"][key]
+        name, short, long = s["life"][key]
         dot = "$" if key == "paid" else str(i + 1)
         ching = f' <span class="ching" aria-hidden="true" data-i18n="life.chaching">{s["life"]["chaching"]}</span>' if key == "paid" else ""
+        hear = hear_btn(s) if key == "paid" else ""
+        on = " on" if key == "found" else ""
         out.append(
-            f'<li class="stop {key}"><span class="dot" aria-hidden="true">{dot}</span>'
+            f'<li class="stop {key}{on}" data-stage="{key}"><span class="dot" aria-hidden="true">{dot}</span>'
+            f'<button type="button" class="stop-btn" aria-expanded="{"true" if on else "false"}" aria-controls="detail">'
             f'<span class="name"><span data-i18n="life.{key}.0">{name}</span>{ching}</span>'
-            f'<span class="desc" data-i18n="life.{key}.1">{desc}</span></li>'
+            f'<span class="desc" data-i18n="life.{key}.1">{short}</span></button>'
+            f'<div class="more"><span data-i18n="life.{key}.2">{long}</span>{hear}</div></li>'
         )
     return "\n      ".join(out)
+
+
+def money(n: float) -> str:
+    return f"${round(n):,}"
+
+
+def calc_html(s: dict) -> str:
+    c, k = CALC, s["calc"]
+    them = c["rate"] * c["pct"] / 100
+    diff = max(0, them - c["fee"])
+    keep = k["keep"].format(diff=money(diff))
+    month = k["month"].format(month=money(diff * c["loads"]), year=money(diff * c["loads"] * 12))
+
+    def field(fid, key, value, lo, hi, step, shown):
+        pct = (value - lo) / (hi - lo) * 100
+        return (f'<div class="field"><div class="field-top"><label for="c-{fid}" data-i18n="calc.{key}">{k[key]}</label>'
+                f'<output id="o-{fid}" for="c-{fid}">{shown}</output></div>'
+                f'<input type="range" id="c-{fid}" min="{lo}" max="{hi}" step="{step}" value="{value}" style="--fill:{pct:.1f}%"></div>')
+
+    return f"""<section class="in calc" id="pricing" aria-labelledby="calc-h">
+  <div class="calc-text">
+    {i18n("calc.eyebrow", k["eyebrow"], "span", "eyebrow")}
+    <h2 class="h2" id="calc-h" data-i18n="calc.h2">{k["h2"]}</h2>
+    {i18n("calc.p", k["p"], "p", "lead")}
+    <div class="tiles">
+      <div class="tile"><strong data-i18n="calc.sub_t">{k["sub_t"]}</strong><span data-i18n="calc.sub_d">{k["sub_d"]}</span></div>
+      <div class="tile us"><strong data-i18n="calc.oct_t">{k["oct_t"]}</strong><span data-i18n="calc.oct_d">{k["oct_d"]}</span></div>
+    </div>
+  </div>
+  <div class="machine">
+    {field("rate", "rate", c["rate"], c["rate_min"], c["rate_max"], c["rate_step"], money(c["rate"]))}
+    {field("pct", "pct", c["pct"], c["pct_min"], c["pct_max"], 1, f'{c["pct"]}%')}
+    {field("loads", "loads", c["loads"], c["loads_min"], c["loads_max"], 1, str(c["loads"]))}
+    <div class="bars" aria-live="polite">
+      <div class="bar them"><span data-i18n="calc.them">{k["them"]}</span><span class="track"><span class="fill" style="width:100%"></span></span><b id="b-them">{money(them)}</b></div>
+      <div class="bar us"><span data-i18n="calc.us">{k["us"]}</span><span class="track"><span class="fill" id="f-us" style="width:{max(2, c["fee"] / them * 100):.1f}%"></span></span><b id="b-us">{money(c["fee"])}</b></div>
+    </div>
+    <p class="result" id="r-keep">{keep}</p>
+    <p class="result-month" id="r-month">{month}</p>
+    {i18n("calc.fine", k["fine"], "p", "fine")}
+  </div>
+</section>"""
+
+
+def who_html(s: dict) -> str:
+    w, ui = s["who"], s["ui"]
+    cards = [
+        ("oo", REGISTER_URL, "ui.start", ui["start"]),
+        ("fl", DEMO_URL, "ui.demo_long", ui["demo_long"]),
+        ("pa", f"mailto:{PARTNERS_EMAIL}", None, PARTNERS_EMAIL),
+    ]
+    items = ""
+    for c, href, lk, lv in cards:
+        link_i18n = f' data-i18n="{lk}"' if lk else ""
+        items += (f'\n    <li class="card"><h3 data-i18n="who.{c}_t">{w[c + "_t"]}</h3><p data-i18n="who.{c}_d">{w[c + "_d"]}</p>'
+                  f'<a href="{href}"{link_i18n}>{lv}</a></li>')
+    return f"""<section class="in who" id="who" aria-labelledby="who-h">
+  <h2 class="eyebrow" id="who-h" data-i18n="who.eyebrow">{w["eyebrow"]}</h2>
+  <ul class="cards">{items}
+  </ul>
+</section>"""
+
+
+def contact_html(s: dict) -> str:
+    c = s["contact"]
+    return f"""<section class="in contact" id="partners" aria-labelledby="contact-h">
+  <div class="contact-text">
+    {i18n("contact.eyebrow", c["eyebrow"], "span", "eyebrow")}
+    <h2 class="h2" id="contact-h" data-i18n="contact.h2">{c["h2"]}</h2>
+  </div>
+  <ul class="lines">
+    <li class="call"><a href="{DEMO_URL}"><strong data-i18n="contact.call_t">{c["call_t"]}</strong><span data-i18n="contact.call_d">{c["call_d"]}</span></a></li>
+    <li><a href="mailto:{PARTNERS_EMAIL}"><strong data-i18n="contact.partners_t">{c["partners_t"]}</strong><span>{PARTNERS_EMAIL}</span></a></li>
+    <li><a href="mailto:{CONTACT_EMAIL}"><strong data-i18n="contact.ask_t">{c["ask_t"]}</strong><span>{CONTACT_EMAIL}</span></a></li>
+    <li><a href="mailto:{PRIVACY_EMAIL}"><strong data-i18n="contact.privacy_t">{c["privacy_t"]}</strong><span>{PRIVACY_EMAIL}</span></a></li>
+  </ul>
+</section>"""
 
 
 SONAR_SVG = """<svg viewBox="0 0 1440 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" data-still="1.2">
@@ -483,12 +803,12 @@ def landing(lang: str, prefix: str) -> str:
     canonical = f"{SITE}/ru/" if lang == "ru" else f"{SITE}/"
     ui = s["ui"]
     start = f'<a class="btn" href="{REGISTER_URL}" data-i18n="ui.start">{ui["start"]}</a>'
-    demo = f'<a class="link" href="{DEMO_URL}" data-i18n="ui.demo">{ui["demo"]}</a>'
+    demo = f'<a class="link" href="{DEMO_URL}" data-i18n="ui.demo_long">{ui["demo_long"]}</a>'
     rules = "".join(
         f'\n      <li class="rule">{icon}<p data-i18n="sasr.r{i + 1}">{s["sasr"][f"r{i + 1}"]}</p></li>'
         for i, icon in enumerate(RULE_ICONS)
     )
-    js = JS.replace("__THEME_COLORS__", json.dumps(THEME_COLOR))
+    js = JS.replace("__THEME_COLORS__", json.dumps(THEME_COLOR)).replace("__CALC__", json.dumps(CALC))
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -522,13 +842,19 @@ def landing(lang: str, prefix: str) -> str:
 <body>
 <header class="in top" id="top">
   <a class="brand" href="#top">{LOGO_SVG}<span data-i18n="ui.brand">{ui["brand"]}</span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#lifecycle" data-i18n="ui.nav_how">{ui["nav_how"]}</a>
+    <a href="#pricing" data-i18n="ui.nav_pricing">{ui["nav_pricing"]}</a>
+    <a href="#founder" data-i18n="ui.nav_founder">{ui["nav_founder"]}</a>
+    <a href="#partners" data-i18n="ui.nav_partners">{ui["nav_partners"]}</a>
+  </nav>
   <div class="top-right">
     <div class="lang" role="group" aria-label="Language / Язык">
       <button type="button" data-lang="en" lang="en" aria-pressed="{'true' if lang == 'en' else 'false'}" aria-label="English">{FLAG_US}<span>EN</span></button>
       <button type="button" data-lang="ru" lang="ru" aria-pressed="{'true' if lang == 'ru' else 'false'}" aria-label="Русский">{FLAG_RU}<span>RU</span></button>
     </div>
     <button type="button" class="theme" id="theme" data-i18n-attr="aria-label:ui.theme,title:ui.theme" aria-label="{attr(ui["theme"])}" title="{attr(ui["theme"])}">{ICON_MOON}{ICON_SUN}</button>
-    {demo}
+    <a class="link link-demo" href="{DEMO_URL}" data-i18n="ui.demo">{ui["demo"]}</a>
     {start}
   </div>
 </header>
@@ -536,43 +862,56 @@ def landing(lang: str, prefix: str) -> str:
 <main>
 <section class="in hero">
   <div class="hero-l">
-    <h1>{s["hero"]["h1"]}</h1>
-    {i18n("hero.h3", s["hero"]["h3"], "h3")}
+    {i18n("hero.tag", s["hero"]["tag"], "p", "tag")}
+    <h1 data-i18n="hero.h1">{s["hero"]["h1"]}</h1>
     {i18n("hero.sub", s["hero"]["sub"], "p", "sub")}
   </div>
   <div class="price">
     {i18n("hero.motto", s["hero"]["motto"], "p", "motto")}
     {i18n("hero.price", s["hero"]["price"], "p")}
+    {i18n("hero.refund", s["hero"]["refund"], "p", "refund")}
     <div class="ctas"><a class="btn btn-lg" href="{REGISTER_URL}" data-i18n="ui.start">{ui["start"]}</a>{demo}</div>
   </div>
 </section>
 
 <section class="band" id="lifecycle" aria-labelledby="life-h">
   <div class="in">
-    <div class="band-head"><h2 class="eyebrow" id="life-h" data-i18n="life.eyebrow">{s["life"]["eyebrow"]}</h2>{i18n("life.chain", s["life"]["chain"], "span", "chain")}</div>
+    <div class="band-head"><h2 class="eyebrow" id="life-h" data-i18n="life.eyebrow">{s["life"]["eyebrow"]}</h2>{i18n("life.hint", s["life"]["hint"], "span", "hint")}{i18n("life.chain", s["life"]["chain"], "span", "chain")}</div>
     {spine_svg(s)}
     <ol class="stops">
       {stops_html(s)}
     </ol>
+    <div class="detail" id="detail" aria-live="polite">
+      <h3 id="detail-name">{s["life"]["found"][0]}</h3>
+      <p id="detail-text">{s["life"]["found"][2]}</p>
+      {hear_btn(s)}
+    </div>
   </div>
 </section>
 
-<section class="in why" id="why" aria-labelledby="why-h">
-  <h2 class="eyebrow" id="why-h" data-i18n="why.eyebrow">{s["why"]["eyebrow"]}</h2>
+{calc_html(s)}
+
+{who_html(s)}
+
+<section class="in why" id="founder" aria-labelledby="why-h">
+  {i18n("why.eyebrow", s["why"]["eyebrow"], "span", "eyebrow")}
   <div class="why-body">
+    <h2 class="h2" id="why-h" data-i18n="why.h2">{s["why"]["h2"]}</h2>
+    {i18n("why.p0", s["why"]["p0"], "p", "p0")}
     {i18n("why.p1", s["why"]["p1"], "p", "p1")}
     {i18n("why.p2", s["why"]["p2"], "p", "p")}
     {i18n("why.p3", s["why"]["p3"], "p", "p")}
     {i18n("why.p4", s["why"]["p4"], "p", "p4")}
+    <div class="sign"><span class="mono" aria-hidden="true">BH</span><strong data-i18n="why.sign">{s["why"]["sign"]}</strong><a href="{DEMO_URL}" data-i18n="why.talk">{s["why"]["talk"]}</a></div>
   </div>
 </section>
-<div class="sonar">
+<div class="sonar" id="why">
   {SONAR_SVG}
   {i18n("why.sonar", s["why"]["sonar"], "p")}
 </div>
 
 <section class="in sasr" id="security" aria-labelledby="sasr-h">
-  <div class="sasr-head">{i18n("sasr.eyebrow", s["sasr"]["eyebrow"], "span", "eyebrow")}<h2 id="sasr-h">{s["sasr"]["title"]} {i18n("sasr.full", s["sasr"]["full"])}</h2></div>
+  <div class="sasr-head">{i18n("sasr.eyebrow", s["sasr"]["eyebrow"], "span", "eyebrow")}<h2 id="sasr-h">{s["sasr"]["title"]} {i18n("sasr.full", s["sasr"]["full"])}</h2>{i18n("sasr.note", s["sasr"]["note"], "span", "note")}</div>
   <ul class="rules">{rules}
   </ul>
   {i18n("sasr.close", s["sasr"]["close"], "p", "close")}
@@ -588,6 +927,8 @@ def landing(lang: str, prefix: str) -> str:
     {plate_svg(s)}
   </div>
 </section>
+
+{contact_html(s)}
 
 <section class="in end">
   {i18n("end.byline", s["end"]["byline"], "p")}

@@ -106,7 +106,7 @@ Full pricing lives in the **Partnership Agreement**. The short version:
 
 ### 7.2 If a Payment Fails
 
-We'll tell you and give you a chance to fix it. If it stays unpaid, load booking gets suspended — your data stays put and stays exportable. We don't charge interest or late penalties, and we don't hold your records hostage. If cash is tight, email us at private@thedigitalronin.com before it becomes a problem. We've been there.
+We'll tell you and give you a chance to fix it. If it stays unpaid, load booking gets suspended — your data stays put and stays exportable. We don't charge interest or late penalties, and we don't hold your records hostage. If cash is tight, email us at you.matter@octopustms.com before it becomes a problem. We've been there.
 
 ## 8. Honest Limitations
 
@@ -151,7 +151,7 @@ You'll cover us — Octopus, Digital Ronin LLC, and the people who work on it �
 
 Let's try being adults about it first. Most things get solved with one honest conversation.
 
-1. Email private@thedigitalronin.com with what went wrong
+1. Email ask@octopustms.com with what went wrong
 2. We aim to respond within 48 hours
 3. If email isn't cutting it, we get on a call
 4. If it's still unresolved after 30 days, binding arbitration under AAA rules, individually — not as a class
@@ -194,7 +194,7 @@ These Terms are governed by the laws of the State of Delaware, without regard to
 
 **Octopus TMS**
 Operated by Digital Ronin LLC
-Email: private@thedigitalronin.com
+Email: ask@octopustms.com
 Phone: +1 (412)510-5854
 
 ---

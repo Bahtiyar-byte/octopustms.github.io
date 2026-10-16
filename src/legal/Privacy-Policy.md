@@ -142,7 +142,7 @@ We commit to the following:
 - Deletion of your account and its data, subject to the retention rules below
 - An export of your data in a machine-readable format, any time
 
-Email private@thedigitalronin.com and we'll respond within 30 days. We won't charge you, and we won't treat you differently for asking.
+Email privacy@octopustms.com and we'll respond within 30 days. We won't charge you, and we won't treat you differently for asking.
 
 ### 6.2 Communication Preferences
 - You can opt out of non-essential notifications any time
@@ -178,7 +178,7 @@ If you're a California resident, you have the right to know what we collect, to 
 
 **Drivers.** If you drive for a carrier that uses Octopus, that carrier decides that you are tracked and for which loads; we process trip location on their instructions as a service provider. You hold the same rights listed above and can exercise them with us directly at the address below, and your carrier may owe you separate written notice of monitoring under your state's law.
 
-To exercise any right, email private@thedigitalronin.com. An authorized agent may act for you with written permission.
+To exercise any right, email privacy@octopustms.com. An authorized agent may act for you with written permission.
 
 ## 10. Children's Privacy
 
@@ -194,7 +194,7 @@ Privacy questions, data requests, or anything in this policy that reads wrong to
 
 **Octopus TMS**
 Operated by Digital Ronin LLC
-Email: private@thedigitalronin.com
+Email: privacy@octopustms.com
 Phone: +1 (412)510-5854
 
 ## 13. Cookies
