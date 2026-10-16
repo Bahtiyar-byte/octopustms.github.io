@@ -1,2101 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus TMS - Pay Only When You Book</title>
-    <meta name="description" content="$20 per booked load. Zero loads = Zero cost. The revolutionary TMS built by truckers, for truckers.">
-    <meta property="og:title" content="Octopus TMS - Revolutionary Trucking Management Software">
-    <meta property="og:description" content="$20 per booked load. Zero loads = Zero cost. Built by truckers, for truckers.">
-    <meta property="og:image" content="https://octopustms.com/octopus-logo.svg">
-    <link rel="icon" type="image/svg+xml" href="octopus-logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            /* C.H. Robinson inspired colors */
-            --primary: #0066B3;
-            --primary-light: #00A3E0;
-            --primary-dark: #064979;
-            --primary-darker: #003057;
-            --secondary: #00B5E2;
-            --accent: #00C7B1;
-            --success: #00A94F;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --bg-white: #FFFFFF;
-            --bg-light: #F8FAFC;
-            --bg-gray: #F1F5F9;
-            --bg-dark: #001F3F;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --text-light: #94A3B8;
-            --border-light: #E2E8F0;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Light section backgrounds */
-        .section-white {
-            background: var(--bg-white);
-        }
-
-        .section-light {
-            background: var(--bg-light);
-        }
-
-        .section-gray {
-            background: var(--bg-gray);
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Top Trust Bar */
-        .trust-bar {
-            background: linear-gradient(90deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .trust-bar-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 48px;
-            flex-wrap: wrap;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .trust-item svg {
-            width: 16px;
-            height: 16px;
-            color: var(--success);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 16px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo img { width: 40px; height: 40px; }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-            background: rgba(0, 102, 179, 0.05);
-        }
-
-        .nav-link.active {
-            color: var(--primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 4px 14px rgba(0, 102, 179, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 179, 0.5);
-        }
-
-        .btn-secondary {
-            background: var(--bg-white);
-            color: var(--primary);
-            border: 1px solid var(--border-light);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-light);
-            border-color: var(--primary);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 1.05rem;
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-white);
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-dark);
-            z-index: 200;
-            padding: 24px;
-            flex-direction: column;
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-
-        .mobile-menu-close {
-            background: none;
-            border: none;
-            color: var(--text-white);
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .mobile-menu-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mobile-menu-links a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 16px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .mobile-menu-links a:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .mobile-menu-cta {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 0 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            z-index: -1;
-        }
-
-        .hero-bg-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.95) 100%);
-            z-index: -1;
-        }
-
-        .hero-parallax-element {
-            position: absolute;
-            pointer-events: none;
-            will-change: transform;
-        }
-
-        .hero-circle-1 {
-            width: 600px;
-            height: 600px;
-            border: 1px solid rgba(0, 102, 179, 0.1);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-        }
-
-        .hero-circle-2 {
-            width: 400px;
-            height: 400px;
-            border: 1px solid rgba(0, 163, 224, 0.1);
-            border-radius: 50%;
-            bottom: -100px;
-            left: -100px;
-        }
-
-        .hero-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-image:
-                linear-gradient(rgba(0, 102, 179, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 179, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
-            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black, transparent);
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--success);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .hero h1 {
-            font-size: 3.75rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            color: var(--text-dark);
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 1.25rem;
-            color: var(--text-gray);
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .stat-item {
-            text-align: left;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .stat-value.counting {
-            color: var(--primary-light);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        /* Hero Visual - Pricing Card */
-        .hero-visual {
-            position: relative;
-        }
-
-        .pricing-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 48px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .pricing-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-
-        .pricing-amount {
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .pricing-amount span {
-            font-size: 1.5rem;
-            color: var(--text-gray);
-            font-weight: 500;
-        }
-
-        .pricing-subtitle {
-            font-size: 1.1rem;
-            color: var(--success);
-            font-weight: 600;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-light);
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-
-        .check-icon {
-            width: 20px;
-            height: 20px;
-            background: rgba(16, 185, 129, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--success);
-            flex-shrink: 0;
-        }
-
-        /* Audience Segmentation */
-        .audience-section {
-            padding: 80px 0;
-            background: var(--bg-white);
-        }
-
-        .audience-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .audience-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 32px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .audience-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .audience-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .audience-card:hover::before {
-            opacity: 1;
-        }
-
-        .audience-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .audience-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .audience-card:hover .audience-image img {
-            transform: scale(1.05);
-        }
-
-        .audience-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .audience-card p {
-            color: var(--text-gray);
-            margin-bottom: 24px;
-            line-height: 1.7;
-        }
-
-        /* Social Proof Section */
-        .social-proof {
-            padding: 60px 0;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .social-proof-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .social-proof-header p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-
-        .stats-item {
-            text-align: center;
-            padding: 24px;
-            background: var(--bg-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .stats-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        .integrations-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-        }
-
-        .integration-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 16px;
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .integration-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 102, 179, 0.1);
-        }
-
-        .integration-logo {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-
-        .integration-logo.dat {
-            background: linear-gradient(135deg, rgba(0, 70, 224, 0.1) 0%, rgba(28, 96, 242, 0.15) 100%);
-        }
-
-        .integration-logo.stripe {
-            background: linear-gradient(135deg, rgba(99, 91, 255, 0.1) 0%, rgba(99, 91, 255, 0.15) 100%);
-            color: #635BFF;
-        }
-
-        .integration-logo.twilio {
-            background: linear-gradient(135deg, rgba(241, 78, 78, 0.1) 0%, rgba(241, 78, 78, 0.15) 100%);
-            color: #F14E4E;
-        }
-
-        .integration-logo.mapbox {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
-            color: #000000;
-        }
-
-        .integration-logo.quickbooks {
-            background: linear-gradient(135deg, rgba(44, 160, 28, 0.1) 0%, rgba(44, 160, 28, 0.15) 100%);
-            color: #2CA01C;
-        }
-
-        .integration-name {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .integration-desc {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-        }
-
-        /* Features Section */
-        .section {
-            padding: 120px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 64px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: rgba(0, 102, 179, 0.1);
-            border: 1px solid rgba(0, 102, 179, 0.3);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            color: var(--text-dark);
-        }
-
-        .section-description {
-            font-size: 1.15rem;
-            color: var(--text-gray);
-            line-height: 1.8;
-        }
-
-        /* Feature Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card.parallax-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .feature-card:nth-child(1) { transition-delay: 0s; }
-        .feature-card:nth-child(2) { transition-delay: 0.1s; }
-        .feature-card:nth-child(3) { transition-delay: 0.2s; }
-        .feature-card:nth-child(4) { transition-delay: 0.3s; }
-        .feature-card:nth-child(5) { transition-delay: 0.4s; }
-        .feature-card:nth-child(6) { transition-delay: 0.5s; }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 179, 0.1) 0%, rgba(0, 163, 224, 0.1) 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .feature-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--primary);
-        }
-
-        .feature-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .feature-card p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* Workflow Section */
-        .workflow-section {
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .workflow-steps {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-            position: relative;
-        }
-
-        .workflow-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
-            opacity: 0.3;
-        }
-
-        .workflow-step {
-            text-align: center;
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .workflow-step.parallax-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .workflow-step:nth-child(1) { transition-delay: 0s; }
-        .workflow-step:nth-child(2) { transition-delay: 0.15s; }
-        .workflow-step:nth-child(3) { transition-delay: 0.3s; }
-        .workflow-step:nth-child(4) { transition-delay: 0.45s; }
-        .workflow-step:nth-child(5) { transition-delay: 0.6s; }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: var(--bg-white);
-            border: 2px solid var(--border-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .workflow-step:hover .step-number {
-            border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(0, 102, 179, 0.2);
-        }
-
-        .step-number svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--primary);
-        }
-
-        .workflow-step h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-
-        .workflow-step p {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* Comparison Section */
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .comparison-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 40px;
-            opacity: 0;
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .comparison-card:first-child {
-            transform: translateX(-50px);
-        }
-
-        .comparison-card:last-child {
-            transform: translateX(50px);
-        }
-
-        .comparison-card.parallax-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .comparison-card:first-child { transition-delay: 0.1s; }
-        .comparison-card:last-child { transition-delay: 0.3s; }
-
-        .comparison-card.highlight {
-            background: linear-gradient(145deg, rgba(0, 102, 179, 0.05) 0%, var(--bg-white) 100%);
-            border-color: var(--primary);
-        }
-
-        .comparison-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .comparison-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .comparison-card:not(.highlight) .comparison-icon {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .comparison-card.highlight .comparison-icon {
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .comparison-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .comparison-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 24px;
-            color: var(--text-dark);
-        }
-
-        .comparison-card:not(.highlight) .comparison-price {
-            color: var(--text-light);
-            text-decoration: line-through;
-        }
-
-        .comparison-list {
-            list-style: none;
-        }
-
-        .comparison-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            font-size: 0.95rem;
-            color: var(--text-gray);
-        }
-
-        /* Testimonials */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .testimonial-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(40px) rotateX(10deg);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .testimonial-card.parallax-visible {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
-        }
-
-        .testimonial-card:nth-child(1) { transition-delay: 0s; }
-        .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
-        .testimonial-card:nth-child(3) { transition-delay: 0.3s; }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 102, 179, 0.15);
-        }
-
-        .testimonial-stars {
-            color: #F59E0B;
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-        }
-
-        .testimonial-text {
-            font-size: 1rem;
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-        }
-
-        .author-name {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .author-role {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* Image Showcase Section */
-        .showcase-section {
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-light);
-        }
-
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .showcase-item {
-            border-radius: 16px;
-            overflow: hidden;
-            height: 300px;
-            position: relative;
-        }
-
-        .showcase-item:first-child {
-            grid-column: span 1;
-            grid-row: span 1;
-            height: 300px;
-        }
-
-        .showcase-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .showcase-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .showcase-item::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 31, 63, 0.6) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .cta-card {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
-            border-radius: 24px;
-            padding: 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-bg-image {
-            display: none;
-        }
-
-        .cta-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-
-        .cta-description {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 32px;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--primary-dark);
-        }
-
-        .btn-white:hover {
-            background: #F3F4F6;
-            transform: translateY(-2px);
-        }
-
-        .btn-ghost {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Footer */
-        footer {
-            padding: 60px 0 40px;
-            background: var(--bg-dark);
-            color: white;
-        }
-
-        .footer-logo .logo-text {
-            color: white;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-main {
-            max-width: 320px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .footer-logo img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .footer-tagline {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 64px;
-        }
-
-        .footer-column h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            color: white;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-legal a:hover {
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content { grid-template-columns: 1fr; gap: 60px; }
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
-            .workflow-steps { grid-template-columns: repeat(3, 1fr); }
-            .workflow-steps::before { display: none; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .audience-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .integrations-grid { grid-template-columns: repeat(5, 1fr); }
-            .footer-content { flex-direction: column; }
-            .footer-links { gap: 48px; }
-            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
-            .showcase-item:first-child { grid-column: span 2; grid-row: span 1; height: 300px; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links, .nav-actions { display: none; }
-            .mobile-menu-btn { display: block; }
-            .hero { padding: 120px 0 80px; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-stats { flex-direction: column; gap: 24px; }
-            .features-grid { grid-template-columns: 1fr; }
-            .comparison-grid { grid-template-columns: 1fr; }
-            .workflow-steps { grid-template-columns: repeat(2, 1fr); }
-            .cta-card { padding: 48px 24px; }
-            .cta-title { font-size: 2rem; }
-            .cta-buttons { flex-direction: column; }
-            .section { padding: 80px 0; }
-            .pricing-amount { font-size: 3rem; }
-            .footer-links { flex-direction: column; gap: 32px; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-            .footer-legal { justify-content: center; }
-            .integrations-grid { grid-template-columns: repeat(2, 1fr); }
-            .integration-item:last-child { grid-column: span 2; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .showcase-grid { grid-template-columns: 1fr; }
-            .showcase-item:first-child { grid-column: span 1; height: 250px; }
-            .showcase-item { height: 200px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(function(){var t;try{t=localStorage.getItem('octopus.theme')}catch(e){}if(t!=='dark'&&t!=='light')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+<title>Octopus TMS — Load Lifecycle Management and Payments for small carriers | $20 per load</title>
+<meta name="description" content="Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and payment. Start free. $20 per load, no subscription.">
+<link rel="canonical" href="https://octopustms.com/">
+<link rel="alternate" hreflang="en" href="https://octopustms.com/">
+<link rel="alternate" hreflang="ru" href="https://octopustms.com/ru/">
+<link rel="alternate" hreflang="x-default" href="https://octopustms.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Octopus TMS">
+<meta property="og:url" content="https://octopustms.com/">
+<meta property="og:title" content="Octopus TMS — from found to paid. $20 per load.">
+<meta property="og:description" content="Built by a former owner-operator. One app for the whole life of a load. Start free; $20 per load, refunded automatically if you cancel before the truck moves.">
+<meta property="og:image" content="https://octopustms.com/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EEF2F7">
+<link rel="icon" href="/octopus-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://octopustms.com/#app","name":"Octopus TMS","alternateName":"LLMP — Load Lifecycle Management and Payments","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://octopustms.com/","inLanguage":["en","ru"],"description":"Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and payment. Start free. $20 per load, no subscription.","offers":[{"@type":"Offer","price":"20.00","priceCurrency":"USD","name":"Per load","description":"$20 per load. No subscription. No seats. No load, no fee."}],"publisher":{"@id":"https://octopustms.com/#org"}},{"@type":"Organization","@id":"https://octopustms.com/#org","name":"Digital Ronin LLC","alternateName":"Octopus TMS","url":"https://octopustms.com","logo":"https://octopustms.com/octopus-logo.svg","email":"ask@octopustms.com","founder":{"@type":"Person","name":"Brandon Hay","jobTitle":"Founder"},"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"ask@octopustms.com","availableLanguage":["English","Russian"]},{"@type":"ContactPoint","contactType":"partnerships","email":"partners@octopustms.com"},{"@type":"ContactPoint","contactType":"privacy","email":"privacy@octopustms.com"}]}]}</script>
+<style>:root{--paper:#EEF2F7;--card:#FFFFFF;--card2:#F3F6FA;--ink:#0E1726;--ink2:#3A4556;--muted:#69737F;--line:#D9DFE8;
+  --accent:#0A5BFF;--accent-ink:#0646C7;--accent-soft:#E7EEFF;--money:#0E9F6E;--money-soft:#E3F6EE;
+  --glow:rgba(10,91,255,.5);--band:#0E1726;--quote:#F4F7FD;color-scheme:light}
+:root[data-theme="dark"]{--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}}
+
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-text-size-adjust:100%;font-size:16px;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;overflow-x:hidden}
+:root{--pad:clamp(16px,5.5vw,80px);--display:'Unbounded','Golos Text',system-ui,sans-serif;--body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+a{color:var(--accent-ink);text-decoration:none}
+a:hover{color:var(--accent)}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.in{max-width:1440px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent-ink)}
+.display{font-family:var(--display)}
+svg{max-width:100%}
+
+/* ---- buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;white-space:nowrap;transition:transform .15s,filter .15s}
+.btn:hover{color:#fff;filter:brightness(1.1);transform:translateY(-1px)}
+.btn::after{content:"→"}
+.btn-lg{font-size:16px;padding:14px 24px}
+.btn-xl{font-size:17px;padding:16px 28px}
+.link{font-weight:600;font-size:15px;color:var(--ink2);white-space:nowrap}
+.link:hover{color:var(--accent-ink)}
+.ctas{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center}
+
+/* ---- top bar */
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:19px;font-family:var(--display);letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+.brand:hover{color:var(--ink)}
+.brand .logo{width:38px;height:38px;flex:none}
+.nav{display:flex;gap:clamp(14px,1.8vw,28px);margin-right:auto;margin-left:clamp(20px,3vw,48px)}
+.nav a{font-weight:600;font-size:15px;color:var(--ink2);white-space:nowrap}
+.nav a:hover{color:var(--accent-ink)}
+.top-right{display:flex;align-items:center;gap:clamp(10px,1.4vw,18px)}
+.lang{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.lang button{border:0;background:transparent;font:inherit;font-weight:600;font-size:13px;color:var(--muted);padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:background .15s,color .15s}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.flag{border-radius:2px;flex:none}
+.theme{width:38px;height:38px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;padding:0}
+.theme svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.theme .ic-sun{display:none}
+[data-theme="dark"] .theme .ic-sun{display:block}
+[data-theme="dark"] .theme .ic-moon{display:none}
+
+/* ---- hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:64px;align-items:end;padding-top:64px;padding-bottom:72px}
+.hero-l{display:flex;flex-direction:column;gap:22px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(42px,5.6vw,84px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+.tag{align-self:flex-start;display:inline-block;max-width:100%;font-size:14px;font-weight:600;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+.tag b{font-family:var(--display);font-weight:800;color:var(--accent-ink);letter-spacing:.03em}
+.money{color:var(--money)}
+.hero .sub{font-size:clamp(18px,1.55vw,22px);line-height:1.5;color:var(--ink2);max-width:640px;text-wrap:pretty}
+.hero .sub em{white-space:nowrap;font-style:italic;color:var(--money);font-weight:600}
+.price{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,2.5vw,36px);display:flex;flex-direction:column;gap:20px;box-shadow:0 30px 60px -40px var(--glow)}
+.price .motto{color:var(--ink);font-family:var(--display);font-weight:800;font-size:clamp(26px,2.4vw,34px);line-height:1.1;letter-spacing:-.02em}
+.price p{font-size:19px;line-height:1.55;color:var(--ink2)}
+.price p b{font-family:var(--display);font-size:clamp(30px,2.6vw,38px);color:var(--money);letter-spacing:-.02em;display:block;margin-bottom:4px}
+.price .refund{font-size:15px;line-height:1.5;color:var(--muted)}
+
+/* ---- lifecycle */
+.band{background:var(--band);color:#fff;padding:64px 0 72px;scroll-margin-top:0}
+.band-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px;margin-bottom:28px}
+.band .eyebrow{color:#8DB2FF}
+.band .chain{font-size:14px;color:#8693A7}
+.spine{display:block;width:100%;height:auto;overflow:visible;font-family:var(--body)}
+.stops{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+.stop{padding:16px 14px;border-radius:14px;display:flex;flex-direction:column;gap:8px;transition:background .2s}
+.stop:hover{background:rgba(255,255,255,.06)}
+.stop .name{font-family:var(--display);font-weight:700;font-size:16px}
+.stop .desc{font-size:13.5px;line-height:1.5;color:#B7C1D1}
+.stop .dot{display:none}
+.stop.paid{background:rgba(52,211,153,.12);box-shadow:inset 0 0 0 1.5px #34D399}
+.stop.paid .name{font-weight:800;color:#34D399}
+.stop.paid .desc{color:#E3F6EE}
+.stop.archived .name{color:#B7C1D1}
+.stop.archived .desc{color:#8693A7}
+.ching{display:none}
+
+/* ---- why */
+.why{display:grid;grid-template-columns:260px minmax(0,1fr);gap:64px;padding-top:112px;scroll-margin-top:24px}
+.why .eyebrow{padding-top:10px}
+.why-body{display:flex;flex-direction:column;gap:26px;max-width:860px}
+.why .p1{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.1vw,30px);line-height:1.35;letter-spacing:-.015em;text-wrap:pretty}
+.why .p{font-size:clamp(18px,1.5vw,21px);line-height:1.6;color:var(--ink2);text-wrap:pretty}
+.why .p4{font-size:clamp(20px,1.7vw,24px);line-height:1.5;font-weight:600}
+.sonar{position:relative;height:clamp(280px,26.4vw,380px);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sonar svg{position:absolute;inset:0;width:100%;height:100%}
+.sonar p{position:relative;font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,58px);letter-spacing:-.03em;text-align:center;line-height:1.05;background:var(--paper);padding:10px 24px;border-radius:16px;max-width:calc(100% - 2*var(--pad));text-wrap:balance;transition:background .3s}
+
+/* ---- SASR */
+.sasr{padding-top:40px;padding-bottom:104px;scroll-margin-top:24px}
+.sasr-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin-bottom:36px}
+.sasr h2{flex:none;font-family:var(--display);font-weight:800;font-size:clamp(34px,3.1vw,44px);letter-spacing:-.025em;white-space:nowrap}
+.sasr h2 span{font-weight:600;font-size:clamp(17px,1.55vw,22px);color:var(--muted);letter-spacing:-.01em}
+.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:22px}
+.rule p{font-size:clamp(19px,1.5vw,21px);line-height:1.4;font-weight:600}
+.sasr .close{margin-top:44px;font-family:var(--display);font-weight:600;font-size:clamp(21px,2vw,28px);line-height:1.35;letter-spacing:-.015em;max-width:1020px;text-wrap:pretty}
+.hl{color:var(--accent-ink)}
+
+/* ---- the standard */
+.std{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);scroll-margin-top:0;transition:background .3s}
+.std .in{padding-top:96px;padding-bottom:96px;display:grid;grid-template-columns:minmax(0,1fr) 560px;gap:72px;align-items:center}
+.std-text{display:flex;flex-direction:column;gap:22px}
+.std h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,3.4vw,48px);line-height:1.05;letter-spacing:-.03em}
+.std p{font-size:clamp(18px,1.5vw,21px);line-height:1.6;color:var(--ink2);text-wrap:pretty}
+.plate{display:block;width:100%;max-width:560px;height:auto;font-family:var(--body);justify-self:center}
+
+/* ---- end + footer */
+.end{padding-top:88px;padding-bottom:40px;display:flex;flex-direction:column;align-items:center;gap:30px;text-align:center}
+.end p{font-size:clamp(19px,1.7vw,24px);line-height:1.5;font-style:italic;color:var(--ink2);max-width:760px;text-wrap:balance}
+.end .ctas{justify-content:center}
+.foot{border-top:1px solid var(--line)}
+.foot .in{min-height:56px;padding-top:12px;padding-bottom:12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;font-size:13px;color:var(--muted)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+.foot a{color:var(--muted)}
+.foot a:hover{color:var(--ink)}
+
+/* ---- lifecycle: interactive */
+.band-head .hint{font-size:14px;color:#8DB2FF;font-weight:600}
+.band-head .hint::before{content:"👆 "}
+.stop-btn{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;cursor:pointer;width:100%}
+.stop-btn:focus-visible{outline:3px solid #8DB2FF;outline-offset:8px;border-radius:8px}
+.stop{cursor:pointer}
+.stop.on{background:rgba(61,123,255,.18);box-shadow:inset 0 0 0 1.5px #3D7BFF}
+.stop.paid.on{background:rgba(52,211,153,.22);box-shadow:inset 0 0 0 2px #34D399}
+.stop .more{display:none}
+.detail{margin-top:20px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:24px 28px;display:grid;grid-template-columns:190px minmax(0,1fr) auto;gap:24px;align-items:center;min-height:118px}
+.detail h3{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em;color:#fff}
+.detail.is-paid h3{color:#34D399}
+.detail p{font-size:17px;line-height:1.6;color:#D5DCE7;max-width:820px}
+.hear{border:0;font:inherit;font-weight:700;font-size:15px;color:#052e16;background:#34D399;border-radius:999px;padding:11px 18px;cursor:pointer;display:none;align-items:center;gap:8px;white-space:nowrap}
+.hear:hover{filter:brightness(1.08)}
+.hear svg{width:18px;height:18px;fill:currentColor}
+.detail.is-paid .hear{display:inline-flex}
+.hear.ringing{animation:ring .55s ease-out}
+@keyframes ring{0%{transform:none}25%{transform:scale(1.1) rotate(-4deg)}55%{transform:scale(1.05) rotate(4deg)}100%{transform:none}}
+
+/* ---- section headings shared by pricing, who, founder, contact */
+.h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,3.2vw,46px);line-height:1.05;letter-spacing:-.03em;text-wrap:balance}
+.lead{font-size:clamp(18px,1.4vw,20px);line-height:1.6;color:var(--ink2);text-wrap:pretty}
+
+/* ---- pricing calculator */
+.calc{padding-top:104px;padding-bottom:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(36px,5vw,72px);align-items:start;scroll-margin-top:24px}
+.calc-text{display:flex;flex-direction:column;gap:18px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.tile{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--card);display:flex;flex-direction:column;gap:6px}
+.tile strong{font-size:15.5px}
+.tile span{font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.tile.us{border-color:var(--money);background:var(--money-soft)}
+.tile.us strong{color:var(--money)}
+.machine{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,2.4vw,34px);display:flex;flex-direction:column;gap:20px;box-shadow:0 30px 60px -44px var(--glow)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.field label{font-weight:600;font-size:15px;color:var(--ink2)}
+.field output{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.field input{width:100%;margin:0;height:28px;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none;--fill:50%}
+.field input::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(var(--accent),var(--accent)) 0 0/var(--fill) 100% no-repeat,var(--line)}
+.field input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--card);border:3px solid var(--accent);margin-top:-9px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.field input::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
+.field input::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
+.field input::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--card);border:3px solid var(--accent)}
+.bars{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid var(--line)}
+.bar{display:grid;grid-template-columns:96px minmax(0,1fr) 92px;gap:12px;align-items:center;font-size:15px;font-weight:600}
+.bar .track{height:14px;border-radius:99px;background:var(--card2);overflow:hidden}
+.bar .fill{display:block;height:100%;border-radius:99px;background:#EF4444;transition:width .3s ease}
+.bar.us .fill{background:var(--money)}
+.bar b{text-align:right;font-family:var(--display);font-size:18px}
+.bar.them b{color:#EF4444}
+.bar.us b{color:var(--money)}
+.result{font-size:clamp(19px,1.6vw,22px);line-height:1.45;font-weight:600}
+.result b{color:var(--money);font-family:var(--display);white-space:nowrap}
+.result-month{font-size:16px;line-height:1.55;color:var(--ink2)}
+.result-month b{color:var(--ink);white-space:nowrap}
+.fine{font-size:13.5px;line-height:1.55;color:var(--muted)}
+
+/* ---- who it's for */
+.who{padding-top:72px;padding-bottom:16px;scroll-margin-top:24px}
+.who .eyebrow{display:block;margin-bottom:22px}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.card h3{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.02em}
+.card p{font-size:16.5px;line-height:1.55;color:var(--ink2);flex:1}
+.card a{font-weight:700;font-size:15px}
+.card a::after{content:" →"}
+
+/* ---- founder */
+.why h2{margin-bottom:4px}
+.why .p0{font-size:clamp(18px,1.5vw,21px);line-height:1.6;color:var(--ink)}
+.sign{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:6px}
+.mono{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:.02em;flex:none}
+.sign strong{font-size:17px}
+.sign a{font-weight:700}
+
+/* ---- SASR status note */
+.sasr .note{font-size:13.5px;font-weight:600;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+
+/* ---- contact */
+.contact{padding-top:96px;padding-bottom:16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(32px,5vw,64px);align-items:start;scroll-margin-top:24px}
+.contact-text{display:flex;flex-direction:column;gap:16px}
+.lines{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lines a{display:flex;flex-direction:column;gap:4px;height:100%;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);transition:border-color .15s,transform .15s}
+.lines a:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+.lines strong{font-size:15.5px}
+.lines span{font-size:15px;color:var(--accent-ink);font-weight:600;overflow-wrap:anywhere}
+.lines .call a{background:var(--accent);border-color:var(--accent);color:#fff}
+.lines .call a:hover{color:#fff}
+.lines .call span{color:#DCE7FF;font-weight:500}
+
+/* ---- medium screens */
+@media (max-width:1180px){
+  .std .in{grid-template-columns:1fr;gap:48px}
+}
+@media (max-width:1180px){
+  .nav{display:none}
+}
+@media (max-width:1080px){
+  /* The spine turns vertical: one stop per row, the rail on the left. */
+  .spine{display:none}
+  .detail{display:none}
+  .stop.on .more{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:10px;font-size:15px;line-height:1.6;color:#D5DCE7}
+  .stop.paid.on .hear{display:inline-flex}
+  .band .chain{display:none}
+  .stops{grid-template-columns:1fr;gap:0;margin:0}
+  .stop{position:relative;padding:14px 16px 18px 60px;border-radius:14px}
+  .stop .dot{display:grid;place-items:center;position:absolute;left:10px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--band);border:2.5px solid rgba(255,255,255,.4);color:#8DB2FF;font-size:11px;font-weight:700;z-index:1}
+  .stop::after{content:"";position:absolute;left:22px;top:40px;bottom:-12px;width:4px;background:#3D7BFF}
+  .stop.proven::after{background:linear-gradient(#3D7BFF,#34D399)}
+  .stop.paid::after{background:rgba(255,255,255,.16)}
+  .stop.archived::after{display:none}
+  .stop.paid{margin:6px 0}
+  .stop.paid .dot{background:#34D399;border:0;color:#052e16;font-family:var(--display);font-size:15px;font-weight:800;width:34px;height:34px;left:7px;top:10px;box-shadow:0 0 0 6px rgba(52,211,153,.18);animation:ping 3s ease-out infinite}
+  .stop.archived .dot{border-style:dashed;border-color:rgba(255,255,255,.25);color:#8693A7}
+  .stop .name{display:flex;align-items:baseline;gap:12px}
+  .ching{display:inline;font-family:var(--body);font-size:15px;font-style:italic;font-weight:700;color:#34D399;opacity:0;animation:ching 3s ease-out infinite}
+}
+@keyframes ping{0%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 6px rgba(52,211,153,.6)}70%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 26px rgba(52,211,153,0)}100%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 26px rgba(52,211,153,0)}}
+@keyframes ching{0%,8%{opacity:0;transform:translateY(4px)}14%,70%{opacity:1;transform:none}85%,100%{opacity:0}}
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:36px;padding-top:40px;padding-bottom:56px}
+  .calc,.contact{grid-template-columns:1fr;padding-top:80px}
+  .cards{grid-template-columns:1fr}
+  .why{grid-template-columns:1fr;gap:18px;padding-top:80px}
+  .why .eyebrow{padding-top:0}
+  .rules{grid-template-columns:1fr}
+  .rule{flex-direction:row;align-items:center;gap:20px;padding:22px}
+  .rule svg{flex:none;width:60px;height:60px}
+  .sasr{padding-bottom:72px}
+  .std .in{padding-top:72px;padding-bottom:72px}
+  .end{padding-top:64px}
+}
+@media (max-width:720px){
+  .top .link{display:none}
+  .lang button span{display:none}
+  .lang button{padding:7px 9px}
+  .top .btn{padding:9px 14px;font-size:14px}
+  .sasr h2{white-space:normal}
+  .sasr h2 span{display:block;margin-top:6px}
+  .foot .in{justify-content:center;text-align:center}
+  .lines{grid-template-columns:1fr}
+  .top .link-demo{display:none}
+  .foot nav{justify-content:center}
+}
+@media (max-width:440px){
+  .brand{font-size:16px;gap:8px}
+  .brand .logo{width:32px;height:32px}
+  .theme{display:none}
+}
+@media (max-width:400px){
+  .brand .tms{display:none}
+  .top .btn::after{content:none}
+  .top-right{gap:6px}
+  .lang button{padding:7px 7px}
+  .top .btn{padding:9px 12px}
+  .tiles{grid-template-columns:1fr}
+  .bar{grid-template-columns:76px minmax(0,1fr) 80px;gap:8px}
+  .top-right{gap:8px}
+  .rule{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .ching{opacity:1}
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <img src="octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </div>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#how-it-works" class="nav-link">How It Works</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-            </div>
-            <div class="nav-actions">
-                <a href="https://calendly.com/brandon-hay-thedigitalronin/30min" class="btn btn-secondary btn-small">Book Demo</a>
-                <a href="https://app.octopustms.com/register" class="btn btn-primary btn-small">Get Started Free</a>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <div class="logo">
-                <img src="octopus-logo.svg" alt="Octopus TMS">
-                <span class="logo-text">Octopus TMS</span>
-            </div>
-            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        <div class="mobile-menu-links">
-            <a href="#features" onclick="toggleMobileMenu()">Features</a>
-            <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
-            <a href="#pricing" onclick="toggleMobileMenu()">Pricing</a>
-        </div>
-        <div class="mobile-menu-cta">
-            <a href="https://calendly.com/brandon-hay-thedigitalronin/30min" class="btn btn-secondary btn-large">Book Demo</a>
-            <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">Get Started Free</a>
-        </div>
+<header class="in top" id="top">
+  <a class="brand" href="#top"><svg class="logo" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true" focusable="false">
+<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
+<text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
+</svg><span data-i18n="ui.brand">Octopus<span class="tms"> TMS</span></span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#lifecycle" data-i18n="ui.nav_how">How it works</a>
+    <a href="#pricing" data-i18n="ui.nav_pricing">Pricing</a>
+    <a href="#founder" data-i18n="ui.nav_founder">Founder</a>
+    <a href="#partners" data-i18n="ui.nav_partners">Partners</a>
+  </nav>
+  <div class="top-right">
+    <div class="lang" role="group" aria-label="Language / Язык">
+      <button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English"><svg class="flag" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false"><rect width="20" height="14" rx="2" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.31" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.5" r=".45"/><circle cx="4.3" cy="1.5" r=".45"/><circle cx="7" cy="1.5" r=".45"/><circle cx="2.95" cy="3.1" r=".45"/><circle cx="5.65" cy="3.1" r=".45"/><circle cx="1.6" cy="4.7" r=".45"/><circle cx="4.3" cy="4.7" r=".45"/><circle cx="7" cy="4.7" r=".45"/><circle cx="2.95" cy="6.2" r=".45"/><circle cx="5.65" cy="6.2" r=".45"/></g></svg><span>EN</span></button>
+      <button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский"><svg class="flag" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false"><rect width="20" height="14" rx="2" fill="#fff"/><rect y="4.67" width="20" height="4.67" fill="#0039A6"/><path d="M0 9.33h20V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2z" fill="#D52B1E"/></svg><span>RU</span></button>
     </div>
+    <button type="button" class="theme" id="theme" data-i18n-attr="aria-label:ui.theme,title:ui.theme" aria-label="Switch light / dark mode" title="Switch light / dark mode"><svg class="ic-moon" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <a class="link link-demo" href="https://calendly.com/brandon-hay-thedigitalronin/30min" data-i18n="ui.demo">Talk to Brandon</a>
+    <a class="btn" href="https://app.octopustms.com/register" data-i18n="ui.start">Start free</a>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg-image"></div>
-        <div class="hero-bg-overlay"></div>
-        <div class="hero-parallax-element hero-grid" data-parallax-speed="0.05"></div>
-        <div class="hero-parallax-element hero-circle-1" data-parallax-speed="0.15"></div>
-        <div class="hero-parallax-element hero-circle-2" data-parallax-speed="0.1"></div>
+<main>
+<section class="in hero">
+  <div class="hero-l">
+    <p class="tag" data-i18n="hero.tag"><b>LLMP</b> · Load Lifecycle Management and Payments</p>
+    <h1 data-i18n="hero.h1">Every load, from found to <span class="money">paid.</span></h1>
+    <p class="sub" data-i18n="hero.sub">Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and the money. One app. One record. Built by a driver who paid for his own truck.</p>
+  </div>
+  <div class="price">
+    <p class="motto" data-i18n="hero.motto">We don't eat unless you eat.</p>
+    <p data-i18n="hero.price"><b>$20 per load.</b> Start free. No subscription, no seats, no setup.</p>
+    <p class="refund" data-i18n="hero.refund">Cancel a load before the truck moves and the $20 comes back automatically.</p>
+    <div class="ctas"><a class="btn btn-lg" href="https://app.octopustms.com/register" data-i18n="ui.start">Start free</a><a class="link" href="https://calendly.com/brandon-hay-thedigitalronin/30min" data-i18n="ui.demo_long">Book 30 min with Brandon</a></div>
+  </div>
+</section>
 
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text" data-parallax-fade>
-                    <h1>The TMS that <span>wins when you win</span></h1>
-                    <p class="hero-description">
-                        Stop paying thousands for software that doesn't care if you succeed.
-                        Octopus charges only when you book loads. Zero loads? Zero cost.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="https://app.octopustms.com/register" class="btn btn-primary btn-large">
-                            Start Free Today
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <a href="https://calendly.com/brandon-hay-thedigitalronin/30min" class="btn btn-outline btn-large">Schedule Demo</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-value" data-count="20">$20</div>
-                            <div class="stat-label">Per booked load</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">Free</div>
-                            <div class="stat-label">To start</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">$0</div>
-                            <div class="stat-label">Monthly fees</div>
-                        </div>
-                    </div>
-                </div>
+<section class="band" id="lifecycle" aria-labelledby="life-h">
+  <div class="in">
+    <div class="band-head"><h2 class="eyebrow" id="life-h" data-i18n="life.eyebrow">HOW IT WORKS</h2><span class="hint" data-i18n="life.hint">Tap any stop</span><span class="chain" data-i18n="life.chain">Found → Booked → Dispatched → Moving → Delivered → Proven → Paid → Archived</span></div>
+    <svg class="spine" viewBox="0 0 1280 132" aria-hidden="true" focusable="false" data-still="4.4">
+      <defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3D7BFF"/><stop offset="1" stop-color="#34D399"/></linearGradient></defs>
+      <path d="M80,72 H1200" style="stroke:rgba(255,255,255,.16);stroke-width:4;stroke-linecap:round"/>
+      <path d="M80,72 H1040" stroke-dasharray="960" stroke-dashoffset="960" style="fill:none;stroke:url(#sp);stroke-width:4;stroke-linecap:round"><animate attributeName="stroke-dashoffset" values="960;0;0;960" keyTimes="0;.7;.96;1" dur="6s" repeatCount="indefinite"/></path>
+      <g style="fill:#0E1726;stroke:rgba(255,255,255,.4);stroke-width:2.5"><circle cx="80" cy="72" r="13"/><circle cx="240" cy="72" r="13"/><circle cx="400" cy="72" r="13"/><circle cx="560" cy="72" r="13"/><circle cx="720" cy="72" r="13"/><circle cx="880" cy="72" r="13"/></g>
+      <g style="fill:#8DB2FF;font-size:11px;font-weight:700" text-anchor="middle"><text x="80" y="76">1</text><text x="240" y="76">2</text><text x="400" y="76">3</text><text x="560" y="76">4</text><text x="720" y="76">5</text><text x="880" y="76">6</text></g>
+      <circle cx="1200" cy="72" r="13" style="fill:#0E1726;stroke:rgba(255,255,255,.25);stroke-width:2.5" stroke-dasharray="4 4"/><text x="1200" y="76" text-anchor="middle" style="fill:#8693A7;font-size:11px;font-weight:700">8</text>
+      <circle cx="1040" cy="72" r="24" style="fill:none;stroke:#34D399;stroke-width:3" opacity="0"><animate attributeName="r" values="24;24;60" keyTimes="0;.7;1" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;.9;0" keyTimes="0;.69;.7;1" dur="6s" repeatCount="indefinite"/></circle>
+      <circle cx="1040" cy="72" r="26" style="fill:rgba(52,211,153,.18)"/>
+      <circle cx="1040" cy="72" r="20" style="fill:#34D399"/>
+      <text x="1040" y="80" text-anchor="middle" style="fill:#052e16;font-family:var(--display);font-size:20px;font-weight:800">$</text>
+      <text x="1040" y="26" text-anchor="middle" style="fill:#34D399;font-size:17px;font-weight:700;font-style:italic" opacity="0" data-i18n="life.chaching">cha-ching<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.7;.74;.93;1" dur="6s" repeatCount="indefinite"/></text>
+      <g><rect x="-11" y="-8" width="22" height="16" rx="4" style="fill:#fff"/><rect x="-7" y="-4" width="9" height="2.5" rx="1" style="fill:#0A5BFF"/><rect x="-7" y="1" width="14" height="2.5" rx="1" style="fill:#0A5BFF"/><animateMotion path="M80,72 H1040" keyPoints="0;1;1" keyTimes="0;.7;1" calcMode="linear" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.7;.72;1" dur="6s" repeatCount="indefinite"/></g>
+    </svg>
+    <ol class="stops">
+      <li class="stop found on" data-stage="found"><span class="dot" aria-hidden="true">1</span><button type="button" class="stop-btn" aria-expanded="true" aria-controls="detail"><span class="name"><span data-i18n="life.found.0">Found</span></span><span class="desc" data-i18n="life.found.1">123Loadboard and DAT in under a second, ranked the way a dispatcher thinks.</span></button><div class="more"><span data-i18n="life.found.2">Enter where the truck is and where you want to go. Results come back in under a second, sorted the way a dispatcher thinks: deadhead first, then rate, broker rating and payment terms. The best load is always on top.</span></div></li>
+      <li class="stop booked" data-stage="booked"><span class="dot" aria-hidden="true">2</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.booked.0">Booked</span></span><span class="desc" data-i18n="life.booked.1">One click to call or message the broker.</span></button><div class="more"><span data-i18n="life.booked.2">Every load card has two buttons: call and message. Book it and the load is created with the broker, rate and stops already filled in. No retyping.</span></div></li>
+      <li class="stop dispatched" data-stage="dispatched"><span class="dot" aria-hidden="true">3</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.dispatched.0">Dispatched</span></span><span class="desc" data-i18n="life.dispatched.1">The driver gets the load and sees the real rate con.</span></button><div class="more"><span data-i18n="life.dispatched.2">Assign a driver and a truck, and the load lands in the driver's app. The driver sees the real rate confirmation from the broker: what the load actually pays. Nothing hidden from the person doing the work.</span></div></li>
+      <li class="stop moving" data-stage="moving"><span class="dot" aria-hidden="true">4</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.moving.0">Moving</span></span><span class="desc" data-i18n="life.moving.1">Live tracking, one link for the broker. No check calls.</span></button><div class="more"><span data-i18n="life.moving.2">The driver's phone is the tracker: no hardware to buy or wire. You see every truck on one map, and the broker gets a tracking link instead of a phone call.</span></div></li>
+      <li class="stop delivered" data-stage="delivered"><span class="dot" aria-hidden="true">5</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.delivered.0">Delivered</span></span><span class="desc" data-i18n="life.delivered.1">Documents arrive by email, attach themselves, and are read by AI.</span></button><div class="more"><span data-i18n="life.delivered.2">Every load gets its own email address. When the broker sends the rate con, the BOL or the signed POD, it lands on the right load by itself, and AI reads it: is it the document we expect, is it signed, does the amount match.</span></div></li>
+      <li class="stop proven" data-stage="proven"><span class="dot" aria-hidden="true">6</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.proven.0">Proven</span></span><span class="desc" data-i18n="life.proven.1">The signed POD is checked against the load.</span></button><div class="more"><span data-i18n="life.proven.2">Before money moves, Octopus checks the delivery: the right document, signed, matching the load, uploaded by the assigned driver. One clean package, ready for your factoring company.</span></div></li>
+      <li class="stop paid" data-stage="paid"><span class="dot" aria-hidden="true">$</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.paid.0">Paid</span> <span class="ching" aria-hidden="true" data-i18n="life.chaching">cha-ching</span></span><span class="desc" data-i18n="life.paid.1">Settlements, factoring package, invoice. Then one sound.</span></button><div class="more"><span data-i18n="life.paid.2">Octopus calculates who gets what for every driver pay type, builds the factoring package and syncs the invoice to QuickBooks. When the money actually lands, the owner hears one sound, the only sound Octopus makes. Bad news comes from dispatchers. The app only brings money.</span><button type="button" class="hear"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg><span data-i18n="life.hear">Hear it</span></button></div></li>
+      <li class="stop archived" data-stage="archived"><span class="dot" aria-hidden="true">8</span><button type="button" class="stop-btn" aria-expanded="false" aria-controls="detail"><span class="name"><span data-i18n="life.archived.0">Archived</span></span><span class="desc" data-i18n="life.archived.1">One complete record, kept forever.</span></button><div class="more"><span data-i18n="life.archived.2">Every document, status change and dollar of the load stays in one record you can export any time: for audits, for disputes, or for peace of mind.</span></div></li>
+    </ol>
+    <div class="detail" id="detail" aria-live="polite">
+      <h3 id="detail-name">Found</h3>
+      <p id="detail-text">Enter where the truck is and where you want to go. Results come back in under a second, sorted the way a dispatcher thinks: deadhead first, then rate, broker rating and payment terms. The best load is always on top.</p>
+      <button type="button" class="hear"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg><span data-i18n="life.hear">Hear it</span></button>
+    </div>
+  </div>
+</section>
 
-                <div class="hero-visual">
-                    <div class="pricing-card">
-                        <div class="pricing-badge">Most Popular</div>
-                        <div class="pricing-label">Simple Pricing</div>
-                        <div class="pricing-amount">$20 <span>/ load</span></div>
-                        <div class="pricing-subtitle">Only pay when you book</div>
-                        <ul class="pricing-features">
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No monthly subscription
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No setup fees
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                No annual contracts
-                            </li>
-                            <li>
-                                <span class="check-icon">
-                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 6l3 3 5-6"/>
-                                    </svg>
-                                </span>
-                                Cancel anytime
-                            </li>
-                        </ul>
-                        <a href="https://app.octopustms.com/register" class="btn btn-primary" style="width: 100%;">
-                            Get Started Free
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="in calc" id="pricing" aria-labelledby="calc-h">
+  <div class="calc-text">
+    <span class="eyebrow" data-i18n="calc.eyebrow">PRICING</span>
+    <h2 class="h2" id="calc-h" data-i18n="calc.h2">What does a load really cost you?</h2>
+    <p class="lead" data-i18n="calc.p">Leased onto someone else's MC or paying a dispatch service, a percentage of every load is gone before you see it. Run it under your own authority with Octopus and it's $20.</p>
+    <div class="tiles">
+      <div class="tile"><strong data-i18n="calc.sub_t">Subscription TMS</strong><span data-i18n="calc.sub_d">A fixed bill every month, even the month you didn't haul.</span></div>
+      <div class="tile us"><strong data-i18n="calc.oct_t">Octopus</strong><span data-i18n="calc.oct_d">$0 in a dead month. $20 a load in a good one. Start free, no card needed.</span></div>
+    </div>
+  </div>
+  <div class="machine">
+    <div class="field"><div class="field-top"><label for="c-rate" data-i18n="calc.rate">Load pays</label><output id="o-rate" for="c-rate">$3,000</output></div><input type="range" id="c-rate" min="500" max="15000" step="100" value="3000" style="--fill:17.2%"></div>
+    <div class="field"><div class="field-top"><label for="c-pct" data-i18n="calc.pct">Their cut</label><output id="o-pct" for="c-pct">15%</output></div><input type="range" id="c-pct" min="5" max="30" step="1" value="15" style="--fill:40.0%"></div>
+    <div class="field"><div class="field-top"><label for="c-loads" data-i18n="calc.loads">Loads a month</label><output id="o-loads" for="c-loads">12</output></div><input type="range" id="c-loads" min="1" max="40" step="1" value="12" style="--fill:28.2%"></div>
+    <div class="bars" aria-live="polite">
+      <div class="bar them"><span data-i18n="calc.them">Their cut</span><span class="track"><span class="fill" style="width:100%"></span></span><b id="b-them">$450</b></div>
+      <div class="bar us"><span data-i18n="calc.us">Octopus</span><span class="track"><span class="fill" id="f-us" style="width:4.4%"></span></span><b id="b-us">$20</b></div>
+    </div>
+    <p class="result" id="r-keep">You keep <b>$430</b> more on this load.</p>
+    <p class="result-month" id="r-month">That's <b>$5,160</b> a month and <b>$61,920</b> a year that stays with you.</p>
+    <p class="fine" data-i18n="calc.fine">For carriers running under their own authority. Insurance, fuel and load-board subscriptions are yours either way: Octopus replaces the cut, not your costs.</p>
+  </div>
+</section>
 
-    <!-- Audience Segmentation -->
-    <section class="audience-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Who We Serve</span>
-                <h2 class="section-title">Built for carriers of all sizes</h2>
-                <p class="section-description">
-                    Whether you're an owner-operator or managing a fleet, Octopus scales with your business.
-                </p>
-            </div>
-            <div class="audience-grid">
-                <div class="audience-card">
-                    <h3>Owner-Operators</h3>
-                    <p>Run your business without expensive software overhead. Pay only when you haul, keep more profit in your pocket.</p>
-                    <a href="https://app.octopustms.com/register" class="btn btn-primary">Start Now</a>
-                </div>
-                <div class="audience-card">
-                    <h3>Fleet Managers</h3>
-                    <p>Manage your entire fleet from one dashboard. Driver assignments, settlements, and tracking all in one place.</p>
-                    <a href="https://calendly.com/brandon-hay-thedigitalronin/30min" class="btn btn-secondary">Schedule Demo</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="in who" id="who" aria-labelledby="who-h">
+  <h2 class="eyebrow" id="who-h" data-i18n="who.eyebrow">WHO IT'S FOR</h2>
+  <ul class="cards">
+    <li class="card"><h3 data-i18n="who.oo_t">Owner-operators</h3><p data-i18n="who.oo_d">Your MC, your rate con, your money. Find, book, haul, invoice and get paid from one app, without giving a percentage to anyone.</p><a href="https://app.octopustms.com/register" data-i18n="ui.start">Start free</a></li>
+    <li class="card"><h3 data-i18n="who.fl_t">Small fleets</h3><p data-i18n="who.fl_d">Dispatch, drivers, tracking, documents and settlements in one place. Every driver sees the real rate con, and every settlement adds up.</p><a href="https://calendly.com/brandon-hay-thedigitalronin/30min" data-i18n="ui.demo_long">Book 30 min with Brandon</a></li>
+    <li class="card"><h3 data-i18n="who.pa_t">Partners</h3><p data-i18n="who.pa_d">Load boards, factoring companies, brokers and investors who want a fairer industry. Let's build it together.</p><a href="mailto:partners@octopustms.com">partners@octopustms.com</a></li>
+  </ul>
+</section>
 
-    <!-- Social Proof Section -->
-    <section class="social-proof">
-        <div class="container">
-            <div class="social-proof-header">
-                <p>Integrated with industry leaders</p>
-            </div>
-            <div class="integrations-grid">
-                <div class="integration-item">
-                    <div class="integration-logo dat">
-                        <svg viewBox="0 0 52 16" width="52" height="16">
-                            <rect x="0" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <rect x="18" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <rect x="36" y="0" width="16" height="16" rx="1" fill="#0052CC"/>
-                            <text x="8" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">D</text>
-                            <text x="26" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">A</text>
-                            <text x="44" y="12.5" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="white" text-anchor="middle">T</text>
-                        </svg>
-                    </div>
-                    <span class="integration-name">DAT</span>
-                    <span class="integration-desc">Load Board</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo stripe">
-                        <svg viewBox="0 0 60 25" width="60" height="25">
-                            <path fill="#635BFF" d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-6.3-5.63c-.98 0-2.1.72-2.1 2.71h4.09c0-1.99-1.01-2.71-1.99-2.71zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-5.13L32.37 0v3.51l-4.13.88V.44zm-4.32 9.35v10.22H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.45-3.32.43zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.47-2.76.47-2.76 0-4.52-1.65-4.52-4.89V3.54l4.13-.88v3.3H18.5v3.49h-3.13v4.06zm-8.33-4.44c-1.24-.37-2.25-.89-2.25-1.75 0-.75.5-1.15 1.45-1.15 1.44 0 2.94.72 4.34 1.8V5.62a10.14 10.14 0 0 0-4.34-.92c-3.45 0-5.58 1.92-5.58 4.65 0 2.3 1.7 3.73 4.15 4.51 1.49.46 2.14.96 2.14 1.72 0 .84-.64 1.27-1.7 1.27-1.48 0-3.35-.78-4.8-2.05v3.78a9.33 9.33 0 0 0 4.75 1.52c3.53 0 5.88-1.72 5.88-4.86 0-2.41-1.45-3.73-4.04-4.61z"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Stripe</span>
-                    <span class="integration-desc">Payments</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo twilio">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#F22F46"/>
-                            <circle cx="16" cy="16" r="11" fill="none" stroke="white" stroke-width="2"/>
-                            <circle cx="12" cy="12" r="2.5" fill="white"/>
-                            <circle cx="20" cy="12" r="2.5" fill="white"/>
-                            <circle cx="12" cy="20" r="2.5" fill="white"/>
-                            <circle cx="20" cy="20" r="2.5" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Twilio</span>
-                    <span class="integration-desc">SMS & Calls</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo mapbox">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#000000"/>
-                            <path d="M16 6C12.13 6 9 9.13 9 13c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">Mapbox</span>
-                    <span class="integration-desc">GPS Tracking</span>
-                </div>
-                <div class="integration-item">
-                    <div class="integration-logo quickbooks">
-                        <svg viewBox="0 0 32 32" width="32" height="32">
-                            <circle cx="16" cy="16" r="16" fill="#2CA01C"/>
-                            <path d="M10.5 21h-2c-1.38 0-2.5-1.12-2.5-2.5v-5C6 12.12 7.12 11 8.5 11h2v2h-2c-.28 0-.5.22-.5.5v5c0 .28.22.5.5.5h2v2zm13-2.5c0 1.38-1.12 2.5-2.5 2.5h-2v-2h2c.28 0 .5-.22.5-.5v-5c0-.28-.22-.5-.5-.5h-2v-2h2c1.38 0 2.5 1.12 2.5 2.5v5zM14 8v16h2V8h-2z" fill="white"/>
-                        </svg>
-                    </div>
-                    <span class="integration-name">QuickBooks</span>
-                    <span class="integration-desc">Accounting</span>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="in why" id="founder" aria-labelledby="why-h">
+  <span class="eyebrow" data-i18n="why.eyebrow">WHO BUILT IT</span>
+  <div class="why-body">
+    <h2 class="h2" id="why-h" data-i18n="why.h2">I'm Brandon. I built this.</h2>
+    <p class="p0" data-i18n="why.p0">Before I wrote a line of Octopus, I drove. Owner-operator, my own truck: $4,400 a month to the bank, insurance every month, diesel that could pass $15,000. I hauled under someone else's MC because brokers don't trust a new authority, and I watched a cut of every load go to people who never touched the truck.</p>
+    <p class="p1" data-i18n="why.p1">3 AM, past Flagstaff, twenty tons behind me. A herd of deer was running alongside the truck, and I floored it. I came to at 82 mph. There were no deer.</p>
+    <p class="p" data-i18n="why.p2">Weeks later, on another highway, I passed a crash. The driver stood by his cab with his hands on his head.</p>
+    <p class="p" data-i18n="why.p3">You can be legal on paper and exhausted one hour after you wake up, with 12 hours left on your logbook. The logbook measures hours. It doesn't measure the man. And nobody in the chain — not the broker, not the carrier, not the state — could see who was behind that wheel.</p>
+    <p class="p4" data-i18n="why.p4">We don't need more laws. We need visibility.</p>
+    <div class="sign"><span class="mono" aria-hidden="true">BH</span><strong data-i18n="why.sign">Brandon Hay, founder</strong><a href="https://calendly.com/brandon-hay-thedigitalronin/30min" data-i18n="why.talk">Book 30 minutes with me</a></div>
+  </div>
+</section>
+<div class="sonar" id="why">
+  <svg viewBox="0 0 1440 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" data-still="1.2">
+      <circle cx="720" cy="190" r="40" style="fill:none;stroke:var(--accent);stroke-width:2"><animate attributeName="r" values="40;420" dur="4.5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0" dur="4.5s" repeatCount="indefinite"/></circle>
+      <circle cx="720" cy="190" r="40" style="fill:none;stroke:var(--accent);stroke-width:2"><animate attributeName="r" values="40;420" dur="4.5s" begin="-1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0" dur="4.5s" begin="-1.5s" repeatCount="indefinite"/></circle>
+      <circle cx="720" cy="190" r="40" style="fill:none;stroke:var(--accent);stroke-width:2"><animate attributeName="r" values="40;420" dur="4.5s" begin="-3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0" dur="4.5s" begin="-3s" repeatCount="indefinite"/></circle>
+      <circle cx="1010" cy="120" r="5" style="fill:var(--money)"><animate attributeName="opacity" values="0;0;1;0" keyTimes="0;.62;.66;1" dur="4.5s" repeatCount="indefinite"/></circle>
+      <circle cx="430" cy="270" r="5" style="fill:var(--money)"><animate attributeName="opacity" values="0;0;1;0" keyTimes="0;.6;.64;1" dur="4.5s" begin="-1.5s" repeatCount="indefinite"/></circle>
+    </svg>
+  <p data-i18n="why.sonar">Octopus is sonar for a blind industry.</p>
+</div>
 
-    <!-- Features Section -->
-    <section class="section" id="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Features</span>
-                <h2 class="section-title">Everything you need to run your fleet</h2>
-                <p class="section-description">
-                    Built by truckers who know the pain of overcomplicated software.
-                    Simple, powerful, and actually useful.
-                </p>
-            </div>
+<section class="in sasr" id="security" aria-labelledby="sasr-h">
+  <div class="sasr-head"><span class="eyebrow" data-i18n="sasr.eyebrow">SECURITY</span><h2 id="sasr-h">SASR <span data-i18n="sasr.full">(Strict Access Security Rule)</span></h2><span class="note" data-i18n="sasr.note">Rolling out at launch.</span></div>
+  <ul class="rules">
+      <li class="rule"><svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><rect x="20" y="6" width="32" height="60" rx="7" style="fill:var(--card2);stroke:var(--ink);stroke-width:2.5"/><rect x="31" y="11" width="10" height="2.5" rx="1.2" style="fill:var(--ink)"/><circle cx="36" cy="37" r="11" style="fill:var(--money-soft)"/><path d="M30.5,37 L34.5,41 L42,33" style="fill:none;stroke:var(--money);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg><p data-i18n="sasr.r1">Only phones approved by the owner can enter.</p></li>
+      <li class="rule"><svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true" focusable="false" data-still="0.6"><g style="fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round"><path d="M8,22 V14 a6,6 0 0 1 6,-6 H22"/><path d="M50,8 H58 a6,6 0 0 1 6,6 V22"/><path d="M64,50 V58 a6,6 0 0 1 -6,6 H50"/><path d="M22,64 H14 a6,6 0 0 1 -6,-6 V50"/><path d="M27,28 V31 M45,28 V31 M36,30 V40 H33 M28,47 C32,51 40,51 44,47"/></g><rect x="8" y="10" width="56" height="2.5" rx="1.2" style="fill:var(--accent)"><animate attributeName="y" values="10;60;10" dur="2.4s" repeatCount="indefinite"/></rect></svg><p data-i18n="sasr.r2">Only the assigned driver's phone, unlocked by his face, can accept the load.</p></li>
+      <li class="rule"><svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true" focusable="false" data-still="2.0"><circle cx="22" cy="36" r="11" style="fill:none;stroke:var(--ink);stroke-width:2.5"/><g><path d="M33,36 H62 M52,36 V45 M60,36 V43" style="fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round"/><animateTransform attributeName="transform" type="translate" values="0 0;0 0;8 -6;8 -6;0 0" keyTimes="0;.45;.55;.9;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.45;.6;.9;1" dur="3s" repeatCount="indefinite"/></g><path d="M36,26 L44,46" style="stroke:#EF4444;stroke-width:2.5;stroke-linecap:round" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.42;.46;.9;1" dur="3s" repeatCount="indefinite"/></path></svg><p data-i18n="sasr.r3">Add a new face to the phone and its key destroys itself.</p></li>
+  </ul>
+  <p class="close" data-i18n="sasr.close">Security and money are the same problem: <span class="hl">whoever sees the whole load gets paid fast, and nobody can steal it.</span></p>
+</section>
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                    </div>
-                    <h3>DAT Integration</h3>
-                    <p>Search and book loads directly from DAT without switching between apps. Find the best rates instantly.</p>
-                </div>
+<section class="std" id="standard" aria-labelledby="std-h">
+  <div class="in">
+    <div class="std-text">
+      <span class="eyebrow" data-i18n="std.eyebrow">THE STANDARD</span>
+      <h2 id="std-h" data-i18n="std.h2">LLMP isn't a feature.</h2>
+      <p data-i18n="std.p">It's how every load should live: one unbreakable record of load, truck, driver and documents. Today it's for carriers. Tomorrow, an inspector types one plate number and sees everything connected to it.</p>
+    </div>
+    <svg class="plate" viewBox="0 0 560 330" role="img" data-i18n-attr="aria-label:std.aria" aria-label="One plate number, TX 4821 KJ, connects to the load, the truck, the verified driver and the documents." data-still="3">
+      <rect x="150" y="14" width="260" height="56" rx="28" style="fill:var(--card2);stroke:var(--ink);stroke-width:2"/>
+      <circle cx="184" cy="42" r="9" style="fill:none;stroke:var(--muted);stroke-width:2.2"/><path d="M190.5,48.5 L196,54" style="stroke:var(--muted);stroke-width:2.2;stroke-linecap:round"/>
+      <text x="292" y="50" text-anchor="middle" style="fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:22px;font-weight:700;letter-spacing:.08em">TX 4821 KJ</text>
+      <rect x="374" y="30" width="2.5" height="24" style="fill:var(--accent)"><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/></rect>
+      <g style="fill:none;stroke:var(--accent);stroke-width:2" stroke-dasharray="1" stroke-dashoffset="1">
+        <path d="M280,70 C280,140 70,140 70,214" pathLength="1"><animate attributeName="stroke-dashoffset" values="1;1;0;0;1" keyTimes="0;.1;.3;.92;1" dur="5s" repeatCount="indefinite"/></path>
+        <path d="M280,70 C280,140 210,150 210,214" pathLength="1"><animate attributeName="stroke-dashoffset" values="1;1;0;0;1" keyTimes="0;.15;.35;.92;1" dur="5s" repeatCount="indefinite"/></path>
+        <path d="M280,70 C280,150 350,150 350,214" pathLength="1"><animate attributeName="stroke-dashoffset" values="1;1;0;0;1" keyTimes="0;.2;.4;.92;1" dur="5s" repeatCount="indefinite"/></path>
+        <path d="M280,70 C280,140 490,140 490,214" pathLength="1"><animate attributeName="stroke-dashoffset" values="1;1;0;0;1" keyTimes="0;.25;.45;.92;1" dur="5s" repeatCount="indefinite"/></path>
+      </g>
+      <g opacity=".35"><animate attributeName="opacity" values=".35;.35;1;1;.35" keyTimes="0;.3;.34;.92;1" dur="5s" repeatCount="indefinite"/><rect x="10" y="214" width="120" height="74" rx="14" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="24" y="242" style="fill:var(--muted);font-size:12px;font-weight:600" data-i18n="std.load">Load</text><text x="24" y="266" style="fill:var(--ink);font-size:14px;font-weight:700">#4821</text></g><g opacity=".35"><animate attributeName="opacity" values=".35;.35;1;1;.35" keyTimes="0;.35;.39;.92;1" dur="5s" repeatCount="indefinite"/><rect x="150" y="214" width="120" height="74" rx="14" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="164" y="242" style="fill:var(--muted);font-size:12px;font-weight:600" data-i18n="std.truck">Truck</text><text x="164" y="266" style="fill:var(--ink);font-size:14px;font-weight:700">#104</text></g><g opacity=".35"><animate attributeName="opacity" values=".35;.35;1;1;.35" keyTimes="0;.4;.44;.92;1" dur="5s" repeatCount="indefinite"/><rect x="290" y="214" width="120" height="74" rx="14" style="fill:var(--card);stroke:var(--money);stroke-width:1.5"/><text x="304" y="242" style="fill:var(--muted);font-size:12px;font-weight:600" data-i18n="std.driver">Driver</text><text x="304" y="266" style="fill:var(--ink);font-size:14px;font-weight:700">B. Hay ✓</text></g><g opacity=".35"><animate attributeName="opacity" values=".35;.35;1;1;.35" keyTimes="0;.45;.49;.92;1" dur="5s" repeatCount="indefinite"/><rect x="430" y="214" width="120" height="74" rx="14" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="444" y="242" style="fill:var(--muted);font-size:12px;font-weight:600" data-i18n="std.docs">Documents</text><text x="444" y="266" style="fill:var(--ink);font-size:14px;font-weight:700">BOL · POD</text></g>
+    </svg>
+  </div>
+</section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
-                        </svg>
-                    </div>
-                    <h3>Instant Settlements</h3>
-                    <p>Generate driver settlements in seconds, not hours. Calculated per load, for every driver pay type.</p>
-                </div>
+<section class="in contact" id="partners" aria-labelledby="contact-h">
+  <div class="contact-text">
+    <span class="eyebrow" data-i18n="contact.eyebrow">TALK TO US</span>
+    <h2 class="h2" id="contact-h" data-i18n="contact.h2">A human answers. Usually me.</h2>
+  </div>
+  <ul class="lines">
+    <li class="call"><a href="https://calendly.com/brandon-hay-thedigitalronin/30min"><strong data-i18n="contact.call_t">Book 30 minutes with Brandon</strong><span data-i18n="contact.call_d">Demo, questions, or just to talk trucking.</span></a></li>
+    <li><a href="mailto:partners@octopustms.com"><strong data-i18n="contact.partners_t">Partnerships & investors</strong><span>partners@octopustms.com</span></a></li>
+    <li><a href="mailto:ask@octopustms.com"><strong data-i18n="contact.ask_t">Questions & billing</strong><span>ask@octopustms.com</span></a></li>
+    <li><a href="mailto:privacy@octopustms.com"><strong data-i18n="contact.privacy_t">Privacy & data</strong><span>privacy@octopustms.com</span></a></li>
+  </ul>
+</section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
-                    <h3>Live GPS Tracking</h3>
-                    <p>Real-time GPS tracking with shareable links for brokers and shippers. Full visibility, always.</p>
-                </div>
+<section class="in end">
+  <p data-i18n="end.byline">Built by a driver who slept in the cab, for carriers the software industry forgot.</p>
+  <div class="ctas"><a class="btn btn-xl" href="https://app.octopustms.com/register" data-i18n="ui.start">Start free</a><a class="link" href="https://calendly.com/brandon-hay-thedigitalronin/30min" data-i18n="ui.demo_long">Book 30 min with Brandon</a></div>
+</section>
+</main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-                        </svg>
-                    </div>
-                    <h3>Document Management</h3>
-                    <p>All your BOLs, rate confirmations, and PODs in one organized place. Never lose a document again.</p>
-                </div>
+<footer class="foot">
+  <div class="in">
+    <span data-i18n="ui.footer_rights">© 2026 Digital Ronin LLC</span>
+    <nav aria-label="Legal">
+      <a href="/privacy/" data-i18n="ui.privacy">Privacy</a>
+      <a href="/terms/" data-i18n="ui.terms">Terms</a>
+      <a href="/payment-terms/" data-i18n="ui.payment_terms">Payment terms</a>
+      <a href="/refund-policy/" data-i18n="ui.refund_policy">Refund policy</a>
+      <a href="mailto:ask@octopustms.com">ask@octopustms.com</a>
+    </nav>
+  </div>
+</footer>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                        </svg>
-                    </div>
-                    <h3>Driver Management</h3>
-                    <p>Assign loads, track availability, and communicate with your team effortlessly from one dashboard.</p>
-                </div>
+<script id="i18n" type="application/json">{"en":{"meta":{"title":"Octopus TMS — Load Lifecycle Management and Payments for small carriers | $20 per load","description":"Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and payment. Start free. $20 per load, no subscription.","og_title":"Octopus TMS — from found to paid. $20 per load.","og_description":"Built by a former owner-operator. One app for the whole life of a load. Start free; $20 per load, refunded automatically if you cancel before the truck moves."},"ui":{"brand":"Octopus<span class=\"tms\"> TMS<\/span>","nav_pricing":"Pricing","nav_how":"How it works","nav_founder":"Founder","nav_partners":"Partners","demo":"Talk to Brandon","demo_long":"Book 30 min with Brandon","start":"Start free","theme":"Switch light / dark mode","footer_rights":"© 2026 Digital Ronin LLC","privacy":"Privacy","terms":"Terms","payment_terms":"Payment terms","refund_policy":"Refund policy"},"hero":{"tag":"<b>LLMP<\/b> · Load Lifecycle Management and Payments","h1":"Every load, from found to <span class=\"money\">paid.<\/span>","sub":"Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and the money. One app. One record. Built by a driver who paid for his own truck.","motto":"We don't eat unless you eat.","price":"<b>$20 per load.<\/b> Start free. No subscription, no seats, no setup.","refund":"Cancel a load before the truck moves and the $20 comes back automatically."},"life":{"eyebrow":"HOW IT WORKS","hint":"Tap any stop","chain":"Found → Booked → Dispatched → Moving → Delivered → Proven → Paid → Archived","chaching":"cha-ching","hear":"Hear it","found":["Found","123Loadboard and DAT in under a second, ranked the way a dispatcher thinks.","Enter where the truck is and where you want to go. Results come back in under a second, sorted the way a dispatcher thinks: deadhead first, then rate, broker rating and payment terms. The best load is always on top."],"booked":["Booked","One click to call or message the broker.","Every load card has two buttons: call and message. Book it and the load is created with the broker, rate and stops already filled in. No retyping."],"dispatched":["Dispatched","The driver gets the load and sees the real rate con.","Assign a driver and a truck, and the load lands in the driver's app. The driver sees the real rate confirmation from the broker: what the load actually pays. Nothing hidden from the person doing the work."],"moving":["Moving","Live tracking, one link for the broker. No check calls.","The driver's phone is the tracker: no hardware to buy or wire. You see every truck on one map, and the broker gets a tracking link instead of a phone call."],"delivered":["Delivered","Documents arrive by email, attach themselves, and are read by AI.","Every load gets its own email address. When the broker sends the rate con, the BOL or the signed POD, it lands on the right load by itself, and AI reads it: is it the document we expect, is it signed, does the amount match."],"proven":["Proven","The signed POD is checked against the load.","Before money moves, Octopus checks the delivery: the right document, signed, matching the load, uploaded by the assigned driver. One clean package, ready for your factoring company."],"paid":["Paid","Settlements, factoring package, invoice. Then one sound.","Octopus calculates who gets what for every driver pay type, builds the factoring package and syncs the invoice to QuickBooks. When the money actually lands, the owner hears one sound, the only sound Octopus makes. Bad news comes from dispatchers. The app only brings money."],"archived":["Archived","One complete record, kept forever.","Every document, status change and dollar of the load stays in one record you can export any time: for audits, for disputes, or for peace of mind."]},"calc":{"eyebrow":"PRICING","h2":"What does a load really cost you?","p":"Leased onto someone else's MC or paying a dispatch service, a percentage of every load is gone before you see it. Run it under your own authority with Octopus and it's $20.","rate":"Load pays","pct":"Their cut","loads":"Loads a month","them":"Their cut","us":"Octopus","keep":"You keep <b>{diff}<\/b> more on this load.","month":"That's <b>{month}<\/b> a month and <b>{year}<\/b> a year that stays with you.","fine":"For carriers running under their own authority. Insurance, fuel and load-board subscriptions are yours either way: Octopus replaces the cut, not your costs.","sub_t":"Subscription TMS","sub_d":"A fixed bill every month, even the month you didn't haul.","oct_t":"Octopus","oct_d":"$0 in a dead month. $20 a load in a good one. Start free, no card needed."},"who":{"eyebrow":"WHO IT'S FOR","oo_t":"Owner-operators","oo_d":"Your MC, your rate con, your money. Find, book, haul, invoice and get paid from one app, without giving a percentage to anyone.","fl_t":"Small fleets","fl_d":"Dispatch, drivers, tracking, documents and settlements in one place. Every driver sees the real rate con, and every settlement adds up.","pa_t":"Partners","pa_d":"Load boards, factoring companies, brokers and investors who want a fairer industry. Let's build it together."},"why":{"eyebrow":"WHO BUILT IT","h2":"I'm Brandon. I built this.","p0":"Before I wrote a line of Octopus, I drove. Owner-operator, my own truck: $4,400 a month to the bank, insurance every month, diesel that could pass $15,000. I hauled under someone else's MC because brokers don't trust a new authority, and I watched a cut of every load go to people who never touched the truck.","p1":"3 AM, past Flagstaff, twenty tons behind me. A herd of deer was running alongside the truck, and I floored it. I came to at 82 mph. There were no deer.","p2":"Weeks later, on another highway, I passed a crash. The driver stood by his cab with his hands on his head.","p3":"You can be legal on paper and exhausted one hour after you wake up, with 12 hours left on your logbook. The logbook measures hours. It doesn't measure the man. And nobody in the chain — not the broker, not the carrier, not the state — could see who was behind that wheel.","p4":"We don't need more laws. We need visibility.","sonar":"Octopus is sonar for a blind industry.","sign":"Brandon Hay, founder","talk":"Book 30 minutes with me"},"sasr":{"eyebrow":"SECURITY","title":"SASR","full":"(Strict Access Security Rule)","note":"Rolling out at launch.","r1":"Only phones approved by the owner can enter.","r2":"Only the assigned driver's phone, unlocked by his face, can accept the load.","r3":"Add a new face to the phone and its key destroys itself.","close":"Security and money are the same problem: <span class=\"hl\">whoever sees the whole load gets paid fast, and nobody can steal it.<\/span>"},"std":{"eyebrow":"THE STANDARD","h2":"LLMP isn't a feature.","p":"It's how every load should live: one unbreakable record of load, truck, driver and documents. Today it's for carriers. Tomorrow, an inspector types one plate number and sees everything connected to it.","load":"Load","truck":"Truck","driver":"Driver","docs":"Documents","aria":"One plate number, TX 4821 KJ, connects to the load, the truck, the verified driver and the documents."},"contact":{"eyebrow":"TALK TO US","h2":"A human answers. Usually me.","call_t":"Book 30 minutes with Brandon","call_d":"Demo, questions, or just to talk trucking.","partners_t":"Partnerships & investors","ask_t":"Questions & billing","privacy_t":"Privacy & data"},"end":{"byline":"Built by a driver who slept in the cab, for carriers the software industry forgot."}},"ru":{"meta":{"title":"Octopus TMS — управление жизненным циклом груза и платежами для небольших перевозчиков | $20 за груз","description":"Octopus TMS ведёт весь путь груза для овнер-операторов и небольших перевозчиков: поиск, бронирование, диспетчеризация, трекинг, документы, расчёты с водителями и оплата. Начните бесплатно. $20 за груз, без подписки.","og_title":"Octopus TMS — от поиска до оплаты. $20 за груз.","og_description":"Создано бывшим овнер-оператором. Одно приложение на весь путь груза. Начните бесплатно; $20 за груз, возврат автоматически, если отменить до того, как грузовик тронулся."},"ui":{"brand":"Octopus<span class=\"tms\"> TMS<\/span>","nav_pricing":"Цена","nav_how":"Как это работает","nav_founder":"Основатель","nav_partners":"Партнёрам","demo":"Поговорить с Брендоном","demo_long":"30 минут с Брендоном","start":"Начать бесплатно","theme":"Переключить светлую / тёмную тему","footer_rights":"© 2026 Digital Ronin LLC","privacy":"Конфиденциальность","terms":"Условия","payment_terms":"Оплата","refund_policy":"Возвраты"},"hero":{"tag":"<b>LLMP<\/b> · управление жизненным циклом груза и платежами","h1":"Каждый груз — от поиска до <span class=\"money\">оплаты.<\/span>","sub":"Octopus TMS ведёт весь путь груза для овнер-операторов и небольших перевозчиков: поиск, бронирование, диспетчеризация, трекинг, документы, расчёты и деньги. Одно приложение. Одна запись. Создано водителем, который сам платил за свой грузовик.","motto":"Мы не едим, пока не поели вы.","price":"<b>$20 за груз.<\/b> Начните бесплатно. Без подписки, без платы за пользователей, без настройки.","refund":"Отмените груз до того, как грузовик тронулся, — и $20 вернутся автоматически."},"life":{"eyebrow":"КАК ЭТО РАБОТАЕТ","hint":"Нажмите на любой этап","chain":"Найден → Забронирован → Отправлен → В пути → Доставлен → Подтверждён → Оплачен → В архиве","chaching":"дзынь","hear":"Послушать","found":["Найден","123Loadboard и DAT меньше чем за секунду, в порядке, в каком думает диспетчер.","Укажите, где грузовик и куда хотите ехать. Результаты приходят меньше чем за секунду и отсортированы так, как думает диспетчер: сначала порожний пробег, потом ставка, рейтинг брокера и условия оплаты. Лучший груз всегда сверху."],"booked":["Забронирован","Один клик — и вы звоните или пишете брокеру.","На каждой карточке груза две кнопки: позвонить и написать. Забронировали — и груз создан с брокером, ставкой и точками уже внутри. Ничего не перепечатывать."],"dispatched":["Отправлен","Водитель получает груз и видит настоящий rate con.","Назначьте водителя и грузовик — груз появится в приложении водителя. Водитель видит настоящее подтверждение ставки от брокера: сколько реально платят за этот груз. От того, кто делает работу, ничего не скрыто."],"moving":["В пути","Трекинг в реальном времени, одна ссылка для брокера. Никаких звонков.","Телефон водителя и есть трекер: никакого оборудования. Все грузовики на одной карте, а брокер получает ссылку вместо звонка «где груз?»."],"delivered":["Доставлен","Документы приходят на почту, прикрепляются сами и читаются ИИ.","У каждого груза свой email. Когда брокер присылает rate con, BOL или подписанный POD, документ сам попадает к нужному грузу, и ИИ его читает: тот ли это документ, есть ли подпись, совпадает ли сумма."],"proven":["Подтверждён","Подписанный POD сверяется с грузом.","Прежде чем деньги пойдут, Octopus проверяет доставку: правильный документ, подписан, совпадает с грузом, загружен назначенным водителем. Один чистый пакет, готовый для факторинговой компании."],"paid":["Оплачен","Расчёты, пакет для факторинга, счёт. И один звук.","Octopus считает, кому сколько положено, для любого типа оплаты водителя, собирает пакет для факторинга и синхронизирует счёт с QuickBooks. Когда деньги реально приходят, владелец слышит один звук — единственный звук, который издаёт Octopus. Плохие новости приносят диспетчеры. Приложение приносит только деньги."],"archived":["В архиве","Одна полная запись, навсегда.","Каждый документ, каждый статус и каждый доллар груза остаются в одной записи, которую можно выгрузить в любой момент: для аудита, для спора или для спокойствия."]},"calc":{"eyebrow":"ЦЕНА","h2":"Сколько на самом деле стоит вам груз?","p":"Если вы под чужим MC или платите диспетчерской службе, процент с каждого груза уходит ещё до того, как вы его увидите. Под своей лицензией с Octopus — $20.","rate":"Груз платит","pct":"Их процент","loads":"Грузов в месяц","them":"Их процент","us":"Octopus","keep":"На этом грузе у вас остаётся на <b>{diff}<\/b> больше.","month":"Это <b>{month}<\/b> в месяц и <b>{year}<\/b> в год, которые остаются у вас.","fine":"Для перевозчиков под собственной лицензией. Страховка, топливо и подписки на биржи — ваши в любом случае: Octopus заменяет процент, а не ваши расходы.","sub_t":"TMS по подписке","sub_d":"Фиксированный счёт каждый месяц, даже в месяц, когда вы не возили.","oct_t":"Octopus","oct_d":"$0 в пустой месяц. $20 за груз в хороший. Начните бесплатно, без карты."},"who":{"eyebrow":"ДЛЯ КОГО","oo_t":"Овнер-операторы","oo_d":"Ваш MC, ваш rate con, ваши деньги. Найти, забронировать, отвезти, выставить счёт и получить оплату — в одном приложении, без процента кому-либо.","fl_t":"Небольшие автопарки","fl_d":"Диспетчеризация, водители, трекинг, документы и расчёты в одном месте. Каждый водитель видит настоящий rate con, и каждый расчёт сходится.","pa_t":"Партнёры","pa_d":"Биржи грузов, факторинговые компании, брокеры и инвесторы, которые хотят честную индустрию. Давайте строить её вместе."},"why":{"eyebrow":"КТО ЭТО СОЗДАЛ","h2":"Я Брендон. Я это построил.","p0":"Прежде чем написать первую строчку Octopus, я водил. Овнер-оператор, свой грузовик: $4 400 в месяц банку, страховка каждый месяц, дизель, который мог перевалить за $15 000. Я возил под чужим MC, потому что брокеры не доверяют новой лицензии, и смотрел, как процент с каждого груза уходит людям, которые никогда не касались грузовика.","p1":"3 часа ночи, за Флагстаффом, двадцать тонн за спиной. Рядом с грузовиком бежало стадо оленей, и я вдавил газ в пол. Очнулся на 82 милях в час. Никаких оленей не было.","p2":"Через несколько недель, на другом шоссе, я проехал мимо аварии. Водитель стоял у своей кабины, схватившись за голову.","p3":"Можно быть чистым по бумагам и вымотанным через час после пробуждения, когда в логбуке ещё 12 часов. Логбук считает часы. Он не измеряет человека. И никто в цепочке — ни брокер, ни перевозчик, ни государство — не мог увидеть, кто сидит за этим рулём.","p4":"Нам не нужно больше законов. Нам нужна видимость.","sonar":"Octopus — сонар для слепой индустрии.","sign":"Брендон Хэй, основатель","talk":"30 минут со мной"},"sasr":{"eyebrow":"БЕЗОПАСНОСТЬ","title":"SASR","full":"(правило строгого доступа)","note":"Включается с запуском.","r1":"Войти могут только телефоны, одобренные владельцем.","r2":"Принять груз может только телефон назначенного водителя, разблокированный его лицом.","r3":"Добавьте в телефон новое лицо — и его ключ уничтожит себя сам.","close":"Безопасность и деньги — одна и та же задача: <span class=\"hl\">тот, кто видит груз целиком, получает деньги быстро, и украсть их не может никто.<\/span>"},"std":{"eyebrow":"СТАНДАРТ","h2":"LLMP — это не функция.","p":"Так должен жить каждый груз: одна неразрушимая запись о грузе, грузовике, водителе и документах. Сегодня — для перевозчиков. Завтра инспектор введёт один номер и увидит всё, что с ним связано.","load":"Груз","truck":"Грузовик","driver":"Водитель","docs":"Документы","aria":"Один номер, TX 4821 KJ, связывает груз, грузовик, проверенного водителя и документы."},"contact":{"eyebrow":"СВЯЗАТЬСЯ","h2":"Отвечает человек. Обычно я.","call_t":"30 минут с Брендоном","call_d":"Демо, вопросы или просто поговорить о грузоперевозках.","partners_t":"Партнёрство и инвестиции","ask_t":"Вопросы и оплата","privacy_t":"Конфиденциальность и данные"},"end":{"byline":"Создано водителем, который спал в кабине, — для перевозчиков, о которых забыла индустрия софта."}}}</script>
+<script>
+(function(){
+  var STR = JSON.parse(document.getElementById('i18n').textContent);
+  var root = document.documentElement;
+  var lang = root.lang === 'ru' ? 'ru' : 'en';
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var COLORS = {"light": "#EEF2F7", "dark": "#0A111E"};
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M3 3v18h18"/>
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                        </svg>
-                    </div>
-                    <h3>English &amp; Russian</h3>
-                    <p>Every screen in both languages, for owners, dispatchers and drivers.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  function t(key, l){ return key.split('.').reduce(function(o,k){ return o == null ? o : o[k]; }, STR[l]); }
+  function tpl(key, vars){ return String(t(key, lang) || '').replace(/\{(\w+)\}/g, function(m, k){ return vars[k] != null ? vars[k] : m; }); }
+  function setHTML(id, v){ var el = document.getElementById(id); if (el) el.innerHTML = v; }
+  var REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-    <!-- Workflow Section -->
-    <section class="section workflow-section" id="how-it-works">
-        <div class="workflow-parallax-bg" data-parallax-speed="0.1"></div>
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">How It Works</span>
-                <h2 class="section-title">From load to payment in 5 simple steps</h2>
-                <p class="section-description">
-                    One app instead of a load board, a spreadsheet, a group chat and a folder of photos.
-                </p>
-            </div>
-
-            <div class="workflow-steps">
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                    </div>
-                    <h4>Find</h4>
-                    <p>Search loads from DAT</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                    </div>
-                    <h4>Book</h4>
-                    <p>One click booking</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <path d="M20 8v6M23 11h-6"/>
-                        </svg>
-                    </div>
-                    <h4>Assign</h4>
-                    <p>Notify your driver</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
-                    <h4>Track</h4>
-                    <p>Real-time location</p>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-number">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
-                        </svg>
-                    </div>
-                    <h4>Get Paid</h4>
-                    <p>Fast settlements</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Comparison -->
-    <section class="section" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Pricing</span>
-                <h2 class="section-title">Traditional vs Partnership Model</h2>
-                <p class="section-description">
-                    We only make money when you make money. That's real partnership.
-                </p>
-            </div>
-
-            <div class="comparison-grid">
-                <div class="comparison-card">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M15 9l-6 6M9 9l6 6"/>
-                            </svg>
-                        </div>
-                        <div class="comparison-title">Traditional TMS</div>
-                    </div>
-                    <div class="comparison-price">$2,000/mo</div>
-                    <ul class="comparison-list">
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Pay even during slow weeks
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Locked into annual contracts
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Hidden fees and add-ons
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#EF4444" stroke-width="2">
-                                <path d="M12 4L4 12M4 4l8 8"/>
-                            </svg>
-                            Data held hostage
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="comparison-card highlight">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M20 6L9 17l-5-5"/>
-                            </svg>
-                        </div>
-                        <div class="comparison-title">Octopus TMS</div>
-                    </div>
-                    <div class="comparison-price">$20/load</div>
-                    <ul class="comparison-list">
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Slow week? Pay less
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Cancel anytime
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            No hidden costs ever
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#10B981" stroke-width="2">
-                                <path d="M3 8l4 4 6-8"/>
-                            </svg>
-                            Export your data anytime
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-bg-image"></div>
-                <div class="cta-content">
-                    <h2 class="cta-title">Ready to transform your operations?</h2>
-                    <p class="cta-description">
-                        Run every load in one place. Pay only when you book.
-                        No credit card required to start.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="https://app.octopustms.com/register" class="btn btn-white btn-large">
-                            Start Free Today
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
-                            </svg>
-                        </a>
-                        <a href="https://calendly.com/brandon-hay-thedigitalronin/30min" class="btn btn-ghost btn-large">
-                            Schedule Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-main">
-                    <div class="footer-logo">
-                        <img src="octopus-logo.svg" alt="Octopus TMS">
-                        <span class="logo-text">Octopus TMS</span>
-                    </div>
-                    <p class="footer-tagline">
-                        Built by truckers, for truckers. The TMS that wins when you win.
-                    </p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#pricing">Pricing</a></li>
-                            <li><a href="#how-it-works">How It Works</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Get Started</h4>
-                        <ul>
-                            <li><a href="https://app.octopustms.com/register">Sign Up Free</a></li>
-                            <li><a href="https://calendly.com/brandon-hay-thedigitalronin/30min">Book a Demo</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Digital Ronin LLC. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="/privacy/">Privacy Policy</a>
-                    <a href="/terms/">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+  // ---- cha-ching: synthesized on the spot (no audio file), only ever after a tap.
+  var ac = null;
+  function chaChing(){
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) {
+        ac = ac || new AC();
+        if (ac.state === 'suspended') ac.resume();
+        var now = ac.currentTime + .02, out = ac.createGain();
+        out.gain.value = .9; out.connect(ac.destination);
+        // "cha": a short bright burst, like a register drawer
+        var len = Math.floor(ac.sampleRate * .07), buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2);
+        var nz = ac.createBufferSource(), hp = ac.createBiquadFilter(), ng = ac.createGain();
+        nz.buffer = buf; hp.type = 'highpass'; hp.frequency.value = 2500; ng.gain.value = .35;
+        nz.connect(hp); hp.connect(ng); ng.connect(out); nz.start(now);
+        // "ching": two bell strikes, each a tone plus a bright overtone
+        [[1568, .09], [2093, .2]].forEach(function(note){
+          [[1, .24, 1.2], [2.76, .07, .4]].forEach(function(part){
+            var o = ac.createOscillator(), g = ac.createGain(), t0 = now + note[1];
+            o.type = 'sine'; o.frequency.value = note[0] * part[0];
+            g.gain.setValueAtTime(.0001, t0);
+            g.gain.exponentialRampToValueAtTime(part[1], t0 + .008);
+            g.gain.exponentialRampToValueAtTime(.0001, t0 + part[2]);
+            o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + part[2] + .05);
+          });
         });
+      }
+    } catch (e) {}
+    document.querySelectorAll('.hear').forEach(function(b){ b.classList.remove('ringing'); void b.offsetWidth; b.classList.add('ringing'); });
+  }
+  document.querySelectorAll('.hear').forEach(function(b){
+    b.addEventListener('click', function(e){ e.stopPropagation(); chaChing(); });
+  });
 
-        // Parallax Effect System
-        const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
+  // ---- lifecycle: tap a stop to read what happens there. Until the first tap, it walks itself.
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop[data-stage]'));
+  var detail = document.getElementById('detail');
+  var current = 'found', timer = null, touched = false, visible = false;
+  function select(key){
+    current = key;
+    stops.forEach(function(li){
+      var on = li.getAttribute('data-stage') === key;
+      li.classList.toggle('on', on);
+      var b = li.querySelector('.stop-btn'); if (b) b.setAttribute('aria-expanded', String(on));
+    });
+    if (detail) {
+      detail.classList.toggle('is-paid', key === 'paid');
+      setHTML('detail-name', t('life.' + key + '.0', lang));
+      setHTML('detail-text', t('life.' + key + '.2', lang));
+    }
+  }
+  function stopWalk(){ if (timer) { clearInterval(timer); timer = null; } }
+  function walk(){
+    if (timer || touched || REDUCED || !visible) return;
+    timer = setInterval(function(){
+      var i = stops.findIndex(function(li){ return li.getAttribute('data-stage') === current; });
+      select(stops[(i + 1) % stops.length].getAttribute('data-stage'));
+    }, 3600);
+  }
+  stops.forEach(function(li){
+    var b = li.querySelector('.stop-btn');
+    if (!b) return;
+    b.addEventListener('click', function(){
+      touched = true; stopWalk();
+      var key = li.getAttribute('data-stage');
+      select(key);
+      if (key === 'paid') chaChing();
+    });
+  });
+  var band = document.getElementById('lifecycle');
+  if (band && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      visible = es[0].isIntersecting;
+      if (visible) walk(); else stopWalk();
+    }, {threshold: .35}).observe(band);
+  }
 
-        let ticking = false;
-        function updateParallax() {
-            const scrollY = window.pageYOffset;
+  // ---- pricing: their percentage vs our $20, live.
+  var CALC = {"rate": 3000, "rate_min": 500, "rate_max": 15000, "rate_step": 100, "pct": 15, "pct_min": 5, "pct_max": 30, "loads": 12, "loads_min": 1, "loads_max": 40, "fee": 20};
+  var money = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+  var inRate = document.getElementById('c-rate'), inPct = document.getElementById('c-pct'), inLoads = document.getElementById('c-loads');
+  function fill(el){ el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+  function calc(){
+    if (!inRate) return;
+    var r = +inRate.value, c = +inPct.value, n = +inLoads.value;
+    var them = r * c / 100, us = CALC.fee, diff = Math.max(0, them - us);
+    [inRate, inPct, inLoads].forEach(fill);
+    setHTML('o-rate', money(r)); setHTML('o-pct', c + '%'); setHTML('o-loads', String(n));
+    setHTML('b-them', money(them)); setHTML('b-us', money(us));
+    var fu = document.getElementById('f-us'); if (fu) fu.style.width = Math.max(2, Math.min(100, us / them * 100)) + '%';
+    setHTML('r-keep', tpl('calc.keep', {diff: money(diff)}));
+    setHTML('r-month', tpl('calc.month', {month: money(diff * n), year: money(diff * n * 12)}));
+  }
+  [inRate, inPct, inLoads].forEach(function(el){ if (el) el.addEventListener('input', calc); });
+  calc();
 
-            parallaxElements.forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-parallax-speed'));
-                const yPos = -(scrollY * speed);
-                el.style.transform = `translate3d(0, ${yPos}px, 0)`;
-            });
+  // ---- language: both dictionaries are embedded, so switching needs no reload.
+  function apply(l){
+    lang = l;
+    root.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var v = t(el.getAttribute('data-i18n'), l); if (v != null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-i18n-attr]').forEach(function(el){
+      el.getAttribute('data-i18n-attr').split(',').forEach(function(pair){
+        var p = pair.split(':'); var v = t(p[1], l); if (v != null) el.setAttribute(p[0], v);
+      });
+    });
+    document.title = t('meta.title', l);
+    select(current); calc();
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === l)); });
+    try { localStorage.setItem('octopus.lang', l); } catch (e) {}
+    try {
+      if (/^https?:$/.test(location.protocol)) {
+        var want = l === 'ru' ? '/ru/' : '/';
+        if (location.pathname !== want) history.replaceState(null, '', want + location.search + location.hash);
+      }
+    } catch (e) {}
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
+  });
+  // An explicit earlier choice wins; otherwise a Russian browser gets Russian.
+  var saved = null;
+  try { saved = localStorage.getItem('octopus.lang'); } catch (e) {}
+  var wanted = (saved === 'ru' || saved === 'en') ? saved
+             : ((navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : lang);
+  if (wanted !== lang) apply(wanted);
 
-            ticking = false;
-        }
+  // ---- theme: the head script already set data-theme; the button flips and remembers it.
+  function setTheme(th, remember){
+    root.setAttribute('data-theme', th);
+    if (themeMeta) themeMeta.setAttribute('content', COLORS[th]);
+    if (remember) { try { localStorage.setItem('octopus.theme', th); } catch (e) {} }
+  }
+  setTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light', false);
+  document.getElementById('theme').addEventListener('click', function(){
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+  });
+  // With no saved choice, follow the system setting live.
+  if (window.matchMedia) {
+    var mq = matchMedia('(prefers-color-scheme: dark)');
+    var follow = function(e){
+      var s = null; try { s = localStorage.getItem('octopus.theme'); } catch (x) {}
+      if (s !== 'dark' && s !== 'light') setTheme(e.matches ? 'dark' : 'light', false);
+    };
+    if (mq.addEventListener) mq.addEventListener('change', follow); else if (mq.addListener) mq.addListener(follow);
+  }
 
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
+  // ---- reduced motion: freeze each looping SVG on its most telling frame.
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('svg[data-still]').forEach(function(svg){
+      try { svg.pauseAnimations(); svg.setCurrentTime(parseFloat(svg.getAttribute('data-still'))); } catch (e) {}
+    });
+  }
 
-            // Nav scroll effect
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Intersection Observer for scroll-triggered animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -100px 0px',
-            threshold: 0.1
-        };
-
-        const parallaxObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('parallax-visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements
-        document.querySelectorAll('.feature-card, .workflow-step, .comparison-card, .testimonial-card').forEach(el => {
-            parallaxObserver.observe(el);
-        });
-
-        // Mouse-based parallax for hero section
-        const hero = document.querySelector('.hero');
-        const heroElements = document.querySelectorAll('.hero-parallax-element');
-
-        hero.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { width, height, left, top } = hero.getBoundingClientRect();
-
-            const xPos = (clientX - left) / width - 0.5;
-            const yPos = (clientY - top) / height - 0.5;
-
-            heroElements.forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-parallax-speed')) * 50;
-                const x = xPos * speed;
-                const y = yPos * speed;
-                el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            });
-        });
-
-        hero.addEventListener('mouseleave', () => {
-            heroElements.forEach(el => {
-                el.style.transform = 'translate3d(0, 0, 0)';
-                el.style.transition = 'transform 0.5s ease-out';
-            });
-        });
-
-        hero.addEventListener('mouseenter', () => {
-            heroElements.forEach(el => {
-                el.style.transition = 'none';
-            });
-        });
-
-        // Pricing card 3D tilt effect
-        const pricingCard = document.querySelector('.pricing-card');
-        if (pricingCard) {
-            pricingCard.addEventListener('mousemove', (e) => {
-                const { width, height, left, top } = pricingCard.getBoundingClientRect();
-                const x = (e.clientX - left) / width - 0.5;
-                const y = (e.clientY - top) / height - 0.5;
-
-                pricingCard.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-
-            pricingCard.addEventListener('mouseleave', () => {
-                pricingCard.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
-            });
-
-            pricingCard.style.transition = 'transform 0.3s ease-out';
-        }
-
-        // Animated counter for stats
-        const animateCounter = (element, target, suffix = '') => {
-            const duration = 2000;
-            const start = 0;
-            const startTime = performance.now();
-
-            const updateCounter = (currentTime) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                const current = Math.floor(start + (target - start) * easeOutQuart);
-
-                element.textContent = current.toLocaleString() + suffix;
-
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounter);
-                }
-            };
-
-            requestAnimationFrame(updateCounter);
-        };
-
-        // Observe stats for animation
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const element = entry.target;
-                    const text = element.textContent;
-                    const match = text.match(/(\d+)/);
-                    if (match) {
-                        const target = parseInt(match[1]);
-                        const suffix = text.replace(/[\d,]+/, '');
-                        animateCounter(element, target, suffix);
-                    }
-                    statsObserver.unobserve(element);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.stats-number').forEach(stat => {
-            statsObserver.observe(stat);
-        });
-    </script>
+  // ---- old deep links from the six-card page (#free, #one, ...) land on the matching section.
+  var OLD = {free:'pricing', one:'lifecycle', boards:'lifecycle', track:'lifecycle', paper:'lifecycle', why:'founder'};
+  var h = (location.hash || '').slice(1);
+  if (OLD[h]) {
+    var el = document.getElementById(OLD[h]);
+    if (el) setTimeout(function(){ el.scrollIntoView(); }, 0);
+  }
+})();
+</script>
 </body>
 </html>
