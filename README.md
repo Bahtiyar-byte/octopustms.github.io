@@ -31,6 +31,31 @@ Links and addresses all live at the top of `src/strings.py`:
 
 The pricing calculator's defaults (load rate, cut %, loads a month, the $20 fee) are in `CALC`.
 
+## Click counting (PostHog)
+
+Set `POSTHOG_KEY` in `src/strings.py` to the project's public key (starts with `phc_`, safe to publish) and rebuild. Empty means no analytics script loads at all. It runs cookieless (nothing stored in the visitor's browser), records no sessions, respects Do Not Track, and sends only these named events:
+
+| Event | When | Details sent |
+|---|---|---|
+| `$pageview` | Page opens | — |
+| `start_free` | Any "Start free" click | `where` (section) |
+| `book_brandon` | Any Calendly link | `where` |
+| `email` | Any email link | `to`, `where` |
+| `lifecycle_stop` | Tapping a lifecycle stop | `stage` |
+| `hear_chaching` | "Hear it" | — |
+| `calc_used` | Moving a calculator slider | `field`, `value` |
+| `nav`, `legal` | Menu and footer links | `to` |
+| `lang_switch`, `theme_toggle` | Flag and moon/sun buttons | `to` |
+| `ask_open`, `ask_question`, `ask_error` | The "Ask Brandon" chat | `turn`, `status` |
+
+Every event also carries `lang`. Clicks that leave the page go out by `sendBeacon`, so they're counted even though the browser navigates away.
+
+## "Ask Brandon" chat
+
+A floating chat where an AI answers in Brandon's words. It always says it's an AI and links to the real Brandon's calendar. The site only renders the widget; the answers come from the Octopus backend (`POST /api/public/ask-brandon`, see `docs/features/ASK-BRANDON.md` in the app repo), which holds the API key, rate limits and the daily spend cap.
+
+Turn it on only after that endpoint is live in production: set `ASK_BRANDON_LIVE = True` in `src/strings.py` and rebuild. With `False`, no chat code or button appears on the page.
+
 ## The truth rule
 
 Every claim on this site must be true today. Octopus hasn't launched, so: no customer or load counts, no uptime figures, no "hours saved", and no stock or AI-generated photos of Octopus-branded trucks. A real photo of Brandon with his truck is welcome when there is one.
