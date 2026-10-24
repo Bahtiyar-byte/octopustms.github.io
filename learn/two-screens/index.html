@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One load, two screens — Octopus TMS</title>
+<meta name="description" content="Ask a driver who gets paid by percentage what his last load paid. Then ask the owner. If the two numbers don&#x27;t match, you&#x27;ve found the oldest argument in trucking.">
+<link rel="canonical" href="https://octopustms.com/learn/two-screens/">
+<meta property="og:title" content="One load, two screens — Octopus TMS">
+<meta property="og:url" content="https://octopustms.com/learn/two-screens/">
+<meta property="og:type" content="article">
+<link rel="alternate" hreflang="en" href="https://octopustms.com/learn/two-screens/">
+<link rel="alternate" hreflang="ru" href="https://octopustms.com/ru/learn/two-screens/">
+<link rel="alternate" hreflang="x-default" href="https://octopustms.com/learn/two-screens/">
+<meta property="og:description" content="Ask a driver who gets paid by percentage what his last load paid. Then ask the owner. If the two numbers don&#x27;t match, you&#x27;ve found the oldest argument in trucking.">
+<meta property="og:image" content="https://octopustms.com/images/og.jpg">
+<meta property="og:locale" content="en_US">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"One load, two screens","inLanguage":"en","description":"Ask a driver who gets paid by percentage what his last load paid. Then ask the owner. If the two numbers don't match, you've found the oldest argument in trucking.","mainEntityOfPage":"https://octopustms.com/learn/two-screens/","author":{"@type":"Person","name":"Brandon Hay"},"publisher":{"@id":"https://octopustms.com/#org"}}</script>
+<link rel="icon" href="../../octopus-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<script>(function(){var t;try{t=localStorage.getItem('octopus.theme')}catch(e){}if(t!=='dark'&&t!=='light')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+<style>:root{--paper:#EEF2F7;--card:#FFFFFF;--card2:#F3F6FA;--ink:#0E1726;--ink2:#3A4556;--muted:#69737F;--line:#D9DFE8;
+  --accent:#0A5BFF;--accent-ink:#0646C7;--accent-soft:#E7EEFF;--money:#0E9F6E;--money-soft:#E3F6EE;
+  --glow:rgba(10,91,255,.5);--band:#0E1726;--quote:#F4F7FD;color-scheme:light}
+:root[data-theme="dark"]{--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}}
+
+:root{--display:'Unbounded','Golos Text',system-ui,sans-serif;--body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:var(--accent-ink)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,32px);max-width:1180px;margin:0 auto}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.brand .logo{width:34px;height:34px;flex:none}
+.back{font-weight:600;text-decoration:none;color:var(--ink2);font-size:.95rem}
+.back:hover{color:var(--accent-ink)}
+main{background:var(--card);border:1px solid var(--line);border-radius:24px;max-width:840px;margin:8px auto 32px;padding:clamp(22px,4vw,48px)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:0 0 8px}
+h2{font-size:1.25rem;margin:32px 0 10px;letter-spacing:-.01em}
+h3{font-size:1.02rem;margin:22px 0 8px}
+p,li{color:var(--ink2);max-width:72ch}
+p{margin:0 0 12px}
+.doc-meta{color:var(--muted);font-size:.92rem;line-height:1.7}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin:0 0 6px}
+strong{color:var(--ink)}
+blockquote{margin:16px 0;padding:14px 18px;border-left:3px solid var(--accent);background:var(--quote);border-radius:0 12px 12px 0}
+blockquote p{margin:0;max-width:none}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--paper);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.table-wrap{overflow-x:auto;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink);font-weight:600}
+.foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 28px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 14px}
+.top{flex-wrap:wrap;row-gap:8px}
+.top-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;justify-content:flex-end;margin-left:auto}
+.back,.switch{white-space:nowrap}
+.switch{font-weight:600;text-decoration:none;font-size:.95rem;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink2);background:var(--card)}
+.switch:hover{color:var(--accent-ink);border-color:var(--accent)}
+/* /learn/ articles: a little more air and type than a legal document */
+.article h1{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:18px}
+.article .eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent-ink);margin-bottom:12px}
+.article p,.article li{font-size:1.06rem;line-height:1.65}
+.article p.lead{font-size:1.2rem;line-height:1.55;color:var(--ink)}
+.article h2{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-.01em;margin-top:38px}
+.article ol li,.article ul li{margin-bottom:8px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap}
+.btn::after{content:"→"}
+.btn:hover{filter:brightness(1.1)}
+.link{font-weight:600;font-size:15px;color:var(--ink2);text-decoration:none}
+.link:hover{color:var(--accent-ink)}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="../../"><svg class="logo" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true" focusable="false">
+<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
+<text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
+</svg><span>Octopus TMS</span></a>
+  <nav class="top-links"><a class="back" href="/">← Back to octopustms.com</a> <a class="switch" href="/ru/learn/two-screens/" lang="ru" hreflang="ru">Читать по-русски</a></nav>
+</header>
+<main class="article">
+<span class="eyebrow">LEARN</span>
+<h1>One load, two screens</h1>
+<p class="lead">Ask a driver who gets paid by percentage what his last load paid. Then ask the owner. If the two numbers don't match, you've found the oldest argument in trucking.</p>
+<h2 id="the-argument">The argument</h2>
+<p>A driver on 30 percent is promised 30 percent of the load. But 30 percent of what? He gets a text from dispatch: "Dallas to Memphis, $2,400." The broker's rate confirmation said $3,000. Nobody showed it to him. His settlement is correct to the penny, and he is short $180.</p>
+<p>He can't prove it. The owner can't disprove it. Trust goes first, then the driver goes, and the owner is back on the phone looking for a new one.</p>
+<h2 id="what-octopus-shows-instead">What Octopus shows instead</h2>
+<p>In Octopus a load has one number, and both screens show it.</p>
+<p>The owner's screen shows load #4821, Dallas → Memphis: broker rate con $3,000, driver pay (30%) $900, Octopus $20.</p>
+<p>The driver's screen shows the same load #4821, Dallas → Memphis: broker rate con $3,000, your pay (30%) $900, and the broker's PDF, untouched.</p>
+<p>Not a retyped number. The broker's own rate confirmation, the document that was booked, as it arrived. The driver opens it on his own phone. The owner sees the same file.</p>
+<h2 id="why-that-ends-the-argument">Why that ends the argument</h2>
+<p>Settlements add up because nothing is hidden. The driver sees what the load paid and what his share is, and he can check the math on a napkin. The owner never has to defend a number, because the number came from the broker, not from the owner.</p>
+<p>That is the whole feature. It is not complicated. It just hasn't been the default, because trucking software was built for the office, and the cab was never given a screen.</p>
+<h2 id="honest-carriers-keep-their-drivers">Honest carriers keep their drivers</h2>
+<p>A driver who can see the whole load doesn't wonder. He doesn't call his buddy at another company to compare rates. He doesn't leave over a number he was never shown. Good drivers are the hardest thing in this business to find, and showing them the real number is the cheapest way to keep them.</p>
+<p>The other kind of carrier doesn't sign up. If you edit rate confirmations before your drivers see them, Octopus isn't for you, and we say so on the pricing page.</p>
+<h2 id="who-sees-what">Who sees what</h2>
+<ul><li><strong>The owner sees</strong> the load, the broker's rate con, the driver's pay and the Octopus fee.</li><li><strong>The driver sees</strong> the same load, the same rate con, his pay, and the broker's original PDF.</li></ul>
+<p>Same load. Same number. Zero questions, zero blame.</p>
+<div class="ctas"><a class="btn" href="https://app.octopustms.com/register">Open your account</a><a class="link" href="https://calendly.com/brandon-hay-thedigitalronin/30min">Book 30 min with Brandon</a></div>
+</main>
+<footer class="foot">
+  <span>© 2026 Digital Ronin LLC · <a href="mailto:ask@octopustms.com">ask@octopustms.com</a></span>
+  <nav><span>More from Octopus:</span><a href="/learn/sasr/">SASR, explained like your bank</a><a href="/learn/llmp/">LLMP: Load Lifecycle Management and Payments</a><a href="/learn/no-load-no-fee/">How the $20 works</a></nav>
+</footer>
+</body>
+</html>

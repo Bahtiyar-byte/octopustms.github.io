@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SASR — объясняем, как ваш банк — Octopus TMS</title>
+<meta name="description" content="У Octopus одно правило безопасности из трёх частей. Мы зовём его SASR, Strict Access Security Rule — правило строгого доступа. Оно включается с запуском. Вот что оно значит — словами, которым вас уже научил ваш банк.">
+<link rel="canonical" href="https://octopustms.com/ru/learn/sasr/">
+<meta property="og:title" content="SASR — объясняем, как ваш банк — Octopus TMS">
+<meta property="og:url" content="https://octopustms.com/ru/learn/sasr/">
+<meta property="og:type" content="article">
+<link rel="alternate" hreflang="en" href="https://octopustms.com/learn/sasr/">
+<link rel="alternate" hreflang="ru" href="https://octopustms.com/ru/learn/sasr/">
+<link rel="alternate" hreflang="x-default" href="https://octopustms.com/learn/sasr/">
+<meta property="og:description" content="У Octopus одно правило безопасности из трёх частей. Мы зовём его SASR, Strict Access Security Rule — правило строгого доступа. Оно включается с запуском. Вот что оно значит — словами, которым вас уже научил ваш банк.">
+<meta property="og:image" content="https://octopustms.com/images/og.jpg">
+<meta property="og:locale" content="ru_RU">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SASR — объясняем, как ваш банк","inLanguage":"ru","description":"У Octopus одно правило безопасности из трёх частей. Мы зовём его SASR, Strict Access Security Rule — правило строгого доступа. Оно включается с запуском. Вот что оно значит — словами, которым вас уже научил ваш банк.","mainEntityOfPage":"https://octopustms.com/ru/learn/sasr/","author":{"@type":"Person","name":"Brandon Hay"},"publisher":{"@id":"https://octopustms.com/#org"}}</script>
+<link rel="icon" href="../../../octopus-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<script>(function(){var t;try{t=localStorage.getItem('octopus.theme')}catch(e){}if(t!=='dark'&&t!=='light')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+<style>:root{--paper:#EEF2F7;--card:#FFFFFF;--card2:#F3F6FA;--ink:#0E1726;--ink2:#3A4556;--muted:#69737F;--line:#D9DFE8;
+  --accent:#0A5BFF;--accent-ink:#0646C7;--accent-soft:#E7EEFF;--money:#0E9F6E;--money-soft:#E3F6EE;
+  --glow:rgba(10,91,255,.5);--band:#0E1726;--quote:#F4F7FD;color-scheme:light}
+:root[data-theme="dark"]{--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--paper:#0A111E;--card:#121B2C;--card2:#1A2539;--ink:#EEF2F7;--ink2:#B7C1D1;--muted:#8693A7;--line:#243049;
+  --accent:#3D7BFF;--accent-ink:#8DB2FF;--accent-soft:rgba(61,123,255,.16);--money:#34D399;--money-soft:rgba(52,211,153,.14);
+  --glow:rgba(61,123,255,.45);--band:#050A13;--quote:#1A2539;color-scheme:dark}}
+
+:root{--display:'Unbounded','Golos Text',system-ui,sans-serif;--body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box}
+html{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:var(--accent-ink)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,32px);max-width:1180px;margin:0 auto}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.brand .logo{width:34px;height:34px;flex:none}
+.back{font-weight:600;text-decoration:none;color:var(--ink2);font-size:.95rem}
+.back:hover{color:var(--accent-ink)}
+main{background:var(--card);border:1px solid var(--line);border-radius:24px;max-width:840px;margin:8px auto 32px;padding:clamp(22px,4vw,48px)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:0 0 8px}
+h2{font-size:1.25rem;margin:32px 0 10px;letter-spacing:-.01em}
+h3{font-size:1.02rem;margin:22px 0 8px}
+p,li{color:var(--ink2);max-width:72ch}
+p{margin:0 0 12px}
+.doc-meta{color:var(--muted);font-size:.92rem;line-height:1.7}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin:0 0 6px}
+strong{color:var(--ink)}
+blockquote{margin:16px 0;padding:14px 18px;border-left:3px solid var(--accent);background:var(--quote);border-radius:0 12px 12px 0}
+blockquote p{margin:0;max-width:none}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--paper);padding:1px 5px;border-radius:5px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.table-wrap{overflow-x:auto;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink);font-weight:600}
+.foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 28px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 14px}
+.top{flex-wrap:wrap;row-gap:8px}
+.top-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;justify-content:flex-end;margin-left:auto}
+.back,.switch{white-space:nowrap}
+.switch{font-weight:600;text-decoration:none;font-size:.95rem;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink2);background:var(--card)}
+.switch:hover{color:var(--accent-ink);border-color:var(--accent)}
+/* /learn/ articles: a little more air and type than a legal document */
+.article h1{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:18px}
+.article .eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent-ink);margin-bottom:12px}
+.article p,.article li{font-size:1.06rem;line-height:1.65}
+.article p.lead{font-size:1.2rem;line-height:1.55;color:var(--ink)}
+.article h2{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-.01em;margin-top:38px}
+.article ol li,.article ul li{margin-bottom:8px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap}
+.btn::after{content:"→"}
+.btn:hover{filter:brightness(1.1)}
+.link{font-weight:600;font-size:15px;color:var(--ink2);text-decoration:none}
+.link:hover{color:var(--accent-ink)}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="../../../"><svg class="logo" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true" focusable="false">
+<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
+<text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
+</svg><span>Octopus TMS</span></a>
+  <nav class="top-links"><a class="back" href="/ru/">← На octopustms.com</a> <a class="switch" href="/learn/sasr/" lang="en" hreflang="en">Read in English</a></nav>
+</header>
+<main class="article">
+<span class="eyebrow">РАЗБОР</span>
+<h1>SASR — объясняем, как ваш банк</h1>
+<p class="lead">У Octopus одно правило безопасности из трёх частей. Мы зовём его SASR, Strict Access Security Rule — правило строгого доступа. Оно включается с запуском. Вот что оно значит — словами, которым вас уже научил ваш банк.</p>
+<h2 id="">Ваш банк работает по вашему лицу</h2>
+<p>Вспомните, как вы сегодня переводите деньги. Открываете приложение банка, оно смотрит на ваше лицо — и перевод уходит. Ни пароля, ни секретного вопроса. Банк доверяет вашему лицу больше, чем всему, что можно напечатать, потому что лицо нельзя подобрать, переслать чужому человеку или записать на бумажке в кабине.</p>
+<p>Биометрия лица настолько надёжна, что ей доверяют ваши деньги. Octopus построен на той же идее, потому что груз — это тоже деньги. Rate con — это обещание трёх тысяч долларов, а подписанный POD — бумага, которая превращает обещание в деньги на счету.</p>
+<h2 id="">Правило первое: входят только одобренные телефоны</h2>
+<p>Ваш банк не пустит в ваш счёт чужой телефон, даже с правильным паролем. Мы тоже. Владелец один раз одобряет каждый телефон. С этого момента это известное устройство. Любой другой телефон — закрытая дверь: он не увидит ни ваших грузов, ни rate con, ни водителей.</p>
+<h2 id="">Правило второе: груз принимает лицо назначенного водителя</h2>
+<p>Когда вы отправляете груз, он уходит одному водителю на один одобренный телефон. Чтобы принять его, водитель разблокирует приложение лицом — так же, как разблокирует свой банк. Не паролем, который диспетчер может раздать всем. Не PIN-кодом, записанным на чеке с заправки. Его лицо на его телефоне. Никакой пароль его не заменит.</p>
+<h2 id="">Правило третье: новое лицо уничтожает ключ</h2>
+<p>У каждого одобренного телефона свой ключ — как passkey у Apple, Google и Microsoft. Если кто-то добавит в этот телефон новое лицо, ключ уничтожит себя сам. На этом телефоне ничего не работает, пока владелец не одобрит его заново. У вора в руках кирпич.</p>
+<p>Это новейший стандарт, которым крупнейшие компании мира защищают аккаунты, и именно так мы меняем ключ: та же идея, на уровень выше.</p>
+<h2 id="">Почему безопасность и быстрая оплата — одна задача</h2>
+<p>Вот чего не видит большинство программ. Украденный груз, поддельный POD, груз, перепроданный через второго брокера, и водитель, который «не знал ставку», — это одна и та же дыра: никто не мог доказать, у кого на самом деле был груз. Неопределённость — вот почему деньги в этой отрасли идут медленно. Все перепроверяют всё по два раза, а вы ждёте.</p>
+<p>SASR закрывает эту дыру. Когда POD приходит с одобренного телефона назначенного водителя, разблокированного его лицом, подтверждение доставки — это ещё и подтверждение того, кто доставил. Одна чистая запись: груз, грузовик, водитель, документы. Тот, кто видит груз целиком, получает деньги быстро, и украсть их не может никто.</p>
+<h2 id="">Что это значит в день запуска</h2>
+<p>SASR включается с запуском. Владелец одобряет телефоны, водители разблокируют приложение лицом, а ключ сам следит за собой. Покупать ничего не нужно: телефон, который водитель и так носит в кармане, и есть ключ. Как им пользоваться, его уже научил банк.</p>
+<div class="ctas"><a class="btn" href="https://app.octopustms.com/register">Открыть аккаунт</a><a class="link" href="https://calendly.com/brandon-hay-thedigitalronin/30min">30 минут с Брендоном</a></div>
+</main>
+<footer class="foot">
+  <span>© 2026 Digital Ronin LLC · <a href="mailto:ask@octopustms.com">ask@octopustms.com</a></span>
+  <nav><span>Ещё от Octopus:</span><a href="/ru/learn/llmp/">LLMP: управление жизненным циклом груза и платежами</a><a href="/ru/learn/no-load-no-fee/">Как работают $20</a><a href="/ru/learn/two-screens/">Один груз, два экрана</a></nav>
+</footer>
+</body>
+</html>
