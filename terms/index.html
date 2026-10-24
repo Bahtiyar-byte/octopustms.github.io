@@ -30,8 +30,8 @@ html{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:
 body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6}
 a{color:var(--accent-ink)}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,32px);max-width:1180px;margin:0 auto}
-.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem}
-.brand .logo{width:34px;height:34px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.brand .logo{width:34px;height:34px;flex:none}
 .back{font-weight:600;text-decoration:none;color:var(--ink2);font-size:.95rem}
 .back:hover{color:var(--accent-ink)}
 main{background:var(--card);border:1px solid var(--line);border-radius:24px;max-width:840px;margin:8px auto 32px;padding:clamp(22px,4vw,48px)}
@@ -55,6 +55,25 @@ th{color:var(--ink);font-weight:600}
 .foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 28px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between}
 .foot a{color:var(--muted);text-decoration:none}
 .foot a:hover{color:var(--ink)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 14px}
+.top{flex-wrap:wrap;row-gap:8px}
+.top-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;justify-content:flex-end;margin-left:auto}
+.back,.switch{white-space:nowrap}
+.switch{font-weight:600;text-decoration:none;font-size:.95rem;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink2);background:var(--card)}
+.switch:hover{color:var(--accent-ink);border-color:var(--accent)}
+/* /learn/ articles: a little more air and type than a legal document */
+.article h1{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:18px}
+.article .eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent-ink);margin-bottom:12px}
+.article p,.article li{font-size:1.06rem;line-height:1.65}
+.article p.lead{font-size:1.2rem;line-height:1.55;color:var(--ink)}
+.article h2{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-.01em;margin-top:38px}
+.article ol li,.article ul li{margin-bottom:8px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap}
+.btn::after{content:"→"}
+.btn:hover{filter:brightness(1.1)}
+.link{font-weight:600;font-size:15px;color:var(--ink2);text-decoration:none}
+.link:hover{color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -64,7 +83,7 @@ th{color:var(--ink);font-weight:600}
 <circle cx="50" cy="50" r="46" fill="#fff" stroke="#D7DEE8" stroke-width="2"/>
 <text x="50" y="52" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold" fill="url(#lg)" text-anchor="middle" dominant-baseline="central">O</text>
 </svg><span>Octopus TMS</span></a>
-  <a class="back" href="../">← Back to octopustms.com</a>
+  <nav class="top-links"><a class="back" href="../">← Back to octopustms.com</a></nav>
 </header>
 <main>
 <h1>Terms of Service</h1>
@@ -146,7 +165,7 @@ th{color:var(--ink);font-weight:600}
 </main>
 <footer class="foot">
   <span>© 2026 Digital Ronin LLC · <a href="mailto:ask@octopustms.com">ask@octopustms.com</a></span>
-  <nav><a href="../privacy/">Privacy Policy</a> <a href="../payment-terms/">Payment Terms</a> <a href="../refund-policy/">Refund & Cancellation Policy</a></nav>
+  <nav><a href="../privacy/">Privacy Policy</a><a href="../payment-terms/">Payment Terms</a><a href="../refund-policy/">Refund & Cancellation Policy</a></nav>
 </footer>
 </body>
 </html>

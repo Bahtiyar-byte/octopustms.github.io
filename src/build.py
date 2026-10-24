@@ -9,6 +9,9 @@ Outputs (all committed, GitHub Pages serves the repo as-is):
   privacy/, terms/, payment-terms/, refund-policy/
                         legal pages rendered from src/legal/*.md, which mirror
                         docs/legal/*.md in the octopus app repo (the app is canonical)
+  learn/<slug>/, ru/learn/<slug>/
+                        knowledge articles rendered from src/articles/<slug>.<lang>.md,
+                        linked from the landing's "Read more" links
   sitemap.xml, robots.txt
 
 No dependencies beyond Python 3.
@@ -231,9 +234,18 @@ svg{max-width:100%}
 .sasr h2 span{font-weight:600;font-size:clamp(17px,1.55vw,22px);color:var(--muted);letter-spacing:-.01em}
 .rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .rule{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:22px}
+.rule-text{display:flex;flex-direction:column;gap:12px;min-width:0}
 .rule p{font-size:clamp(19px,1.5vw,21px);line-height:1.4;font-weight:600}
+.rule .how{font-size:15px;line-height:1.55;font-weight:400;color:var(--muted);text-wrap:pretty}
 .sasr .close{margin-top:44px;font-family:var(--display);font-weight:600;font-size:clamp(21px,2vw,28px);line-height:1.35;letter-spacing:-.015em;max-width:1020px;text-wrap:pretty}
+.sasr .more{display:inline-block;margin-top:22px}
 .hl{color:var(--accent-ink)}
+
+/* ---- "Read more" into a /learn/ article; the arrow is CSS, like the other links */
+a.more{font-weight:700;font-size:15px;align-self:flex-start}
+a.more::after{content:" →"}
+.band .more{display:inline-block;margin-top:22px;color:#8DB2FF}
+.band .more:hover{color:#fff}
 
 /* ---- the standard */
 .std{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);scroll-margin-top:0;transition:background .3s}
@@ -408,8 +420,8 @@ svg{max-width:100%}
   .why{grid-template-columns:1fr;gap:18px;padding-top:80px}
   .why .eyebrow{padding-top:0}
   .rules{grid-template-columns:1fr}
-  .rule{flex-direction:row;align-items:center;gap:20px;padding:22px}
-  .rule svg{flex:none;width:60px;height:60px}
+  .rule{flex-direction:row;align-items:flex-start;gap:20px;padding:22px}
+  .rule svg{flex:none;width:60px;height:60px;margin-top:-4px}
   .sasr{padding-bottom:72px}
   .std .in{padding-top:72px;padding-bottom:72px}
   .end{padding-top:64px}
@@ -454,6 +466,7 @@ svg{max-width:100%}
   .bar{grid-template-columns:76px minmax(0,1fr) 80px;gap:8px}
   .top-right{gap:8px}
   .rule{flex-direction:column;align-items:flex-start}
+  .rule svg{margin-top:0}
 }
 @media (max-width:340px){
   .brand .logo{display:none}
@@ -465,7 +478,8 @@ svg{max-width:100%}
 .pgrid{list-style:none;margin:0;padding:0;display:grid;gap:16px}
 .pgrid.big{grid-template-columns:repeat(3,minmax(0,1fr))}
 .pgrid.small{grid-template-columns:repeat(4,minmax(0,1fr))}
-.hood{display:block;margin:36px 0 16px}
+.hood-head{display:flex;flex-direction:column;gap:10px;max-width:860px;margin:44px 0 20px}
+.hood-head .lead{font-size:clamp(17px,1.3vw,19px)}
 .pcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:12px}
 .pcard.live{border-color:var(--money);box-shadow:0 24px 50px -40px var(--money)}
 .mark{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.1;letter-spacing:-.02em;color:var(--ink)}
@@ -494,7 +508,9 @@ svg{max-width:100%}
   .h2{font-size:28px}
 }
 @media (max-width:360px){.h2{font-size:25px}.sasr .note{white-space:normal}}
-@media (max-width:1180px){html[lang="ru"] .top .link-demo{display:none}}
+/* Just above the nav's breakpoint the bar is too crowded for the "Talk to Brandon" link; Russian labels are longer. */
+@media (max-width:1300px){.top .link-demo{display:none}}
+@media (max-width:1439px){html[lang="ru"] .top .link-demo{display:none}}
 
 /* ---- ask brandon (AI chat) */
 .ask-fab{position:fixed;right:20px;bottom:20px;z-index:40;display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:7px 18px 7px 7px;background:var(--ink);color:var(--paper);font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 18px 40px -16px rgba(14,23,38,.55);transition:transform .15s}
@@ -681,6 +697,10 @@ JS = r"""
         var p = pair.split(':'); var v = t(p[1], l); if (v != null) el.setAttribute(p[0], v);
       });
     });
+    // "Read more" links point at the article in the chosen language (/learn/... or /ru/learn/...).
+    document.querySelectorAll('[data-href-en]').forEach(function(el){
+      var v = el.getAttribute('data-href-' + l); if (v) el.setAttribute('href', v);
+    });
     document.title = t('meta.title', l);
     select(current); calc();
     document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === l)); });
@@ -751,6 +771,7 @@ JS = r"""
     else if (a.classList.contains('stop-btn')) { ev = 'lifecycle_stop'; p.stage = a.closest('.stop').getAttribute('data-stage'); }
     else if (a.classList.contains('hear')) ev = 'hear_chaching';
     else if (href.charAt(0) === '#') { ev = 'nav'; p.to = href.slice(1); }
+    else if (href.indexOf('/learn/') >= 0) { ev = 'read_more'; p.to = href; }
     else if (href.charAt(0) === '/') { ev = 'legal'; p.to = href; }
     if (ev) track(ev, p, /^(https?:|mailto:|\/)/.test(href));
   }, true);
@@ -881,6 +902,16 @@ def i18n(key: str, value: str, tag: str = "span", cls: str = "") -> str:
     return f'<{tag}{c} data-i18n="{key}">{value}</{tag}>'
 
 
+def article_url(slug: str, lang: str) -> str:
+    return f"/ru/learn/{slug}/" if lang == "ru" else f"/learn/{slug}/"
+
+
+def more_link(s: dict, slug: str, lang: str) -> str:
+    """A "Read more" link into the /learn/ article; the href follows the language toggle through data-href-*."""
+    return (f'<a class="more" href="{article_url(slug, lang)}" data-href-en="{article_url(slug, "en")}" '
+            f'data-href-ru="{article_url(slug, "ru")}" data-i18n="ui.more">{s["ui"]["more"]}</a>')
+
+
 def spine_svg(s: dict) -> str:
     """The horizontal lifecycle: eight stops, a load sliding Found → Paid, Paid flashing with cha-ching."""
     xs = [80 + 160 * i for i in range(8)]
@@ -972,13 +1003,14 @@ def works_html(s: dict) -> str:
 </section>"""
 
 
-def two_html(s: dict) -> str:
+def two_html(s: dict, lang: str) -> str:
     k = s["two"]
     return f"""<section class="in two" id="two-screens" aria-labelledby="two-h">
   <div class="two-text">
     {i18n("two.eyebrow", k["eyebrow"], "span", "eyebrow")}
     <h2 class="h2" id="two-h" data-i18n="two.h2">{k["h2"]}</h2>
     {i18n("two.p", k["p"], "p", "lead")}
+    {more_link(s, "two-screens", lang)}
   </div>
   <div class="screens">
     <div class="screen owner">
@@ -1029,7 +1061,7 @@ def money(n: float) -> str:
     return f"${round(n):,}"
 
 
-def calc_html(s: dict) -> str:
+def calc_html(s: dict, lang: str) -> str:
     c, k = CALC, s["calc"]
     them = c["rate"] * c["pct"] / 100
     diff = max(0, them - c["fee"])
@@ -1054,6 +1086,7 @@ def calc_html(s: dict) -> str:
       <div class="tile us"><strong data-i18n="calc.oct_t">{k["oct_t"]}</strong><span data-i18n="calc.oct_d">{k["oct_d"]}</span></div>
     </div>
     {i18n("calc.leased", k["leased"], "p", "leased")}
+    {more_link(s, "no-load-no-fee", lang)}
   </div>
   <div class="machine" id="machine" data-mode="own">
     <div class="mode" role="group" aria-label="Pricing view">
@@ -1128,7 +1161,10 @@ def partners_html(s: dict) -> str:
   </div>
   <ul class="pgrid big">{cards(PARTNERS)}
   </ul>
-  {i18n("partners.hood", pt["hood"], "span", "eyebrow hood")}
+  <div class="hood-head">
+    {i18n("partners.hood", pt["hood"], "span", "eyebrow")}
+    {i18n("partners.hood_lead", pt["hood_lead"], "p", "lead")}
+  </div>
   <ul class="pgrid small">{cards(UNDER_THE_HOOD)}
   </ul>
   <p class="pjoin"><span data-i18n="partners.join">{pt["join"]}</span> <a href="mailto:{PARTNERS_EMAIL}">{PARTNERS_EMAIL}</a></p>
@@ -1255,7 +1291,8 @@ def landing(lang: str, prefix: str) -> str:
              f'<span class="sm" data-i18n="ui.start_short">{ui["start_short"]}</span></a>')
     demo = f'<a class="link" href="{DEMO_URL}" data-i18n="ui.demo_long">{ui["demo_long"]}</a>'
     rules = "".join(
-        f'\n      <li class="rule">{icon}<p data-i18n="sasr.r{i + 1}">{s["sasr"][f"r{i + 1}"]}</p></li>'
+        f'\n      <li class="rule">{icon}<div class="rule-text"><p data-i18n="sasr.r{i + 1}">{s["sasr"][f"r{i + 1}"]}</p>'
+        f'<p class="how" data-i18n="sasr.e{i + 1}">{s["sasr"][f"e{i + 1}"]}</p></div></li>'
         for i, icon in enumerate(RULE_ICONS)
     )
     ask_cfg = {"live": ASK_BRANDON_LIVE, "url": ASK_BRANDON_URL, "demo": DEMO_URL}
@@ -1341,12 +1378,13 @@ def landing(lang: str, prefix: str) -> str:
       <p id="detail-text">{s["life"]["found"][2]}</p>
       {hear_btn(s)}
     </div>
+    {more_link(s, "llmp", lang)}
   </div>
 </section>
 
-{calc_html(s)}
+{calc_html(s, lang)}
 
-{two_html(s)}
+{two_html(s, lang)}
 
 {who_html(s)}
 
@@ -1372,6 +1410,7 @@ def landing(lang: str, prefix: str) -> str:
   <ul class="rules">{rules}
   </ul>
   {i18n("sasr.close", s["sasr"]["close"], "p", "close")}
+  {more_link(s, "sasr", lang)}
 </section>
 
 <section class="std" id="standard" aria-labelledby="std-h">
@@ -1380,6 +1419,7 @@ def landing(lang: str, prefix: str) -> str:
       {i18n("std.eyebrow", s["std"]["eyebrow"], "span", "eyebrow")}
       <h2 id="std-h" data-i18n="std.h2">{s["std"]["h2"]}</h2>
       {i18n("std.p", s["std"]["p"], "p")}
+      {more_link(s, "llmp", lang)}
     </div>
     {plate_svg(s)}
   </div>
@@ -1513,8 +1553,8 @@ html{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:
 body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6}
 a{color:var(--accent-ink)}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,3vw,32px);max-width:1180px;margin:0 auto}
-.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem}
-.brand .logo{width:34px;height:34px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.brand .logo{width:34px;height:34px;flex:none}
 .back{font-weight:600;text-decoration:none;color:var(--ink2);font-size:.95rem}
 .back:hover{color:var(--accent-ink)}
 main{background:var(--card);border:1px solid var(--line);border-radius:24px;max-width:840px;margin:8px auto 32px;padding:clamp(22px,4vw,48px)}
@@ -1538,29 +1578,46 @@ th{color:var(--ink);font-weight:600}
 .foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 28px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between}
 .foot a{color:var(--muted);text-decoration:none}
 .foot a:hover{color:var(--ink)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 14px}
+.top{flex-wrap:wrap;row-gap:8px}
+.top-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;justify-content:flex-end;margin-left:auto}
+.back,.switch{white-space:nowrap}
+.switch{font-weight:600;text-decoration:none;font-size:.95rem;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink2);background:var(--card)}
+.switch:hover{color:var(--accent-ink);border-color:var(--accent)}
+/* /learn/ articles: a little more air and type than a legal document */
+.article h1{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:18px}
+.article .eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--accent-ink);margin-bottom:12px}
+.article p,.article li{font-size:1.06rem;line-height:1.65}
+.article p.lead{font-size:1.2rem;line-height:1.55;color:var(--ink)}
+.article h2{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-.01em;margin-top:38px}
+.article ol li,.article ul li{margin-bottom:8px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap}
+.btn::after{content:"→"}
+.btn:hover{filter:brightness(1.1)}
+.link{font-weight:600;font-size:15px;color:var(--ink2);text-decoration:none}
+.link:hover{color:var(--accent-ink)}
 """
 
 
-def legal_page(out_dir: str, md_file: str, page_title: str) -> str:
-    md = (SRC / "legal" / md_file).read_text(encoding="utf-8")
-    title, body = md_to_html(md)
-    title = title or page_title
-    canonical = f"{SITE}/{out_dir}/"
-    others = " ".join(
-        f'<a href="../{d}/">{t}</a>' for d, _, t in LEGAL_PAGES if d != out_dir
-    )
+def doc_page(*, lang: str, title: str, body: str, canonical: str, description: str, depth: int,
+             back_href: str, back_label: str, nav: str, head_extra: str = "", top_extra: str = "",
+             main_class: str = "", before_h1: str = "", after_body: str = "") -> str:
+    """The shared document template: legal pages and /learn/ articles. `depth` is how many folders
+    deep the page lives, so the brand link and the icon stay relative and work on file:// too."""
+    root = "../" * depth
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{attr(title)} — Octopus TMS</title>
-<meta name="description" content="{attr(title)} for Octopus TMS, the carrier partner platform by Digital Ronin LLC.">
+<meta name="description" content="{attr(description)}">
 <link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{attr(title)} — Octopus TMS">
 <meta property="og:url" content="{canonical}">
 <meta property="og:type" content="article">
-<link rel="icon" href="../octopus-logo.svg" type="image/svg+xml">
+{head_extra}<link rel="icon" href="{root}octopus-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;600;700&display=swap" rel="stylesheet">
@@ -1569,39 +1626,105 @@ def legal_page(out_dir: str, md_file: str, page_title: str) -> str:
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="../">{LOGO_SVG}<span>Octopus TMS</span></a>
-  <a class="back" href="../">← Back to octopustms.com</a>
+  <a class="brand" href="{root}">{LOGO_SVG}<span>Octopus TMS</span></a>
+  <nav class="top-links"><a class="back" href="{back_href}">{back_label}</a>{top_extra}</nav>
 </header>
-<main>
-<h1>{inline(title)}</h1>
-{body}
+<main{f' class="{main_class}"' if main_class else ""}>
+{before_h1}<h1>{inline(title)}</h1>
+{body}{after_body}
 </main>
 <footer class="foot">
   <span>© {date.today().year} Digital Ronin LLC · <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a></span>
-  <nav>{others}</nav>
+  <nav>{nav}</nav>
 </footer>
 </body>
 </html>
 """
 
 
+def legal_page(out_dir: str, md_file: str, page_title: str) -> str:
+    md = (SRC / "legal" / md_file).read_text(encoding="utf-8")
+    title, body = md_to_html(md)
+    title = title or page_title
+    others = "".join(f'<a href="../{d}/">{t}</a>' for d, _, t in LEGAL_PAGES if d != out_dir)
+    return doc_page(lang="en", title=title, body=body, canonical=f"{SITE}/{out_dir}/",
+                    description=f"{title} for Octopus TMS, the carrier partner platform by Digital Ronin LLC.",
+                    depth=1, back_href="../", back_label="← Back to octopustms.com", nav=others)
+
+
+# --------------------------------------------------------------------------- /learn/ articles
+
+# Slugs of the knowledge articles. Each has src/articles/<slug>.en.md and <slug>.ru.md and is rendered to
+# /learn/<slug>/ and /ru/learn/<slug>/. The landing's "Read more" links point here (see more_link()).
+ARTICLES = ["sasr", "llmp", "no-load-no-fee", "two-screens"]
+
+
+def article_source(slug: str, lang: str) -> tuple[str, str]:
+    """(title, body_html) of one article. The first paragraph becomes the lead and the meta description."""
+    md = (SRC / "articles" / f"{slug}.{lang}.md").read_text(encoding="utf-8")
+    title, body = md_to_html(md)
+    body = body.replace("<p>", '<p class="lead">', 1)
+    return title, body
+
+
+def plain_text(fragment: str) -> str:
+    return html.unescape(re.sub(r"<[^>]+>", "", fragment)).strip()
+
+
+def article_page(slug: str, lang: str) -> str:
+    s = EN if lang == "en" else RU
+    ln, ui = s["learn"], s["ui"]
+    title, body = article_source(slug, lang)
+    lead = re.search(r'<p class="lead">(.*?)</p>', body, re.S)
+    description = plain_text(lead.group(1)) if lead else title
+    canonical = SITE + article_url(slug, lang)
+    other = "en" if lang == "ru" else "ru"
+    head_extra = (
+        f'<link rel="alternate" hreflang="en" href="{SITE}{article_url(slug, "en")}">\n'
+        f'<link rel="alternate" hreflang="ru" href="{SITE}{article_url(slug, "ru")}">\n'
+        f'<link rel="alternate" hreflang="x-default" href="{SITE}{article_url(slug, "en")}">\n'
+        f'<meta property="og:description" content="{attr(description)}">\n'
+        f'<meta property="og:image" content="{SITE}/images/og.jpg">\n'
+        f'<meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">\n'
+        '<script type="application/ld+json">' + json_for_script({
+            "@context": "https://schema.org", "@type": "Article", "headline": title, "inLanguage": lang,
+            "description": description, "mainEntityOfPage": canonical,
+            "author": {"@type": "Person", "name": "Brandon Hay"}, "publisher": {"@id": f"{SITE}/#org"},
+        }) + "</script>\n"
+    )
+    switch = (f' <a class="switch" href="{article_url(slug, other)}" lang="{other}" hreflang="{other}">'
+              f'{ln["other_lang"]}</a>')
+    nav = f'<span>{ln["more"]}:</span>' + "".join(
+        f'<a href="{article_url(o, lang)}">{article_source(o, lang)[0]}</a>' for o in ARTICLES if o != slug
+    )
+    ctas = (f'\n<div class="ctas"><a class="btn" href="{REGISTER_URL}">{ui["start"]}</a>'
+            f'<a class="link" href="{DEMO_URL}">{ui["demo_long"]}</a></div>')
+    return doc_page(lang=lang, title=title, body=body, canonical=canonical, description=description,
+                    depth=3 if lang == "ru" else 2, back_href="/ru/" if lang == "ru" else "/", back_label=ln["back"],
+                    nav=nav, head_extra=head_extra, top_extra=switch, main_class="article",
+                    before_h1=f'<span class="eyebrow">{ln["eyebrow"]}</span>\n', after_body=ctas)
+
+
 # --------------------------------------------------------------------------- sitemap / robots
 
 
 def sitemap() -> str:
-    urls = [
-        (f"{SITE}/", "1.0", True),
-        (f"{SITE}/ru/", "0.9", True),
-    ] + [(f"{SITE}/{d}/", "0.3", False) for d, _, _ in LEGAL_PAGES]
+    # (loc, priority, English twin) — a page with a twin lists both languages as alternates.
+    urls = [(f"{SITE}/", "1.0", f"{SITE}/"), (f"{SITE}/ru/", "0.9", f"{SITE}/")]
+    for slug in ARTICLES:
+        en = SITE + article_url(slug, "en")
+        urls += [(en, "0.6", en), (SITE + article_url(slug, "ru"), "0.5", en)]
+    urls += [(f"{SITE}/{d}/", "0.3", None) for d, _, _ in LEGAL_PAGES]
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
-    for loc, prio, alternates in urls:
+    for loc, prio, en in urls:
         parts.append("  <url>")
         parts.append(f"    <loc>{loc}</loc>")
-        if alternates:
-            parts.append(f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/"/>')
-            parts.append(f'    <xhtml:link rel="alternate" hreflang="ru" href="{SITE}/ru/"/>')
-            parts.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>')
+        if en:
+            ru = en.replace(f"{SITE}/", f"{SITE}/ru/", 1)
+            parts.append(f'    <xhtml:link rel="alternate" hreflang="en" href="{en}"/>')
+            parts.append(f'    <xhtml:link rel="alternate" hreflang="ru" href="{ru}"/>')
+            parts.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{en}"/>')
         parts.append(f"    <lastmod>{TODAY}</lastmod>")
         parts.append(f"    <priority>{prio}</priority>")
         parts.append("  </url>")
@@ -1623,6 +1746,9 @@ def main() -> None:
     write(ROOT / "ru" / "index.html", landing("ru", "../"))
     for out_dir, md_file, page_title in LEGAL_PAGES:
         write(ROOT / out_dir / "index.html", legal_page(out_dir, md_file, page_title))
+    for slug in ARTICLES:
+        write(ROOT / "learn" / slug / "index.html", article_page(slug, "en"))
+        write(ROOT / "ru" / "learn" / slug / "index.html", article_page(slug, "ru"))
     write(ROOT / "sitemap.xml", sitemap())
     write(ROOT / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 

@@ -16,8 +16,9 @@ Then commit the regenerated files together with `src/`.
 |---|---|
 | `index.html`, `ru/index.html` | `src/strings.py` + `src/build.py`. Same page with EN and RU pre-rendered. The flag toggle switches language without a reload and remembers the choice. A Russian browser gets RU by default. |
 | `privacy/`, `terms/`, `payment-terms/`, `refund-policy/` | `src/legal/*.md`, which are copies of `docs/legal/*.md` in the octopus app repo. The app copy is canonical: when a legal doc changes there, copy it here and rebuild. |
+| `learn/<slug>/`, `ru/learn/<slug>/` | `src/articles/<slug>.en.md` and `<slug>.ru.md`: short knowledge articles (SASR, LLMP, how the $20 works, one load two screens). Each landing section links to its article with "Read more"; the slugs are listed in `ARTICLES` in `src/build.py`. The first paragraph is the lead and the meta description. |
 | `sitemap.xml`, `robots.txt` | Generated. |
-| `images/og.jpg` | The link-preview image (1200×630), a screenshot of the hero. Re-take it if the hero changes. |
+| `images/og.jpg` | The link-preview image (1200×630): the hero rendered at 1440px wide, light theme, English, about 3 s into the animation, scaled to 1200×630 (Playwright: viewport 1440×756, deviceScaleFactor 1200/1440, JPEG quality 85). Re-take it if the hero changes. |
 
 Links and addresses all live at the top of `src/strings.py`:
 
@@ -38,12 +39,13 @@ Set `POSTHOG_KEY` in `src/strings.py` to the project's public key (starts with `
 | Event | When | Details sent |
 |---|---|---|
 | `$pageview` | Page opens | — |
-| `start_free` | Any "Start free" click | `where` (section) |
+| `open_account` | Any "Open your account" click | `where` (section) |
 | `book_brandon` | Any Calendly link | `where` |
 | `email` | Any email link | `to`, `where` |
 | `lifecycle_stop` | Tapping a lifecycle stop | `stage` |
 | `hear_chaching` | "Hear it" | — |
-| `calc_used` | Moving a calculator slider | `field`, `value` |
+| `calc_used`, `calc_mode` | Moving a calculator slider, switching its mode | `field`, `value`, `mode` |
+| `read_more` | A "Read more" link into `/learn/` | `to`, `where` |
 | `nav`, `legal` | Menu and footer links | `to` |
 | `lang_switch`, `theme_toggle` | Flag and moon/sun buttons | `to` |
 | `ask_open`, `ask_question`, `ask_error` | The "Ask Brandon" chat | `turn`, `status` |
