@@ -10,7 +10,11 @@ the page script.
 
 Keep every claim here true. Octopus has not launched yet: no customer counts,
 no uptime numbers, no "loads booked", no stock or AI-generated photos of trucks
-we don't own. This file is the source of truth for what the site promises.
+we don't own. No "start free" lures either: the account is free to open and the
+honest phrase for the price is "no load, no fee" ($20 per load on the Partnership
+plan, refunded if the load is cancelled before the truck moves). Free-plan limits
+are set in the app's admin catalog, so the site never quotes them.
+This file is the source of truth for what the site promises.
 """
 
 REGISTER_URL = "https://app.octopustms.com/register"
@@ -26,14 +30,20 @@ STAGES = ["found", "booked", "dispatched", "moving", "delivered", "proven", "pai
 # Calculator defaults: a typical dry-van load, a typical umbrella/dispatch cut, a typical month.
 CALC = {"rate": 3000, "rate_min": 500, "rate_max": 15000, "rate_step": 100,
         "pct": 15, "pct_min": 5, "pct_max": 30,
-        "loads": 12, "loads_min": 1, "loads_max": 40, "fee": 20}
+        "loads": 12, "loads_min": 1, "loads_max": 40, "fee": 20,
+        # "Trucks under my MC" mode: a small fleet, a normal month per truck.
+        "trucks": 3, "trucks_min": 1, "trucks_max": 40,
+        "per": 8, "per_min": 1, "per_max": 30}
+
+# Third-party names shown in the "inside the app" strip. Text only, no logos.
+WORKS = [("123Loadboard", "lb123", True), ("DAT", "dat", False), ("QuickBooks", "qb", False), ("Stripe", "stripe", False)]
 
 EN = {
     "meta": {
-        "title": "Octopus TMS — Load Lifecycle Management and Payments for small carriers | $20 per load",
-        "description": "Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and payment. Start free. $20 per load, no subscription.",
-        "og_title": "Octopus TMS — from found to paid. $20 per load.",
-        "og_description": "Built by a former owner-operator. One app for the whole life of a load. Start free; $20 per load, refunded automatically if you cancel before the truck moves.",
+        "title": "Octopus TMS — Load Lifecycle Management and Payments for small carriers | $20 per load, no load no fee",
+        "description": "Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and payment. $20 per load, no subscription. No load, no fee.",
+        "og_title": "Octopus TMS — from found to paid. $20 per load. No load, no fee.",
+        "og_description": "Built by a former owner-operator. One app for the whole life of a load. $20 per load, nothing in a month nobody hauls, refunded automatically if you cancel before the truck moves.",
     },
     "ui": {
         "brand": "Octopus<span class=\"tms\"> TMS</span>",
@@ -43,7 +53,8 @@ EN = {
         "nav_partners": "Partners",
         "demo": "Talk to Brandon",
         "demo_long": "Book 30 min with Brandon",
-        "start": "Start free",
+        "start": "Open your account",
+        "start_short": "Open account",
         "theme": "Switch light / dark mode",
         "footer_rights": "© 2026 Digital Ronin LLC",
         "privacy": "Privacy",
@@ -54,10 +65,25 @@ EN = {
     "hero": {
         "tag": "<b>LLMP</b> · Load Lifecycle Management and Payments",
         "h1": "Every load, from found to <span class=\"money\">paid.</span>",
-        "sub": "Octopus TMS runs the whole life of a load for owner-operators and small carriers: search, booking, dispatch, tracking, documents, settlements and the money. One app. One record. Built by a driver who paid for his own truck.",
+        # The animation under the headline: loads come in from the boards, everything happens inside, money comes in from the broker.
+        "anim_aria": "A load is pulled into Octopus from the load boards, passes through every stage inside the app, and the money comes in from the broker.",
+        "anim_in": "Loads come in",
+        "anim_boards": "123Loadboard · DAT",
+        "anim_inside": "Everything happens inside",
+        "anim_money": "Money comes in",
+        "anim_broker": "from the broker",
         "motto": "We don't eat unless you eat.",
-        "price": "<b>$20 per load.</b> Start free. No subscription, no seats, no setup.",
-        "refund": "Cancel a load before the truck moves and the $20 comes back automatically.",
+        "quote": "I paid the bank $4,400 a month for a truck whether it moved or not. I won't do that to you.",
+        "quote_by": "Brandon Hay, founder",
+        "price": "<b>$20 per load.</b> No load, no fee. No subscription, no seats, no setup.",
+        "refund": "Cancel a load before the truck moves and the $20 comes back automatically. Opening an account is free and needs no card.",
+    },
+    "works": {
+        "eyebrow": "INSIDE THE APP",
+        "lb123": "Industry Partner",
+        "dat": "Load board",
+        "qb": "Invoices",
+        "stripe": "Payments",
     },
     "life": {
         "eyebrow": "HOW IT WORKS",
@@ -92,27 +118,49 @@ EN = {
     },
     "calc": {
         "eyebrow": "PRICING",
-        "h2": "What does a load really cost you?",
-        "p": "Leased onto someone else's MC or paying a dispatch service, a percentage of every load is gone before you see it. Run it under your own authority with Octopus and it's $20.",
+        "h2": "Every dollar of the load, visible.",
+        "p": "Own authority or trucks under your MC, the price is the same: $20 a load, $0 in a month nobody hauls. The owner sees every settlement add up. The driver sees the broker's original rate confirmation. Zero questions, zero blame.",
+        "leased": "Driving under someone else's MC? Your carrier pays the $20 and you see the real rate con on every load. Send them this page.",
+        "mode_own": "My own authority",
+        "mode_fleet": "Trucks under my MC",
         "rate": "Load pays",
-        "pct": "Their cut",
+        "pct": "Dispatch or umbrella cut",
         "loads": "Loads a month",
+        "trucks": "Trucks",
+        "per": "Loads per truck a month",
         "them": "Their cut",
+        "rev": "Trucks bring in",
         "us": "Octopus",
         "keep": "You keep <b>{diff}</b> more on this load.",
         "month": "That's <b>{month}</b> a month and <b>{year}</b> a year that stays with you.",
-        "fine": "For carriers running under their own authority. Insurance, fuel and load-board subscriptions are yours either way: Octopus replaces the cut, not your costs.",
+        "fleet_cost": "Octopus costs <b>{cost}</b> a month: <b>{share}</b> of what the trucks bring in.",
+        "fleet_zero": "A month with zero loads costs <b>$0</b>. No seats, no per-truck fee, no contract.",
+        "fine_own": "For carriers under their own authority. Insurance, fuel and load-board subscriptions are yours either way: Octopus replaces the cut, not your costs.",
+        "fine_fleet": "For carriers running drivers under their MC, one truck or forty. Every driver sees the broker's original rate con. If you edit rate confirmations before your drivers see them, Octopus isn't for you.",
         "sub_t": "Subscription TMS",
         "sub_d": "A fixed bill every month, even the month you didn't haul.",
         "oct_t": "Octopus",
-        "oct_d": "$0 in a dead month. $20 a load in a good one. Start free, no card needed.",
+        "oct_d": "$0 in a dead month. $20 a load in a good one. Open an account without a card.",
+    },
+    "two": {
+        "eyebrow": "ONE LOAD, TWO SCREENS",
+        "h2": "Same load. Same number.",
+        "p": "The owner's screen and the driver's screen show the same rate confirmation from the broker. Settlements add up because nothing is hidden. Honest carriers keep their drivers. The other kind doesn't sign up.",
+        "owner": "Owner sees",
+        "driver": "Driver sees",
+        "load": "Load #4821 · Dallas → Memphis",
+        "ratecon": "Broker rate con",
+        "pay": "Driver pay (30%)",
+        "your_pay": "Your pay (30%)",
+        "fee": "Octopus",
+        "pdf": "Broker's PDF, untouched",
     },
     "who": {
         "eyebrow": "WHO IT'S FOR",
         "oo_t": "Owner-operators",
         "oo_d": "Your MC, your rate con, your money. Find, book, haul, invoice and get paid from one app, without giving a percentage to anyone.",
         "fl_t": "Small fleets",
-        "fl_d": "Dispatch, drivers, tracking, documents and settlements in one place. Every driver sees the real rate con, and every settlement adds up.",
+        "fl_d": "Dispatch, drivers, tracking, documents and settlements in one place. Every driver sees the broker's original rate con, and every settlement adds up. One truck or forty.",
         "pa_t": "Partners",
         "pa_d": "Load boards, factoring companies, brokers and investors who want a fairer industry. Let's build it together.",
     },
@@ -164,10 +212,10 @@ EN = {
 
 RU = {
     "meta": {
-        "title": "Octopus TMS — управление жизненным циклом груза и платежами для небольших перевозчиков | $20 за груз",
-        "description": "Octopus TMS ведёт весь путь груза для овнер-операторов и небольших перевозчиков: поиск, бронирование, диспетчеризация, трекинг, документы, расчёты с водителями и оплата. Начните бесплатно. $20 за груз, без подписки.",
-        "og_title": "Octopus TMS — от поиска до оплаты. $20 за груз.",
-        "og_description": "Создано бывшим овнер-оператором. Одно приложение на весь путь груза. Начните бесплатно; $20 за груз, возврат автоматически, если отменить до того, как грузовик тронулся.",
+        "title": "Octopus TMS — управление жизненным циклом груза и платежами для небольших перевозчиков | $20 за груз, нет груза — нет платы",
+        "description": "Octopus TMS ведёт весь путь груза для овнер-операторов и небольших перевозчиков: поиск, бронирование, диспетчеризация, трекинг, документы, расчёты с водителями и оплата. $20 за груз, без подписки. Нет груза — нет платы.",
+        "og_title": "Octopus TMS — от поиска до оплаты. $20 за груз. Нет груза — нет платы.",
+        "og_description": "Создано бывшим овнер-оператором. Одно приложение на весь путь груза. $20 за груз, ничего в месяц без грузов, возврат автоматически, если отменить до того, как грузовик тронулся.",
     },
     "ui": {
         "brand": "Octopus<span class=\"tms\"> TMS</span>",
@@ -177,7 +225,8 @@ RU = {
         "nav_partners": "Партнёрам",
         "demo": "Поговорить с Брендоном",
         "demo_long": "30 минут с Брендоном",
-        "start": "Начать бесплатно",
+        "start": "Открыть аккаунт",
+        "start_short": "Регистрация",
         "theme": "Переключить светлую / тёмную тему",
         "footer_rights": "© 2026 Digital Ronin LLC",
         "privacy": "Конфиденциальность",
@@ -188,10 +237,24 @@ RU = {
     "hero": {
         "tag": "<b>LLMP</b> · управление жизненным циклом груза и платежами",
         "h1": "Каждый груз — от поиска до <span class=\"money\">оплаты.</span>",
-        "sub": "Octopus TMS ведёт весь путь груза для овнер-операторов и небольших перевозчиков: поиск, бронирование, диспетчеризация, трекинг, документы, расчёты и деньги. Одно приложение. Одна запись. Создано водителем, который сам платил за свой грузовик.",
+        "anim_aria": "Octopus затягивает груз с биржи, проводит его через все этапы внутри приложения, и деньги приходят от брокера.",
+        "anim_in": "Грузы приходят",
+        "anim_boards": "123Loadboard · DAT",
+        "anim_inside": "Всё происходит внутри",
+        "anim_money": "Деньги приходят",
+        "anim_broker": "от брокера",
         "motto": "Мы не едим, пока не поели вы.",
-        "price": "<b>$20 за груз.</b> Начните бесплатно. Без подписки, без платы за пользователей, без настройки.",
-        "refund": "Отмените груз до того, как грузовик тронулся, — и $20 вернутся автоматически.",
+        "quote": "Я платил банку $4 400 в месяц за грузовик — ехал он или стоял. С вами я так не поступлю.",
+        "quote_by": "Брендон Хэй, основатель",
+        "price": "<b>$20 за груз.</b> Нет груза — нет платы. Без подписки, без платы за пользователей, без настройки.",
+        "refund": "Отмените груз до того, как грузовик тронулся, — и $20 вернутся автоматически. Открыть аккаунт — бесплатно, карта не нужна.",
+    },
+    "works": {
+        "eyebrow": "ВНУТРИ ПРИЛОЖЕНИЯ",
+        "lb123": "Отраслевой партнёр",
+        "dat": "Биржа грузов",
+        "qb": "Счета",
+        "stripe": "Платежи",
     },
     "life": {
         "eyebrow": "КАК ЭТО РАБОТАЕТ",
@@ -226,27 +289,49 @@ RU = {
     },
     "calc": {
         "eyebrow": "ЦЕНА",
-        "h2": "Сколько на самом деле стоит вам груз?",
-        "p": "Если вы под чужим MC или платите диспетчерской службе, процент с каждого груза уходит ещё до того, как вы его увидите. Под своей лицензией с Octopus — $20.",
+        "h2": "Каждый доллар груза — на виду.",
+        "p": "Своя лицензия или грузовики под вашим MC — цена одна: $20 за груз и $0 в месяц, когда никто не возит. Владелец видит, что каждый расчёт сходится. Водитель видит оригинальное подтверждение ставки от брокера. Ноль вопросов, ноль обвинений.",
+        "leased": "Ездите под чужим MC? $20 платит ваш перевозчик, а вы видите настоящий rate con по каждому грузу. Отправьте ему эту страницу.",
+        "mode_own": "Своя лицензия",
+        "mode_fleet": "Грузовики под моим MC",
         "rate": "Груз платит",
-        "pct": "Их процент",
+        "pct": "Процент диспетчера или «зонтика»",
         "loads": "Грузов в месяц",
+        "trucks": "Грузовиков",
+        "per": "Грузов на грузовик в месяц",
         "them": "Их процент",
+        "rev": "Приносят грузовики",
         "us": "Octopus",
         "keep": "На этом грузе у вас остаётся на <b>{diff}</b> больше.",
         "month": "Это <b>{month}</b> в месяц и <b>{year}</b> в год, которые остаются у вас.",
-        "fine": "Для перевозчиков под собственной лицензией. Страховка, топливо и подписки на биржи — ваши в любом случае: Octopus заменяет процент, а не ваши расходы.",
+        "fleet_cost": "Octopus обходится в <b>{cost}</b> в месяц: <b>{share}</b> от того, что приносят грузовики.",
+        "fleet_zero": "Месяц без грузов стоит <b>$0</b>. Без платы за пользователей, за грузовик и без контракта.",
+        "fine_own": "Для перевозчиков под собственной лицензией. Страховка, топливо и подписки на биржи — ваши в любом случае: Octopus заменяет процент, а не ваши расходы.",
+        "fine_fleet": "Для перевозчиков с водителями под своим MC — один грузовик или сорок. Каждый водитель видит оригинальный rate con брокера. Если вы правите rate con до того, как его увидят водители, Octopus не для вас.",
         "sub_t": "TMS по подписке",
         "sub_d": "Фиксированный счёт каждый месяц, даже в месяц, когда вы не возили.",
         "oct_t": "Octopus",
-        "oct_d": "$0 в пустой месяц. $20 за груз в хороший. Начните бесплатно, без карты.",
+        "oct_d": "$0 в пустой месяц. $20 за груз в хороший. Открыть аккаунт можно без карты.",
+    },
+    "two": {
+        "eyebrow": "ОДИН ГРУЗ, ДВА ЭКРАНА",
+        "h2": "Один груз. Одна цифра.",
+        "p": "Экран владельца и экран водителя показывают одно и то же подтверждение ставки от брокера. Расчёты сходятся, потому что ничего не скрыто. Честные перевозчики сохраняют водителей. Другие — не регистрируются.",
+        "owner": "Видит владелец",
+        "driver": "Видит водитель",
+        "load": "Груз #4821 · Даллас → Мемфис",
+        "ratecon": "Rate con брокера",
+        "pay": "Оплата водителя (30%)",
+        "your_pay": "Ваша оплата (30%)",
+        "fee": "Octopus",
+        "pdf": "PDF брокера, без правок",
     },
     "who": {
         "eyebrow": "ДЛЯ КОГО",
         "oo_t": "Овнер-операторы",
         "oo_d": "Ваш MC, ваш rate con, ваши деньги. Найти, забронировать, отвезти, выставить счёт и получить оплату — в одном приложении, без процента кому-либо.",
         "fl_t": "Небольшие автопарки",
-        "fl_d": "Диспетчеризация, водители, трекинг, документы и расчёты в одном месте. Каждый водитель видит настоящий rate con, и каждый расчёт сходится.",
+        "fl_d": "Диспетчеризация, водители, трекинг, документы и расчёты в одном месте. Каждый водитель видит оригинальный rate con брокера, и каждый расчёт сходится. Один грузовик или сорок.",
         "pa_t": "Партнёры",
         "pa_d": "Биржи грузов, факторинговые компании, брокеры и инвесторы, которые хотят честную индустрию. Давайте строить её вместе.",
     },

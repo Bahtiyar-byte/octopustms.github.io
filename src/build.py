@@ -22,7 +22,7 @@ from datetime import date
 from pathlib import Path
 
 from strings import (CALC, CONTACT_EMAIL, DEMO_URL, EN, PARTNERS_EMAIL, PRIVACY_EMAIL, REGISTER_URL, RU, SITE,
-                     STAGES)
+                     STAGES, WORKS)
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -135,6 +135,7 @@ svg{max-width:100%}
 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 20px;border-radius:999px;white-space:nowrap;transition:transform .15s,filter .15s}
 .btn:hover{color:#fff;filter:brightness(1.1);transform:translateY(-1px)}
 .btn::after{content:"→"}
+.btn .sm{display:none}
 .btn-lg{font-size:16px;padding:14px 24px}
 .btn-xl{font-size:17px;padding:16px 28px}
 .link{font-weight:600;font-size:15px;color:var(--ink2);white-space:nowrap}
@@ -162,19 +163,35 @@ svg{max-width:100%}
 [data-theme="dark"] .theme .ic-moon{display:none}
 
 /* ---- hero */
-.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:64px;align-items:end;padding-top:64px;padding-bottom:72px}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:64px;align-items:end;padding-top:64px;padding-bottom:36px}
 .hero-l{display:flex;flex-direction:column;gap:22px}
 .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(42px,5.6vw,84px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
 .tag{align-self:flex-start;display:inline-block;max-width:100%;font-size:14px;font-weight:600;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
 .tag b{font-family:var(--display);font-weight:800;color:var(--accent-ink);letter-spacing:.03em}
 .money{color:var(--money)}
-.hero .sub{font-size:clamp(18px,1.55vw,22px);line-height:1.5;color:var(--ink2);max-width:640px;text-wrap:pretty}
-.hero .sub em{white-space:nowrap;font-style:italic;color:var(--money);font-weight:600}
 .price{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,2.5vw,36px);display:flex;flex-direction:column;gap:20px;box-shadow:0 30px 60px -40px var(--glow)}
 .price .motto{color:var(--ink);font-family:var(--display);font-weight:800;font-size:clamp(26px,2.4vw,34px);line-height:1.1;letter-spacing:-.02em}
 .price p{font-size:19px;line-height:1.55;color:var(--ink2)}
 .price p b{font-family:var(--display);font-size:clamp(30px,2.6vw,38px);color:var(--money);letter-spacing:-.02em;display:block;margin-bottom:4px}
 .price .refund{font-size:15px;line-height:1.5;color:var(--muted)}
+.price .quote{margin:-6px 0 0;padding-left:16px;border-left:3px solid var(--money)}
+.price .quote p{font-size:16.5px;line-height:1.5;font-style:italic;color:var(--ink2)}
+.price .quote cite{display:block;margin-top:6px;font-style:normal;font-size:13.5px;font-weight:600;color:var(--muted)}
+.price .quote cite::before{content:"— "}
+
+/* ---- hero animation: the load comes in from the boards, everything happens inside, the money comes in from the broker */
+.hero-anim{display:block;width:100%;max-width:720px;height:auto;overflow:visible;font-family:var(--body);margin-top:4px}
+.hero-anim .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:var(--muted)}
+.hero-anim .lbl2{font-size:11.5px;font-weight:600;fill:var(--muted)}
+.hero-anim .num{font-size:11px;font-weight:700;fill:var(--ink)}
+
+/* ---- inside the app */
+.works{padding-top:0;padding-bottom:60px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 32px}
+.works ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 32px}
+.works li{display:flex;flex-direction:column;gap:1px}
+.works b{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
+.works span{font-size:12.5px;font-weight:600;color:var(--muted)}
+.works li.lead b,.works li.lead span{color:var(--accent-ink)}
 
 /* ---- lifecycle */
 .band{background:var(--band);color:#fff;padding:64px 0 72px;scroll-margin-top:0}
@@ -262,7 +279,7 @@ svg{max-width:100%}
 /* ---- pricing calculator */
 .calc{padding-top:104px;padding-bottom:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(36px,5vw,72px);align-items:start;scroll-margin-top:24px}
 .calc-text{display:flex;flex-direction:column;gap:18px}
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.tiles{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:6px}
 .tile{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--card);display:flex;flex-direction:column;gap:6px}
 .tile strong{font-size:15.5px}
 .tile span{font-size:14.5px;line-height:1.5;color:var(--ink2)}
@@ -280,7 +297,7 @@ svg{max-width:100%}
 .field input::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
 .field input::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--card);border:3px solid var(--accent)}
 .bars{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid var(--line)}
-.bar{display:grid;grid-template-columns:96px minmax(0,1fr) 92px;gap:12px;align-items:center;font-size:15px;font-weight:600}
+.bar{display:grid;grid-template-columns:124px minmax(0,1fr) 96px;gap:12px;align-items:center;font-size:15px;font-weight:600}
 .bar .track{height:14px;border-radius:99px;background:var(--card2);overflow:hidden}
 .bar .fill{display:block;height:100%;border-radius:99px;background:#EF4444;transition:width .3s ease}
 .bar.us .fill{background:var(--money)}
@@ -292,6 +309,29 @@ svg{max-width:100%}
 .result-month{font-size:16px;line-height:1.55;color:var(--ink2)}
 .result-month b{color:var(--ink);white-space:nowrap}
 .fine{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.mode{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--card2);align-self:flex-start;max-width:100%}
+.mode button{border:0;background:transparent;font:inherit;font-weight:700;font-size:14px;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.mode button:hover{color:var(--ink)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.machine[data-mode="own"] .f-fleet,.machine[data-mode="fleet"] .f-own{display:none}
+.machine[data-mode="fleet"] .bar.them .fill{background:var(--ink2)}
+.machine[data-mode="fleet"] .bar.them b{color:var(--ink)}
+.leased{font-size:15px;line-height:1.55;color:var(--ink2);border-top:1px solid var(--line);padding-top:16px}
+
+/* ---- one load, two screens */
+.two{padding-top:88px;padding-bottom:8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(32px,5vw,72px);align-items:center;scroll-margin-top:24px}
+.two-text{display:flex;flex-direction:column;gap:18px}
+.screens{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:center}
+.screen{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px 20px 10px;display:flex;flex-direction:column;box-shadow:0 30px 60px -44px var(--glow)}
+.screen .role{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.screen.driver .role{color:var(--money)}
+.screen .ld{font-weight:700;font-size:15px;padding-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14.5px;color:var(--ink2);padding:9px 0;border-top:1px solid var(--line)}
+.row b{font-family:var(--display);font-weight:700;color:var(--ink);white-space:nowrap}
+.row.big b{font-size:24px;color:var(--money);letter-spacing:-.02em}
+.row .pdf{display:inline-flex;align-items:center;gap:6px}
+.row .pdf::before{content:"";width:10px;height:12px;border:1.5px solid var(--muted);border-radius:2px;display:inline-block}
+.eq{font-family:var(--display);font-weight:800;font-size:38px;color:var(--money);text-align:center;line-height:1}
 
 /* ---- who it's for */
 .who{padding-top:72px;padding-bottom:16px;scroll-margin-top:24px}
@@ -356,8 +396,13 @@ svg{max-width:100%}
 @keyframes ping{0%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 6px rgba(52,211,153,.6)}70%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 26px rgba(52,211,153,0)}100%{box-shadow:0 0 0 6px rgba(52,211,153,.18),0 0 0 26px rgba(52,211,153,0)}}
 @keyframes ching{0%,8%{opacity:0;transform:translateY(4px)}14%,70%{opacity:1;transform:none}85%,100%{opacity:0}}
 @media (max-width:960px){
-  .hero{grid-template-columns:1fr;gap:36px;padding-top:40px;padding-bottom:56px}
+  .top .link-demo{display:none}
+  .hero{grid-template-columns:1fr;gap:36px;padding-top:40px;padding-bottom:28px}
+  .works{padding-bottom:48px}
   .calc,.contact{grid-template-columns:1fr;padding-top:80px}
+  .two{grid-template-columns:1fr;padding-top:72px}
+  .works{gap:10px 20px}
+  .works ul{gap:8px 20px}
   .cards{grid-template-columns:1fr}
   .why{grid-template-columns:1fr;gap:18px;padding-top:80px}
   .why .eyebrow{padding-top:0}
@@ -378,23 +423,40 @@ svg{max-width:100%}
   .foot .in{justify-content:center;text-align:center}
   .lines{grid-template-columns:1fr}
   .top .link-demo{display:none}
+  .top .btn .sm{display:inline}
+  .mode{display:flex;width:100%;align-self:stretch}
+  .mode button{flex:1;white-space:normal;padding:8px 8px;font-size:13px;line-height:1.25}
   .foot nav{justify-content:center}
+  .hero-anim .sm{display:none}
+  /* Zoom the animation to the box; the load and the money arrive from beyond the screen edge. */
+  .anim-wrap{overflow:hidden}
+  .hero-anim{width:150%;max-width:none;margin-left:-25%}
+  .top .btn .lg{display:none}
+  .screens{grid-template-columns:1fr;gap:10px}
+  .eq{font-size:30px}
+  .mode button{padding:8px 12px;font-size:13.5px}
 }
 @media (max-width:440px){
   .brand{font-size:16px;gap:8px}
   .brand .logo{width:32px;height:32px}
   .theme{display:none}
+  .brand .tms{display:none}
+  .top .btn{padding:9px 11px;font-size:13.5px}
+  .lang button{padding:6px 6px}
 }
 @media (max-width:400px){
-  .brand .tms{display:none}
   .top .btn::after{content:none}
   .top-right{gap:6px}
-  .lang button{padding:7px 7px}
-  .top .btn{padding:9px 12px}
+  .lang button{padding:6px 5px}
+  .top .btn{padding:9px 10px}
   .tiles{grid-template-columns:1fr}
   .bar{grid-template-columns:76px minmax(0,1fr) 80px;gap:8px}
   .top-right{gap:8px}
   .rule{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:340px){
+  .brand .logo{display:none}
+  .top .btn{padding:8px 8px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -494,23 +556,47 @@ JS = r"""
     }, {threshold: .35}).observe(band);
   }
 
-  // ---- pricing: their percentage vs our $20, live.
+  // ---- pricing, live. Two ways to read it:
+  //   own   — your own authority: a dispatch/umbrella percentage vs our $20 on the same load
+  //   fleet — trucks under your MC: what Octopus costs a month next to what the trucks bring in
   var CALC = __CALC__;
   var money = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
-  var inRate = document.getElementById('c-rate'), inPct = document.getElementById('c-pct'), inLoads = document.getElementById('c-loads');
-  function fill(el){ el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+  var machine = document.getElementById('machine');
+  var mode = 'own';
+  var inRate = document.getElementById('c-rate'), inPct = document.getElementById('c-pct'), inLoads = document.getElementById('c-loads'),
+      inTrucks = document.getElementById('c-trucks'), inPer = document.getElementById('c-per');
+  var sliders = [inRate, inPct, inLoads, inTrucks, inPer];
+  function fill(el){ if (el) el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+  function width(part, whole){ var fu = document.getElementById('f-us'); if (fu) fu.style.width = Math.max(2, Math.min(100, part / whole * 100)) + '%'; }
   function calc(){
     if (!inRate) return;
-    var r = +inRate.value, c = +inPct.value, n = +inLoads.value;
-    var them = r * c / 100, us = CALC.fee, diff = Math.max(0, them - us);
-    [inRate, inPct, inLoads].forEach(fill);
-    setHTML('o-rate', money(r)); setHTML('o-pct', c + '%'); setHTML('o-loads', String(n));
-    setHTML('b-them', money(them)); setHTML('b-us', money(us));
-    var fu = document.getElementById('f-us'); if (fu) fu.style.width = Math.max(2, Math.min(100, us / them * 100)) + '%';
-    setHTML('r-keep', tpl('calc.keep', {diff: money(diff)}));
-    setHTML('r-month', tpl('calc.month', {month: money(diff * n), year: money(diff * n * 12)}));
+    var r = +inRate.value, c = +inPct.value, n = +inLoads.value, tr = +inTrucks.value, per = +inPer.value, us = CALC.fee;
+    sliders.forEach(fill);
+    setHTML('o-rate', money(r)); setHTML('o-pct', c + '%'); setHTML('o-loads', String(n)); setHTML('o-trucks', String(tr)); setHTML('o-per', String(per));
+    if (mode === 'fleet') {
+      var loads = tr * per, rev = r * loads, cost = us * loads;
+      var share = (us / r * 100).toLocaleString(lang === 'ru' ? 'ru-RU' : 'en-US', {maximumFractionDigits: 1}) + '%';
+      setHTML('l-them', t('calc.rev', lang)); setHTML('b-them', money(rev)); setHTML('b-us', money(cost)); width(cost, rev);
+      setHTML('r-keep', tpl('calc.fleet_cost', {cost: money(cost), share: share}));
+      setHTML('r-month', t('calc.fleet_zero', lang));
+      setHTML('c-fine', t('calc.fine_fleet', lang));
+    } else {
+      var them = r * c / 100, diff = Math.max(0, them - us);
+      setHTML('l-them', t('calc.them', lang)); setHTML('b-them', money(them)); setHTML('b-us', money(us)); width(us, them);
+      setHTML('r-keep', tpl('calc.keep', {diff: money(diff)}));
+      setHTML('r-month', tpl('calc.month', {month: money(diff * n), year: money(diff * n * 12)}));
+      setHTML('c-fine', t('calc.fine_own', lang));
+    }
   }
-  [inRate, inPct, inLoads].forEach(function(el){ if (el) el.addEventListener('input', calc); });
+  sliders.forEach(function(el){ if (el) el.addEventListener('input', calc); });
+  document.querySelectorAll('.mode button').forEach(function(b){
+    b.addEventListener('click', function(){
+      mode = b.getAttribute('data-mode') === 'fleet' ? 'fleet' : 'own';
+      if (machine) machine.setAttribute('data-mode', mode);
+      document.querySelectorAll('.mode button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      calc();
+    });
+  });
   calc();
 
   // ---- language: both dictionaries are embedded, so switching needs no reload.
@@ -647,6 +733,104 @@ def spine_svg(s: dict) -> str:
     </svg>"""
 
 
+def hero_svg(s: dict) -> str:
+    """The hero picture: an octopus inside the app pulls a load in from the boards (left, outside),
+    the load passes six lit stops inside, then the octopus pulls the money in from the broker (right, outside).
+    One 9-second loop in SMIL; colours that animate are literal, the rest follow the theme tokens."""
+    h = s["hero"]
+    D = "9s"
+    # Stops inside the box: six process stops, then the paid stop.
+    xs = [160 + 60 * i for i in range(6)]
+    PAID_X = 540
+    # Timeline (fractions of the loop). See the comments next to each element.
+    t_pull0, t_pull1, t_walk1 = .10, .20, .56     # card pulled in, then walks the stops
+    f_left, f_right = .3434, .4079               # straight part of each tentacle, as a fraction of its length
+    stops = ""
+    for i, x in enumerate(xs):
+        ti = t_pull1 + (t_walk1 - t_pull1) * i / 5
+        stops += (f'<circle cx="{x}" cy="200" r="13" style="fill:var(--card2);stroke:var(--line);stroke-width:2"/>'
+                  f'<circle cx="{x}" cy="200" r="13" fill="#3D7BFF" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;{ti:.3f};{ti + .02:.3f};.92;1" dur="{D}" repeatCount="indefinite"/></circle>'
+                  f'<text class="num" x="{x}" y="204" text-anchor="middle">{i + 1}</text>')
+    return f"""<svg class="hero-anim" viewBox="0 0 720 280" role="img" data-i18n-attr="aria-label:hero.anim_aria" aria-label="{attr(h["anim_aria"])}" data-still="3.6">
+      <defs><linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D4ED8"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      <rect x="120" y="28" width="480" height="224" rx="24" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/>
+      <text class="lbl" x="360" y="246" text-anchor="middle" data-i18n="hero.anim_inside">{h["anim_inside"]}</text>
+      <text class="lbl sm" x="60" y="158" text-anchor="middle" data-i18n="hero.anim_in">{h["anim_in"]}</text>
+      <text class="lbl2 sm" x="60" y="176" text-anchor="middle" data-i18n="hero.anim_boards">{h["anim_boards"]}</text>
+      <text class="lbl sm" x="660" y="158" text-anchor="middle" data-i18n="hero.anim_money">{h["anim_money"]}</text>
+      <text class="lbl2 sm" x="660" y="176" text-anchor="middle" data-i18n="hero.anim_broker">{h["anim_broker"]}</text>
+      <!-- the octopus: head, eyes, four swaying tentacles -->
+      <g style="fill:none;stroke:url(#og);stroke-width:7;stroke-linecap:round">
+        <path d="M338,116 C320,150 300,150 296,176"><animateTransform attributeName="transform" type="rotate" values="0 360 116;3 360 116;0 360 116;-3 360 116;0 360 116" dur="3.4s" repeatCount="indefinite"/></path>
+        <path d="M352,120 C348,150 340,160 336,180"><animateTransform attributeName="transform" type="rotate" values="0 360 116;-2 360 116;0 360 116;2 360 116;0 360 116" dur="3.9s" repeatCount="indefinite"/></path>
+        <path d="M368,120 C372,150 380,160 384,180"><animateTransform attributeName="transform" type="rotate" values="0 360 116;2 360 116;0 360 116;-2 360 116;0 360 116" dur="4.3s" repeatCount="indefinite"/></path>
+        <path d="M382,116 C400,150 420,150 424,176"><animateTransform attributeName="transform" type="rotate" values="0 360 116;-3 360 116;0 360 116;3 360 116;0 360 116" dur="3.7s" repeatCount="indefinite"/></path>
+      </g>
+      <!-- left arm: reaches out of the box to the load, then pulls it in to stop 1 -->
+      <path d="M336,118 C300,150 240,200 160,200 H56" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="fill:none;stroke:url(#og);stroke-width:7;stroke-linecap:round"><animate attributeName="stroke-dashoffset" values="1;1;0;0;{f_left};1;1" keyTimes="0;.01;{t_pull0};{t_pull0 + .005};{t_pull1};.30;1" dur="{D}" repeatCount="indefinite"/></path>
+      <!-- right arm: reaches out to the money and pulls it in to the paid stop -->
+      <path d="M384,118 C420,150 480,200 540,200 H664" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="fill:none;stroke:url(#og);stroke-width:7;stroke-linecap:round"><animate attributeName="stroke-dashoffset" values="1;1;0;0;{f_right};1;1" keyTimes="0;.58;.66;.665;.74;.82;1" dur="{D}" repeatCount="indefinite"/></path>
+      <ellipse cx="360" cy="92" rx="34" ry="30" fill="url(#og)"/>
+      <circle cx="348" cy="96" r="6.5" fill="#fff"/><circle cx="372" cy="96" r="6.5" fill="#fff"/>
+      <circle cx="349.5" cy="97" r="3.2" fill="#0E1726"/><circle cx="373.5" cy="97" r="3.2" fill="#0E1726"/>
+      <!-- the stops -->
+      {stops}
+      <circle cx="{PAID_X}" cy="200" r="16" style="fill:var(--card2);stroke:var(--line);stroke-width:2" stroke-dasharray="4 4"/>
+      <circle cx="{PAID_X}" cy="200" r="16" fill="#34D399" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.74;.76;.95;.99;1" dur="{D}" repeatCount="indefinite"/></circle>
+      <text x="{PAID_X}" y="207" text-anchor="middle" style="fill:#052e16;font-family:var(--display);font-size:17px;font-weight:800" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.74;.76;.95;.99;1" dur="{D}" repeatCount="indefinite"/>$</text>
+      <circle cx="{PAID_X}" cy="200" r="16" style="fill:none;stroke:#34D399;stroke-width:3" opacity="0"><animate attributeName="r" values="16;16;64" keyTimes="0;.74;.9" dur="{D}" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;.735;.74;.9;1" dur="{D}" repeatCount="indefinite"/></circle>
+      <text x="{PAID_X}" y="160" text-anchor="middle" style="fill:#34D399;font-size:16px;font-weight:700;font-style:italic" opacity="0" data-i18n="life.chaching">{s["life"]["chaching"]}<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.74;.77;.93;.97;1" dur="{D}" repeatCount="indefinite"/></text>
+      <!-- the load: a rate-con card, pulled in from the left, walking the stops, gone once proven -->
+      <g><rect x="-12" y="-9" width="24" height="18" rx="4" style="fill:#fff;stroke:#D7DEE8;stroke-width:1"/><rect x="-7" y="-4" width="9" height="2.5" rx="1" style="fill:#0A5BFF"/><rect x="-7" y="1" width="14" height="2.5" rx="1" style="fill:#0A5BFF"/>
+        <animateMotion path="M56,200 H460" keyPoints="0;0;.2574;1;1" keyTimes="0;{t_pull0};{t_pull1};{t_walk1};1" calcMode="linear" dur="{D}" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;{t_walk1};{t_walk1 + .05};.99;1" dur="{D}" repeatCount="indefinite"/></g>
+      <!-- the money: a coin from outside, pulled in to the paid stop -->
+      <g opacity="0"><circle r="13" fill="#34D399"/><text y="5" text-anchor="middle" style="fill:#052e16;font-family:var(--display);font-size:14px;font-weight:800">$</text>
+        <animateMotion path="M664,200 H{PAID_X}" keyPoints="0;0;1;1" keyTimes="0;.66;.74;1" calcMode="linear" dur="{D}" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.63;.65;.76;.78;1" dur="{D}" repeatCount="indefinite"/></g>
+    </svg>"""
+
+
+def works_html(s: dict) -> str:
+    w = s["works"]
+    items = ""
+    for name, key, lead in WORKS:
+        cls = ' class="lead"' if lead else ""
+        items += f'<li{cls}><b>{name}</b><span data-i18n="works.{key}">{w[key]}</span></li>'
+    return f"""<section class="in works" aria-label="{attr(w["eyebrow"])}">
+  {i18n("works.eyebrow", w["eyebrow"], "span", "eyebrow")}
+  <ul>{items}</ul>
+</section>"""
+
+
+def two_html(s: dict) -> str:
+    k = s["two"]
+    return f"""<section class="in two" id="two-screens" aria-labelledby="two-h">
+  <div class="two-text">
+    {i18n("two.eyebrow", k["eyebrow"], "span", "eyebrow")}
+    <h2 class="h2" id="two-h" data-i18n="two.h2">{k["h2"]}</h2>
+    {i18n("two.p", k["p"], "p", "lead")}
+  </div>
+  <div class="screens">
+    <div class="screen owner">
+      <span class="role" data-i18n="two.owner">{k["owner"]}</span>
+      <span class="ld" data-i18n="two.load">{k["load"]}</span>
+      <div class="row big"><span data-i18n="two.ratecon">{k["ratecon"]}</span><b>$3,000</b></div>
+      <div class="row"><span data-i18n="two.pay">{k["pay"]}</span><b>$900</b></div>
+      <div class="row"><span data-i18n="two.fee">{k["fee"]}</span><b>$20</b></div>
+    </div>
+    <div class="eq" aria-hidden="true">=</div>
+    <div class="screen driver">
+      <span class="role" data-i18n="two.driver">{k["driver"]}</span>
+      <span class="ld" data-i18n="two.load">{k["load"]}</span>
+      <div class="row big"><span data-i18n="two.ratecon">{k["ratecon"]}</span><b>$3,000</b></div>
+      <div class="row"><span data-i18n="two.your_pay">{k["your_pay"]}</span><b>$900</b></div>
+      <div class="row"><span class="pdf" data-i18n="two.pdf">{k["pdf"]}</span></div>
+    </div>
+  </div>
+</section>"""
+
+
 ICON_BELL = """<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg>"""
 
 
@@ -683,12 +867,14 @@ def calc_html(s: dict) -> str:
     keep = k["keep"].format(diff=money(diff))
     month = k["month"].format(month=money(diff * c["loads"]), year=money(diff * c["loads"] * 12))
 
-    def field(fid, key, value, lo, hi, step, shown):
+    def field(fid, key, value, lo, hi, step, shown, only=""):
         pct = (value - lo) / (hi - lo) * 100
-        return (f'<div class="field"><div class="field-top"><label for="c-{fid}" data-i18n="calc.{key}">{k[key]}</label>'
+        cls = f" f-{only}" if only else ""
+        return (f'<div class="field{cls}"><div class="field-top"><label for="c-{fid}" data-i18n="calc.{key}">{k[key]}</label>'
                 f'<output id="o-{fid}" for="c-{fid}">{shown}</output></div>'
                 f'<input type="range" id="c-{fid}" min="{lo}" max="{hi}" step="{step}" value="{value}" style="--fill:{pct:.1f}%"></div>')
 
+    # Pre-rendered in "own authority" mode; the script re-renders the mode-dependent parts (no data-i18n on those).
     return f"""<section class="in calc" id="pricing" aria-labelledby="calc-h">
   <div class="calc-text">
     {i18n("calc.eyebrow", k["eyebrow"], "span", "eyebrow")}
@@ -698,18 +884,25 @@ def calc_html(s: dict) -> str:
       <div class="tile"><strong data-i18n="calc.sub_t">{k["sub_t"]}</strong><span data-i18n="calc.sub_d">{k["sub_d"]}</span></div>
       <div class="tile us"><strong data-i18n="calc.oct_t">{k["oct_t"]}</strong><span data-i18n="calc.oct_d">{k["oct_d"]}</span></div>
     </div>
+    {i18n("calc.leased", k["leased"], "p", "leased")}
   </div>
-  <div class="machine">
+  <div class="machine" id="machine" data-mode="own">
+    <div class="mode" role="group" aria-label="Pricing view">
+      <button type="button" data-mode="own" aria-pressed="true" data-i18n="calc.mode_own">{k["mode_own"]}</button>
+      <button type="button" data-mode="fleet" aria-pressed="false" data-i18n="calc.mode_fleet">{k["mode_fleet"]}</button>
+    </div>
     {field("rate", "rate", c["rate"], c["rate_min"], c["rate_max"], c["rate_step"], money(c["rate"]))}
-    {field("pct", "pct", c["pct"], c["pct_min"], c["pct_max"], 1, f'{c["pct"]}%')}
-    {field("loads", "loads", c["loads"], c["loads_min"], c["loads_max"], 1, str(c["loads"]))}
+    {field("pct", "pct", c["pct"], c["pct_min"], c["pct_max"], 1, f'{c["pct"]}%', "own")}
+    {field("loads", "loads", c["loads"], c["loads_min"], c["loads_max"], 1, str(c["loads"]), "own")}
+    {field("trucks", "trucks", c["trucks"], c["trucks_min"], c["trucks_max"], 1, str(c["trucks"]), "fleet")}
+    {field("per", "per", c["per"], c["per_min"], c["per_max"], 1, str(c["per"]), "fleet")}
     <div class="bars" aria-live="polite">
-      <div class="bar them"><span data-i18n="calc.them">{k["them"]}</span><span class="track"><span class="fill" style="width:100%"></span></span><b id="b-them">{money(them)}</b></div>
+      <div class="bar them"><span id="l-them">{k["them"]}</span><span class="track"><span class="fill" style="width:100%"></span></span><b id="b-them">{money(them)}</b></div>
       <div class="bar us"><span data-i18n="calc.us">{k["us"]}</span><span class="track"><span class="fill" id="f-us" style="width:{max(2, c["fee"] / them * 100):.1f}%"></span></span><b id="b-us">{money(c["fee"])}</b></div>
     </div>
     <p class="result" id="r-keep">{keep}</p>
     <p class="result-month" id="r-month">{month}</p>
-    {i18n("calc.fine", k["fine"], "p", "fine")}
+    <p class="fine" id="c-fine">{k["fine_own"]}</p>
   </div>
 </section>"""
 
@@ -802,7 +995,9 @@ def landing(lang: str, prefix: str) -> str:
     s = strings[lang]
     canonical = f"{SITE}/ru/" if lang == "ru" else f"{SITE}/"
     ui = s["ui"]
-    start = f'<a class="btn" href="{REGISTER_URL}" data-i18n="ui.start">{ui["start"]}</a>'
+    # The top-bar button carries both labels; CSS shows the short one on phones.
+    start = (f'<a class="btn" href="{REGISTER_URL}"><span class="lg" data-i18n="ui.start">{ui["start"]}</span>'
+             f'<span class="sm" data-i18n="ui.start_short">{ui["start_short"]}</span></a>')
     demo = f'<a class="link" href="{DEMO_URL}" data-i18n="ui.demo_long">{ui["demo_long"]}</a>'
     rules = "".join(
         f'\n      <li class="rule">{icon}<p data-i18n="sasr.r{i + 1}">{s["sasr"][f"r{i + 1}"]}</p></li>'
@@ -864,15 +1059,18 @@ def landing(lang: str, prefix: str) -> str:
   <div class="hero-l">
     {i18n("hero.tag", s["hero"]["tag"], "p", "tag")}
     <h1 data-i18n="hero.h1">{s["hero"]["h1"]}</h1>
-    {i18n("hero.sub", s["hero"]["sub"], "p", "sub")}
+    <div class="anim-wrap">{hero_svg(s)}</div>
   </div>
   <div class="price">
     {i18n("hero.motto", s["hero"]["motto"], "p", "motto")}
+    <blockquote class="quote"><p data-i18n="hero.quote">{s["hero"]["quote"]}</p><cite data-i18n="hero.quote_by">{s["hero"]["quote_by"]}</cite></blockquote>
     {i18n("hero.price", s["hero"]["price"], "p")}
     {i18n("hero.refund", s["hero"]["refund"], "p", "refund")}
     <div class="ctas"><a class="btn btn-lg" href="{REGISTER_URL}" data-i18n="ui.start">{ui["start"]}</a>{demo}</div>
   </div>
 </section>
+
+{works_html(s)}
 
 <section class="band" id="lifecycle" aria-labelledby="life-h">
   <div class="in">
@@ -890,6 +1088,8 @@ def landing(lang: str, prefix: str) -> str:
 </section>
 
 {calc_html(s)}
+
+{two_html(s)}
 
 {who_html(s)}
 
