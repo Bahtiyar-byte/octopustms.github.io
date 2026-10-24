@@ -21,8 +21,8 @@ import re
 from datetime import date
 from pathlib import Path
 
-from strings import (CALC, CONTACT_EMAIL, DEMO_URL, EN, PARTNERS_EMAIL, PRIVACY_EMAIL, REGISTER_URL, RU, SITE,
-                     STAGES, WORKS)
+from strings import (ASK_BRANDON_LIVE, ASK_BRANDON_URL, CALC, CONTACT_EMAIL, DEMO_URL, EN, PARTNERS_EMAIL,
+                     POSTHOG_HOST, POSTHOG_KEY, PRIVACY_EMAIL, REGISTER_URL, RU, SITE, STAGES, WORKS)
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -192,6 +192,7 @@ svg{max-width:100%}
 .works b{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
 .works span{font-size:12.5px;font-weight:600;color:var(--muted)}
 .works li.lead b,.works li.lead span{color:var(--accent-ink)}
+.works a.eyebrow::after{content:" →"}
 
 /* ---- lifecycle */
 .band{background:var(--band);color:#fff;padding:64px 0 72px;scroll-margin-top:0}
@@ -458,6 +459,75 @@ svg{max-width:100%}
   .brand .logo{display:none}
   .top .btn{padding:8px 8px}
 }
+/* ---- partners */
+.partners{padding-top:96px;padding-bottom:16px;scroll-margin-top:24px}
+.partners-head{display:flex;flex-direction:column;gap:14px;max-width:860px;margin-bottom:32px}
+.pgrid{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.pgrid.big{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pgrid.small{grid-template-columns:repeat(4,minmax(0,1fr))}
+.hood{display:block;margin:36px 0 16px}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:12px}
+.pcard.live{border-color:var(--money);box-shadow:0 24px 50px -40px var(--money)}
+.mark{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.1;letter-spacing:-.02em;color:var(--ink)}
+.mark small{display:block;font-family:var(--body);font-weight:600;font-size:13px;letter-spacing:0;color:var(--muted);margin-top:4px}
+.small .mark{font-size:20px}
+.small .pcard{padding:22px}
+.chip{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;border-radius:999px;padding:5px 11px;background:var(--card2);color:var(--ink2)}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.chip.live{background:var(--money-soft);color:var(--money)}
+.chip.live::before{animation:live 2s ease-in-out infinite}
+.chip.prog{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.next{background:rgba(245,158,11,.14);color:#B45309}
+[data-theme="dark"] .chip.next{color:#FBBF24}
+@keyframes live{0%,100%{opacity:1}50%{opacity:.35}}
+.pcard p{font-size:15.5px;line-height:1.55;color:var(--ink2)}
+.small .pcard p{font-size:14.5px}
+.pjoin{margin-top:26px;font-size:17px;font-weight:600}
+.pfine{margin-top:12px;font-size:13px;line-height:1.55;color:var(--muted);max-width:900px}
+.h2{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+@media (max-width:1080px){.pgrid.small{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:960px){.pgrid.big{grid-template-columns:minmax(0,1fr)}.partners{padding-top:80px}}
+@media (max-width:440px){
+  .pgrid.small{grid-template-columns:minmax(0,1fr)}
+  .mark{font-size:24px}
+  .pcard,.small .pcard{padding:20px}
+  .h2{font-size:28px}
+}
+@media (max-width:360px){.h2{font-size:25px}.sasr .note{white-space:normal}}
+@media (max-width:1180px){html[lang="ru"] .top .link-demo{display:none}}
+
+/* ---- ask brandon (AI chat) */
+.ask-fab{position:fixed;right:20px;bottom:20px;z-index:40;display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:7px 18px 7px 7px;background:var(--ink);color:var(--paper);font:inherit;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 18px 40px -16px rgba(14,23,38,.55);transition:transform .15s}
+.ask-fab:hover{transform:translateY(-2px)}
+.ask-fab .mono{width:38px;height:38px;font-size:13px;background:var(--accent);color:#fff}
+.ask-fab[hidden],.ask[hidden]{display:none}
+.ask{position:fixed;right:20px;bottom:20px;z-index:41;width:min(400px,calc(100vw - 32px));height:min(620px,calc(100dvh - 40px));background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:22px;box-shadow:0 40px 90px -30px rgba(14,23,38,.55);display:flex;flex-direction:column;overflow:hidden}
+.ask-head{display:flex;gap:12px;align-items:flex-start;padding:16px 14px 12px 16px;border-bottom:1px solid var(--line)}
+.ask-head .mono{width:40px;height:40px;font-size:14px}
+.ask-head strong{display:block;font-size:16px}
+.ask-head small{display:block;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.ask-x{margin-left:auto;border:0;background:transparent;color:var(--ink2);font-size:22px;line-height:1;width:34px;height:34px;border-radius:50%;cursor:pointer;flex:none}
+.ask-x:hover{background:var(--card2)}
+.ask-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.msg{max-width:86%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot{background:var(--card2);border-bottom-left-radius:6px;align-self:flex-start}
+.msg.me{background:var(--accent);color:#fff;border-bottom-right-radius:6px;align-self:flex-end}
+.msg.err{background:rgba(239,68,68,.1)}
+.msg.typing{color:var(--muted);font-style:italic}
+.ask-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ask-chips button{border:1px solid var(--line);background:var(--card);color:var(--accent-ink);font:inherit;font-size:13.5px;font-weight:600;padding:7px 12px;border-radius:999px;cursor:pointer}
+.ask-chips button:hover{border-color:var(--accent)}
+.ask-form{display:flex;gap:8px;padding:12px 12px 6px;border-top:1px solid var(--line)}
+.ask-form textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);font:inherit;font-size:16px;line-height:1.4;padding:10px 12px;height:46px;max-height:120px}
+.ask-form button{border:0;border-radius:14px;background:var(--accent);color:#fff;font:inherit;font-weight:700;font-size:15px;padding:0 16px;cursor:pointer}
+.ask-form button:disabled{opacity:.5;cursor:default}
+.ask-note{padding:0 14px 10px;font-size:11.5px;color:var(--muted)}
+@media (max-width:520px){
+  .ask{right:0;bottom:0;width:100vw;height:88dvh;border-radius:22px 22px 0 0}
+  .ask-fab{right:14px;bottom:14px;padding:7px}
+  .ask-fab .lbl{display:none}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -659,6 +729,105 @@ JS = r"""
     });
   }
 
+  // ---- click counting (PostHog when configured; a no-op otherwise). Named events, no autocapture.
+  // Clicks that leave the page go out by sendBeacon so navigation can't cut them off.
+  function track(ev, props, leaving){
+    try {
+      if (window.posthog && typeof posthog.capture === 'function')
+        posthog.capture(ev, Object.assign({lang: lang}, props || {}), leaving ? {transport: 'sendBeacon'} : undefined);
+    } catch (e) {}
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a,button') : null;
+    if (!a) return;
+    var sec = a.closest('section,header,footer,.ask');
+    var p = {where: sec ? (sec.id || sec.className.split(' ').pop()) : 'page'};
+    var href = a.getAttribute('href') || '', ev = null;
+    if (href.indexOf(__REG__) === 0) ev = 'open_account';
+    else if (href.indexOf('calendly.com') >= 0) ev = 'book_brandon';
+    else if (href.indexOf('mailto:') === 0) { ev = 'email'; p.to = href.slice(7); }
+    else if (a.getAttribute('data-lang')) { ev = 'lang_switch'; p.to = a.getAttribute('data-lang'); }
+    else if (a.id === 'theme') ev = 'theme_toggle';
+    else if (a.classList.contains('stop-btn')) { ev = 'lifecycle_stop'; p.stage = a.closest('.stop').getAttribute('data-stage'); }
+    else if (a.classList.contains('hear')) ev = 'hear_chaching';
+    else if (href.charAt(0) === '#') { ev = 'nav'; p.to = href.slice(1); }
+    else if (href.charAt(0) === '/') { ev = 'legal'; p.to = href; }
+    if (ev) track(ev, p, /^(https?:|mailto:|\/)/.test(href));
+  }, true);
+  sliders.forEach(function(el){
+    if (el) el.addEventListener('change', function(){ track('calc_used', {field: el.id, value: +el.value, mode: mode}); });
+  });
+  document.querySelectorAll('.mode button').forEach(function(b){
+    b.addEventListener('click', function(){ track('calc_mode', {mode: b.getAttribute('data-mode')}); });
+  });
+
+  // ---- ask brandon: an AI that answers in Brandon's words (rendered only when ASK_BRANDON_LIVE).
+  var ASK = __ASK__;
+  var askBox = document.getElementById('ask');
+  if (ASK.live && askBox) {
+    var fab = document.getElementById('ask-fab'), log = document.getElementById('ask-log');
+    var form = document.getElementById('ask-form'), input = document.getElementById('ask-input'), sendB = document.getElementById('ask-send');
+    var hist = [], busy = false, greeted = false;
+    var bubble = function(text, cls){
+      var d = document.createElement('div'); d.className = 'msg ' + cls; d.textContent = text;
+      log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+    };
+    var chips = function(){
+      var c = document.createElement('div'); c.className = 'ask-chips';
+      (t('ask.chips', lang) || []).forEach(function(q){
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = q;
+        b.addEventListener('click', function(){ c.remove(); ask(q); }); c.appendChild(b);
+      });
+      log.appendChild(c);
+    };
+    var offline = function(key){
+      var d = bubble(t(key, lang), 'bot err');
+      if (key === 'ask.offline') {
+        var a = document.createElement('a'); a.href = ASK.demo; a.textContent = ' ' + t('ask.real', lang) + ' →';
+        d.appendChild(a);
+      }
+    };
+    var openChat = function(){
+      askBox.hidden = false; fab.hidden = true;
+      if (!greeted) { greeted = true; bubble(t('ask.hello', lang), 'bot'); chips(); }
+      input.focus(); track('ask_open');
+    };
+    var closeChat = function(){ askBox.hidden = true; fab.hidden = false; fab.focus(); };
+    var ask = function(q){
+      q = String(q || '').trim().slice(0, 1000);
+      if (!q || busy) return;
+      busy = true; sendB.disabled = true;
+      bubble(q, 'me');
+      hist.push({role: 'user', content: q});
+      while (hist.length > 12 || (hist.length && hist[0].role !== 'user')) hist.shift();
+      var typing = bubble(t('ask.thinking', lang), 'bot typing');
+      track('ask_question', {turn: hist.length});
+      var ctl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function(){ if (ctl) ctl.abort(); }, 25000);
+      fetch(ASK.url, {method: 'POST', headers: {'Content-Type': 'application/json'},
+                      body: JSON.stringify({messages: hist, lang: lang}), signal: ctl ? ctl.signal : undefined})
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok: r.ok, status: r.status, j: j}; }); })
+        .then(function(res){
+          typing.remove();
+          if (res.ok && res.j && typeof res.j.reply === 'string' && res.j.reply) {
+            bubble(res.j.reply, 'bot');
+            hist.push({role: 'assistant', content: res.j.reply.slice(0, 1000)});
+          } else {
+            hist.pop(); offline(res.status === 429 ? 'ask.rate' : 'ask.offline'); track('ask_error', {status: res.status});
+          }
+        })
+        .catch(function(){ typing.remove(); hist.pop(); offline('ask.offline'); track('ask_error', {status: 0}); })
+        .then(function(){ clearTimeout(timer); busy = false; sendB.disabled = false; input.focus(); });
+    };
+    fab.addEventListener('click', openChat);
+    document.getElementById('ask-x').addEventListener('click', closeChat);
+    askBox.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
+    form.addEventListener('submit', function(e){ e.preventDefault(); var q = input.value; input.value = ''; ask(q); });
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit')); }
+    });
+  }
+
   // ---- old deep links from the six-card page (#free, #one, ...) land on the matching section.
   var OLD = {free:'pricing', one:'lifecycle', boards:'lifecycle', track:'lifecycle', paper:'lifecycle', why:'founder'};
   var h = (location.hash || '').slice(1);
@@ -798,7 +967,7 @@ def works_html(s: dict) -> str:
         cls = ' class="lead"' if lead else ""
         items += f'<li{cls}><b>{name}</b><span data-i18n="works.{key}">{w[key]}</span></li>'
     return f"""<section class="in works" aria-label="{attr(w["eyebrow"])}">
-  {i18n("works.eyebrow", w["eyebrow"], "span", "eyebrow")}
+  <a class="eyebrow" href="#partners" data-i18n="works.eyebrow">{w["eyebrow"]}</a>
   <ul>{items}</ul>
 </section>"""
 
@@ -926,9 +1095,95 @@ def who_html(s: dict) -> str:
 </section>"""
 
 
+PARTNERS = [
+    # (key, card class, chip class, wordmark): statuses live in strings.py and must match reality
+    ("lb", "live", "live", "123Loadboard"),
+    ("dat", "", "prog", "DAT"),
+    ("og", "", "next", "Outgo<small>by DAT</small>"),
+]
+UNDER_THE_HOOD = [
+    ("st", "", "", "Stripe"),
+    ("qb", "", "live", "QuickBooks"),
+    ("cl", "", "", "Claude<small>by Anthropic</small>"),
+    ("aws", "", "", "AWS"),
+]
+
+
+def partners_html(s: dict) -> str:
+    pt = s["partners"]
+
+    def cards(rows):
+        return "".join(
+            f'\n    <li class="pcard {cls}"><span class="mark">{mark}</span>'
+            f'<span class="chip {chip}" data-i18n="partners.{k}_s">{pt[k + "_s"]}</span>'
+            f'<p data-i18n="partners.{k}_d">{pt[k + "_d"]}</p></li>'
+            for k, cls, chip, mark in rows
+        )
+
+    return f"""<section class="in partners" id="partners" aria-labelledby="partners-h">
+  <div class="partners-head">
+    {i18n("partners.eyebrow", pt["eyebrow"], "span", "eyebrow")}
+    <h2 class="h2" id="partners-h" data-i18n="partners.h2">{pt["h2"]}</h2>
+    {i18n("partners.lead", pt["lead"], "p", "lead")}
+  </div>
+  <ul class="pgrid big">{cards(PARTNERS)}
+  </ul>
+  {i18n("partners.hood", pt["hood"], "span", "eyebrow hood")}
+  <ul class="pgrid small">{cards(UNDER_THE_HOOD)}
+  </ul>
+  <p class="pjoin"><span data-i18n="partners.join">{pt["join"]}</span> <a href="mailto:{PARTNERS_EMAIL}">{PARTNERS_EMAIL}</a></p>
+  {i18n("partners.fine", pt["fine"], "p", "pfine")}
+</section>"""
+
+
+def ask_html(s: dict) -> str:
+    """The floating "Ask Brandon" chat. Always discloses that it is an AI."""
+    if not ASK_BRANDON_LIVE:
+        return ""
+    a = s["ask"]
+    return f"""
+<button type="button" class="ask-fab" id="ask-fab" aria-controls="ask"><span class="mono" aria-hidden="true">BH</span><span class="lbl" data-i18n="ask.open">{a["open"]}</span></button>
+<section class="ask" id="ask" role="dialog" aria-labelledby="ask-title" hidden>
+  <div class="ask-head">
+    <span class="mono" aria-hidden="true">BH</span>
+    <div><strong id="ask-title" data-i18n="ask.title">{a["title"]}</strong>
+    <small><span data-i18n="ask.disclose">{a["disclose"]}</span> <a href="{DEMO_URL}" data-i18n="ask.real">{a["real"]}</a></small></div>
+    <button type="button" class="ask-x" id="ask-x" data-i18n-attr="aria-label:ask.close" aria-label="{attr(a["close"])}">×</button>
+  </div>
+  <div class="ask-log" id="ask-log" aria-live="polite"></div>
+  <form class="ask-form" id="ask-form">
+    <textarea id="ask-input" rows="1" maxlength="1000" data-i18n-attr="placeholder:ask.placeholder,aria-label:ask.placeholder" placeholder="{attr(a["placeholder"])}" aria-label="{attr(a["placeholder"])}"></textarea>
+    <button type="submit" id="ask-send" data-i18n="ask.send">{a["send"]}</button>
+  </form>
+  {i18n("ask.note", a["note"], "p", "ask-note")}
+</section>"""
+
+
+def posthog_snippet() -> str:
+    """PostHog's loader, cookieless (memory persistence), named events only, no session recording."""
+    if not POSTHOG_KEY:
+        return ""
+    cfg = json.dumps({"api_host": POSTHOG_HOST, "persistence": "memory", "autocapture": False,
+                      "capture_pageview": True, "disable_session_recording": True,
+                      "respect_dnt": True, "person_profiles": "identified_only"})
+    return (
+        "<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){"
+        "var o=e.split(\".\");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call("
+        "arguments,0)))}}(p=t.createElement(\"script\")).type=\"text/javascript\",p.crossOrigin=\"anonymous\",p.async=!0,"
+        "p.src=s.api_host.replace(\".i.posthog.com\",\"-assets.i.posthog.com\")+\"/static/array.js\",(r=t.getElementsByTagName("
+        "\"script\")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a=\"posthog\",u.people=u.people||[],"
+        "u.toString=function(t){var e=\"posthog\";return\"posthog\"!==a&&(e+=\".\"+a),t||(e+=\" (stub)\"),e},"
+        "u.people.toString=function(){return u.toString(1)+\".people (stub)\"},o=\"capture identify alias people.set "
+        "people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing "
+        "opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags "
+        "group\".split(\" \"),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);"
+        f"posthog.init({json.dumps(POSTHOG_KEY)},{cfg});</script>\n"
+    )
+
+
 def contact_html(s: dict) -> str:
     c = s["contact"]
-    return f"""<section class="in contact" id="partners" aria-labelledby="contact-h">
+    return f"""<section class="in contact" id="contact" aria-labelledby="contact-h">
   <div class="contact-text">
     {i18n("contact.eyebrow", c["eyebrow"], "span", "eyebrow")}
     <h2 class="h2" id="contact-h" data-i18n="contact.h2">{c["h2"]}</h2>
@@ -1003,7 +1258,9 @@ def landing(lang: str, prefix: str) -> str:
         f'\n      <li class="rule">{icon}<p data-i18n="sasr.r{i + 1}">{s["sasr"][f"r{i + 1}"]}</p></li>'
         for i, icon in enumerate(RULE_ICONS)
     )
-    js = JS.replace("__THEME_COLORS__", json.dumps(THEME_COLOR)).replace("__CALC__", json.dumps(CALC))
+    ask_cfg = {"live": ASK_BRANDON_LIVE, "url": ASK_BRANDON_URL, "demo": DEMO_URL}
+    js = (JS.replace("__THEME_COLORS__", json.dumps(THEME_COLOR)).replace("__CALC__", json.dumps(CALC))
+          .replace("__REG__", json.dumps(REGISTER_URL)).replace("__ASK__", json.dumps(ask_cfg)))
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -1032,7 +1289,7 @@ def landing(lang: str, prefix: str) -> str:
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">{jsonld(lang, s, canonical)}</script>
-<style>{THEME_CSS}{CSS}</style>
+{posthog_snippet()}<style>{THEME_CSS}{CSS}</style>
 </head>
 <body>
 <header class="in top" id="top">
@@ -1128,6 +1385,8 @@ def landing(lang: str, prefix: str) -> str:
   </div>
 </section>
 
+{partners_html(s)}
+
 {contact_html(s)}
 
 <section class="in end">
@@ -1135,7 +1394,7 @@ def landing(lang: str, prefix: str) -> str:
   <div class="ctas"><a class="btn btn-xl" href="{REGISTER_URL}" data-i18n="ui.start">{ui["start"]}</a>{demo}</div>
 </section>
 </main>
-
+{ask_html(s)}
 <footer class="foot">
   <div class="in">
     <span data-i18n="ui.footer_rights">{ui["footer_rights"]}</span>

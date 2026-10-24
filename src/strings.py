@@ -24,6 +24,17 @@ PARTNERS_EMAIL = "partners@octopustms.com"  # partnerships, investors, press
 PRIVACY_EMAIL = "privacy@octopustms.com"    # privacy and data requests
 SITE = "https://octopustms.com"
 
+# Click counting (PostHog, free tier). Paste the project's public key (starts with "phc_") to turn it on;
+# empty means no analytics script is loaded at all. Cookieless: nothing is stored in the visitor's browser.
+POSTHOG_KEY = ""
+POSTHOG_HOST = "https://us.i.posthog.com"
+
+# "Ask Brandon" chat: an AI that answers in Brandon's words, served by the Octopus backend
+# (POST /api/public/ask-brandon, see docs/features/ASK-BRANDON.md in the app repo).
+# Leave False until the endpoint is live in production; False renders no chat at all.
+ASK_BRANDON_LIVE = False
+ASK_BRANDON_URL = "https://app.octopustms.com/api/public/ask-brandon"
+
 # The eight stops of the lifecycle, in order. "paid" is the lit stop; "archived" is drawn dimmer.
 STAGES = ["found", "booked", "dispatched", "moving", "delivered", "proven", "paid", "archived"]
 
@@ -81,7 +92,7 @@ EN = {
     "works": {
         "eyebrow": "INSIDE THE APP",
         "lb123": "Industry Partner",
-        "dat": "Load board",
+        "dat": "Certified",
         "qb": "Invoices",
         "stripe": "Payments",
     },
@@ -196,6 +207,37 @@ EN = {
         "docs": "Documents",
         "aria": "One plate number, TX 4821 KJ, connects to the load, the truck, the verified driver and the documents.",
     },
+    # Partner statuses must match reality: "Industry Partner" means an approved production integration (123Loadboard's own term).
+    "partners": {
+        "eyebrow": "PARTNERS",
+        "h2": "The best in freight, money and AI, working inside Octopus.",
+        "lead": "Next to every name: exactly where we stand. Live, in progress, or next.",
+        "hood": "UNDER THE HOOD",
+        "lb_s": "Industry Partner · live", "lb_d": "Search and book 123Loadboard freight without leaving Octopus. Production integration approved in October 2026.",
+        "dat_s": "Certified · agreement in progress", "dat_d": "DAT load search and truck posting, built into Octopus. Technical certification is complete; the commercial partnership agreement is in progress.",
+        "og_s": "Coming next", "og_d": "Factoring through Outgo, part of DAT: see which loads can be factored, and get funded automatically once the POD is in.",
+        "st_s": "Payments", "st_d": "Your $20 per-load fee is charged securely through Stripe.",
+        "qb_s": "Accounting · live", "qb_d": "Invoices built in Octopus sync to your QuickBooks.",
+        "cl_s": "AI", "cl_d": "Claude reads your rate cons, BOLs and PODs and pulls out what matters.",
+        "aws_s": "Infrastructure", "aws_d": "Your documents are stored on Amazon Web Services, in the US.",
+        "join": "Want to be on this list?",
+        "fine": "Company names are trademarks of their owners and are used here to describe integrations. Only partners marked “Industry Partner” have an approved production integration with us.",
+    },
+    "ask": {
+        "open": "Ask Brandon",
+        "title": "Brandon's AI",
+        "disclose": "An AI that answers in Brandon's own words. For the real Brandon,",
+        "real": "book 30 min",
+        "hello": "Hey, it's Brandon's AI. Ask me anything about Octopus, the $20 per load, or how a load goes from found to paid.",
+        "chips": ["Is it really $20 a load?", "Does it work with DAT?", "Are you the real Brandon?"],
+        "placeholder": "Type your question…",
+        "send": "Send",
+        "close": "Close chat",
+        "thinking": "Brandon's AI is typing…",
+        "rate": "That's a lot of questions at once. Give me a minute and try again.",
+        "offline": "I can't answer right now. Email ask@octopustms.com or book 30 minutes with the real Brandon.",
+        "note": "Don't share passwords, card numbers or private details here.",
+    },
     "contact": {
         "eyebrow": "TALK TO US",
         "h2": "A human answers. Usually me.",
@@ -252,7 +294,7 @@ RU = {
     "works": {
         "eyebrow": "ВНУТРИ ПРИЛОЖЕНИЯ",
         "lb123": "Отраслевой партнёр",
-        "dat": "Биржа грузов",
+        "dat": "Сертифицировано",
         "qb": "Счета",
         "stripe": "Платежи",
     },
@@ -366,6 +408,36 @@ RU = {
         "driver": "Водитель",
         "docs": "Документы",
         "aria": "Один номер, TX 4821 KJ, связывает груз, грузовик, проверенного водителя и документы.",
+    },
+    "partners": {
+        "eyebrow": "ПАРТНЁРЫ",
+        "h2": "Лучшие в грузоперевозках, деньгах и ИИ — внутри Octopus.",
+        "lead": "Рядом с каждым именем честно указано, где мы сейчас: работает, в процессе или следующий шаг.",
+        "hood": "ПОД КАПОТОМ",
+        "lb_s": "Отраслевой партнёр · работает", "lb_d": "Ищите и бронируйте грузы 123Loadboard, не выходя из Octopus. Боевая интеграция одобрена в октябре 2026.",
+        "dat_s": "Сертифицировано · договор в работе", "dat_d": "Поиск грузов и размещение траков DAT прямо в Octopus. Техническая сертификация пройдена, коммерческий договор о партнёрстве в работе.",
+        "og_s": "Следующий шаг", "og_d": "Факторинг через Outgo, часть DAT: видно, какие грузы можно отдать в факторинг, а деньги приходят автоматически, как только загружен POD.",
+        "st_s": "Платежи", "st_d": "Ваши $20 за груз списываются безопасно через Stripe.",
+        "qb_s": "Бухгалтерия · работает", "qb_d": "Счета из Octopus синхронизируются с вашим QuickBooks.",
+        "cl_s": "ИИ", "cl_d": "Claude читает ваши rate con, BOL и POD и достаёт главное.",
+        "aws_s": "Инфраструктура", "aws_d": "Ваши документы хранятся в Amazon Web Services, в США.",
+        "join": "Хотите в этот список?",
+        "fine": "Названия компаний — товарные знаки их владельцев и используются здесь, чтобы описать интеграции. Одобренная боевая интеграция есть только с партнёрами с пометкой «Отраслевой партнёр».",
+    },
+    "ask": {
+        "open": "Спросить Брендона",
+        "title": "ИИ Брендона",
+        "disclose": "ИИ, который отвечает словами Брендона. Живой Брендон —",
+        "real": "30 минут",
+        "hello": "Привет, это ИИ Брендона. Спрашивайте про Octopus, про $20 за груз или про то, как груз проходит путь от поиска до оплаты.",
+        "chips": ["Правда $20 за груз?", "Работает с DAT?", "Ты настоящий Брендон?"],
+        "placeholder": "Напишите вопрос…",
+        "send": "Отправить",
+        "close": "Закрыть чат",
+        "thinking": "ИИ Брендона печатает…",
+        "rate": "Слишком много вопросов подряд. Подождите минуту и попробуйте снова.",
+        "offline": "Сейчас не могу ответить. Напишите на ask@octopustms.com или запишитесь на 30 минут к живому Брендону.",
+        "note": "Не пишите сюда пароли, номера карт и личные данные.",
     },
     "contact": {
         "eyebrow": "СВЯЗАТЬСЯ",
